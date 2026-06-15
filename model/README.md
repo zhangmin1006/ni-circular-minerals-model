@@ -26,6 +26,9 @@ python run_mvm.py        # run scenarios, write outputs/
 python make_plots.py     # render static figures to outputs/figures/
 streamlit run dashboard.py   # interactive dashboard (Q2.1–2.7 tabs)
 ```
+For online deployment, use the root-level `streamlit_app.py` with the root
+`requirements.txt`; see `../DEPLOYMENT.md`.
+
 Outputs land in `outputs/`:
 - `validation.json` — I-O core vs Minviro anchors
 - `scenario_timeseries.csv` — full 30-year annual results, all scenarios (incl. CGE
