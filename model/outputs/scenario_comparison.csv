@@ -1,0 +1,7 @@
+scenario,cum_disc_GVA_£m,end_jobs,recycling_jobs,named_company_employee_estimate,named_recycler_companies,named_downstream_companies,crit_recycled_share,crit_domestic_share,crit_max_single_country,cum_disc_CO2_kt
+1_baseline,757.3,1101.4,527.7,13690.0,5,7,0.14,0.011,0.85,1529.8
+2_circular_innovation,860.8,1270.1,643.8,13690.0,5,7,0.166,0.011,0.833,1700.6
+3_primary_extraction,765.8,1114.2,527.8,13690.0,5,7,0.14,0.011,0.85,1555.7
+4_integrated_circular_primary,845.6,1242.2,616.2,13690.0,5,7,0.16,0.011,0.838,1687.2
+5_supply_shock,823.1,1209.4,601.9,13690.0,5,7,0.156,0.011,0.84,1638.7
+6_high_esg_low_impact,837.0,1231.6,608.9,13690.0,5,7,0.158,0.011,0.838,1671.9

@@ -1,0 +1,36 @@
+parameter,value,unit,status,source,source_detail,notes
+ni_mining_quarrying_gva_2018,108,GBP_million,real,Minviro Final Report (WP2),"ONS Regional GVA / NISRA, cited in Minviro 2022",0.27% of NI regional GVA total
+ni_mining_quarrying_workers,1950,persons,real,Minviro Final Report (WP2),NISRA BRES,Sector employment baseline
+ni_total_employee_jobs_2023,816562,persons,real,model proposal.docx,NISRA BRES Sep 2023,Used to scale induced effects
+scen4b_jobs_pa,430,persons,real,Minviro Final Report,WP2 Scenario 4b (two mines),Validation anchor - peak mining scenario
+scen4b_output_pa,43,GBP_million,real,Minviro Final Report,WP2 Scenario 4b,Validation anchor
+scen4b_gva_pa,9,GBP_million,real,Minviro Final Report,WP2 Scenario 4b,Validation anchor
+scen_onemine_jobs_pa,73,persons,real,model proposal.docx,Minviro one-mine scenario,Validation anchor - moderate
+scen_onemine_output_pa,7.3,GBP_million,real,model proposal.docx,Minviro one-mine scenario,Validation anchor
+scen_onemine_gva_pa,1.6,GBP_million,real,model proposal.docx,Minviro one-mine scenario,Validation anchor
+stpr_discount_rate,0.035,fraction,real,UK Green Book / NIGEAE,Social Time Preference Rate,Applied across 30-yr horizon
+mining_cost_of_equity_nominal,0.1126,fraction,real,Minviro Final Report,CAPM/WACC mining sector,Used in agent NPV/real-option triggers
+model_horizon_years,30,years,real,Minviro Final Report,WP2 framework,Match Minviro horizon
+uk_target_domestic_share_2035,0.10,fraction,real,Vision 2035 Critical Minerals Strategy,GOV.UK Jan 2026,>=10% domestic production
+uk_target_recycling_share_2035,0.20,fraction,real,Vision 2035,GOV.UK,>=20% via recycling
+uk_target_max_single_country_2035,0.60,fraction,real,Vision 2035,GOV.UK,<=60% from any single country
+uk_criticality_candidates_2024,82,count,real,BGS UK 2024 Criticality Assessment,via model proposal.docx,34 found critical
+uk_criticality_critical_2024,34,count,real,BGS UK 2024 Criticality Assessment,via model proposal.docx,
+tellus_elements_mapped,55,count,real,GSNI Tellus programme,via model proposal.docx,Geochemical baseline coverage
+io_technical_coefficients,NA,matrix,proxy,PLACEHOLDER,Regionalise NISRA Supply-Use + Scottish 2017 I-O via FLQ+RAS,GAP - needs construction; Minviro used Scottish 2017 as proxy
+io_employment_coefficients,NA,vector,proxy,PLACEHOLDER,Derive from BRES + GVA control totals,Anchored to real mining 1950 workers / GVA 108m
+io_co2_coefficients,NA,vector,proxy,PLACEHOLDER,NAEI / DAERA GHG inventory + ecoinvent/EXIOBASE,Environmental satellite account
+local_procurement_share_mining,0.45,fraction,proxy,PLACEHOLDER,Firm-level supplier survey (to commission),Minviro flags leakage risk; key ABM lever
+collection_rate_weee,0.30,fraction,proxy,PLACEHOLDER,DAERA LACMW + EA producer responsibility + recycler survey,GAP at NI level - UK-scaled proxy
+recovery_yield_ree_magnet,0.85,fraction,proxy,PLACEHOLDER,Ionic Technologies / Met4Tech / QUB process data,REE from spent permanent magnets
+recovery_yield_lithium,0.50,fraction,proxy,PLACEHOLDER,UK Technology Metals Observatory,Battery recycling
+recovery_yield_copper,0.90,fraction,proxy,PLACEHOLDER,EXIOBASE / industry data,Mature recycling route
+in_use_stock_ree_tonnes,NA,tonnes,gap,PLACEHOLDER,UK MFA scaled to NI population/industry,Needs stock-flow construction
+ni_demand_growth_ev,0.12,fraction_pa,proxy,PLACEHOLDER,NI energy scenarios / EV uptake stats,Demand driver scenario
+ni_demand_growth_wind,0.08,fraction_pa,proxy,PLACEHOLDER,NI wind deployment / grid investment,Demand driver scenario
+company_register_count,20,companies,web_verified,Desk research June 2026,model/data/company_register.csv,"Named NI operators in recycling, exploration/mining, quarry/minerals, materials-processing equipment, and downstream demand sectors"
+company_employee_estimate,NA,persons,proxy,Desk research June 2026,model/data/company_register.csv,"Uses public reporting where available and desk estimates otherwise; replace with BRES/company accounts/survey data"
+company_capacity_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Heuristic capacity and feedstock scores; replace with turnover, employment, tonnage, plant capacity and survey data"
+company_local_procurement_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Heuristic local-procurement scores; replace with firm-level supplier survey"
+company_planning_risk_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Planning/social/environmental risk score used in mining agent development trigger; replace with planning/licensing and community evidence"
+company_downstream_demand_signal,NA,multiplier,proxy,Desk research June 2026,model/src/company_data.py,"Uses named downstream firms and materials-processing equipment firms to modestly lift demand baselines until real NI sector demand data are collected"

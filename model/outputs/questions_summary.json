@@ -1,0 +1,278 @@
+{
+  "1_baseline": {
+    "2.1_circularity_innovation": {
+      "recycling_jobs_end": 527.7,
+      "crit_recycled_share_start": 0.32,
+      "crit_recycled_share_end": 0.14,
+      "recycling_fd_gbp_m_end": 60.42
+    },
+    "2.2_opportunities_challenges": {
+      "mines_opened": 0,
+      "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
+    },
+    "2.3_business_support": {
+      "recycling_capacity_proxy_fd": 60.42,
+      "named_recycler_companies": 5,
+      "named_downstream_companies": 7,
+      "avg_feedstock_score": 0.617,
+      "note": "firms needing finance/skills identified in ABM agent states"
+    },
+    "2.4_secure_supply": {
+      "crit_domestic_share_end": 0.011,
+      "crit_recycled_share_end": 0.14,
+      "crit_import_share_end": 0.849,
+      "crit_max_single_country_end": 0.85,
+      "vs_target_recycling_0.20": 0.14,
+      "vs_target_domestic_0.10": 0.011,
+      "vs_target_max_single_0.60": 0.85
+    },
+    "2.5_employment_regional_growth": {
+      "total_jobs_end": 1101.4,
+      "mining_jobs_end": 253.1,
+      "recycling_jobs_end": 527.7,
+      "named_company_employee_estimate": 13690.0,
+      "proposed_mining_jobs_from_company_evidence": 1000.0
+    },
+    "2.6_economic_benefits": {
+      "gva_total_end_gbp_m": 50.27,
+      "output_total_end_gbp_m": 126.4,
+      "cumulative_discounted_gva_gbp_m": 757.3,
+      "cumulative_discounted_output_gbp_m": 1898.7
+    },
+    "2.7_negative_impacts": {
+      "co2_kt_end": 100.58,
+      "pm_t_end": 10.79,
+      "cumulative_discounted_co2_kt": 1529.8
+    }
+  },
+  "2_circular_innovation": {
+    "2.1_circularity_innovation": {
+      "recycling_jobs_end": 643.8,
+      "crit_recycled_share_start": 0.376,
+      "crit_recycled_share_end": 0.166,
+      "recycling_fd_gbp_m_end": 73.56
+    },
+    "2.2_opportunities_challenges": {
+      "mines_opened": 0,
+      "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
+    },
+    "2.3_business_support": {
+      "recycling_capacity_proxy_fd": 73.56,
+      "named_recycler_companies": 5,
+      "named_downstream_companies": 7,
+      "avg_feedstock_score": 0.617,
+      "note": "firms needing finance/skills identified in ABM agent states"
+    },
+    "2.4_secure_supply": {
+      "crit_domestic_share_end": 0.011,
+      "crit_recycled_share_end": 0.166,
+      "crit_import_share_end": 0.823,
+      "crit_max_single_country_end": 0.833,
+      "vs_target_recycling_0.20": 0.166,
+      "vs_target_domestic_0.10": 0.011,
+      "vs_target_max_single_0.60": 0.833
+    },
+    "2.5_employment_regional_growth": {
+      "total_jobs_end": 1270.1,
+      "mining_jobs_end": 253.9,
+      "recycling_jobs_end": 643.8,
+      "named_company_employee_estimate": 13690.0,
+      "proposed_mining_jobs_from_company_evidence": 1000.0
+    },
+    "2.6_economic_benefits": {
+      "gva_total_end_gbp_m": 58.57,
+      "output_total_end_gbp_m": 146.98,
+      "cumulative_discounted_gva_gbp_m": 860.8,
+      "cumulative_discounted_output_gbp_m": 2154.8
+    },
+    "2.7_negative_impacts": {
+      "co2_kt_end": 114.15,
+      "pm_t_end": 12.05,
+      "cumulative_discounted_co2_kt": 1700.6
+    }
+  },
+  "3_primary_extraction": {
+    "2.1_circularity_innovation": {
+      "recycling_jobs_end": 527.8,
+      "crit_recycled_share_start": 0.32,
+      "crit_recycled_share_end": 0.14,
+      "recycling_fd_gbp_m_end": 60.42
+    },
+    "2.2_opportunities_challenges": {
+      "mines_opened": 2,
+      "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
+    },
+    "2.3_business_support": {
+      "recycling_capacity_proxy_fd": 60.42,
+      "named_recycler_companies": 5,
+      "named_downstream_companies": 7,
+      "avg_feedstock_score": 0.617,
+      "note": "firms needing finance/skills identified in ABM agent states"
+    },
+    "2.4_secure_supply": {
+      "crit_domestic_share_end": 0.011,
+      "crit_recycled_share_end": 0.14,
+      "crit_import_share_end": 0.849,
+      "crit_max_single_country_end": 0.85,
+      "vs_target_recycling_0.20": 0.14,
+      "vs_target_domestic_0.10": 0.011,
+      "vs_target_max_single_0.60": 0.85
+    },
+    "2.5_employment_regional_growth": {
+      "total_jobs_end": 1114.2,
+      "mining_jobs_end": 262.6,
+      "recycling_jobs_end": 527.8,
+      "named_company_employee_estimate": 13690.0,
+      "proposed_mining_jobs_from_company_evidence": 1000.0
+    },
+    "2.6_economic_benefits": {
+      "gva_total_end_gbp_m": 50.75,
+      "output_total_end_gbp_m": 127.66,
+      "cumulative_discounted_gva_gbp_m": 765.8,
+      "cumulative_discounted_output_gbp_m": 1920.9
+    },
+    "2.7_negative_impacts": {
+      "co2_kt_end": 102.06,
+      "pm_t_end": 10.98,
+      "cumulative_discounted_co2_kt": 1555.7
+    }
+  },
+  "4_integrated_circular_primary": {
+    "2.1_circularity_innovation": {
+      "recycling_jobs_end": 616.2,
+      "crit_recycled_share_start": 0.364,
+      "crit_recycled_share_end": 0.16,
+      "recycling_fd_gbp_m_end": 70.4
+    },
+    "2.2_opportunities_challenges": {
+      "mines_opened": 2,
+      "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
+    },
+    "2.3_business_support": {
+      "recycling_capacity_proxy_fd": 70.4,
+      "named_recycler_companies": 5,
+      "named_downstream_companies": 7,
+      "avg_feedstock_score": 0.617,
+      "note": "firms needing finance/skills identified in ABM agent states"
+    },
+    "2.4_secure_supply": {
+      "crit_domestic_share_end": 0.011,
+      "crit_recycled_share_end": 0.16,
+      "crit_import_share_end": 0.829,
+      "crit_max_single_country_end": 0.838,
+      "vs_target_recycling_0.20": 0.16,
+      "vs_target_domestic_0.10": 0.011,
+      "vs_target_max_single_0.60": 0.838
+    },
+    "2.5_employment_regional_growth": {
+      "total_jobs_end": 1242.2,
+      "mining_jobs_end": 262.8,
+      "recycling_jobs_end": 616.2,
+      "named_company_employee_estimate": 13690.0,
+      "proposed_mining_jobs_from_company_evidence": 1000.0
+    },
+    "2.6_economic_benefits": {
+      "gva_total_end_gbp_m": 57.05,
+      "output_total_end_gbp_m": 143.28,
+      "cumulative_discounted_gva_gbp_m": 845.6,
+      "cumulative_discounted_output_gbp_m": 2118.4
+    },
+    "2.7_negative_impacts": {
+      "co2_kt_end": 112.34,
+      "pm_t_end": 11.94,
+      "cumulative_discounted_co2_kt": 1687.2
+    }
+  },
+  "5_supply_shock": {
+    "2.1_circularity_innovation": {
+      "recycling_jobs_end": 601.9,
+      "crit_recycled_share_start": 0.349,
+      "crit_recycled_share_end": 0.156,
+      "recycling_fd_gbp_m_end": 68.83
+    },
+    "2.2_opportunities_challenges": {
+      "mines_opened": 0,
+      "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
+    },
+    "2.3_business_support": {
+      "recycling_capacity_proxy_fd": 68.83,
+      "named_recycler_companies": 5,
+      "named_downstream_companies": 7,
+      "avg_feedstock_score": 0.617,
+      "note": "firms needing finance/skills identified in ABM agent states"
+    },
+    "2.4_secure_supply": {
+      "crit_domestic_share_end": 0.011,
+      "crit_recycled_share_end": 0.156,
+      "crit_import_share_end": 0.833,
+      "crit_max_single_country_end": 0.84,
+      "vs_target_recycling_0.20": 0.156,
+      "vs_target_domestic_0.10": 0.011,
+      "vs_target_max_single_0.60": 0.84
+    },
+    "2.5_employment_regional_growth": {
+      "total_jobs_end": 1209.4,
+      "mining_jobs_end": 253.7,
+      "recycling_jobs_end": 601.9,
+      "named_company_employee_estimate": 13690.0,
+      "proposed_mining_jobs_from_company_evidence": 1000.0
+    },
+    "2.6_economic_benefits": {
+      "gva_total_end_gbp_m": 55.58,
+      "output_total_end_gbp_m": 139.57,
+      "cumulative_discounted_gva_gbp_m": 823.1,
+      "cumulative_discounted_output_gbp_m": 2061.7
+    },
+    "2.7_negative_impacts": {
+      "co2_kt_end": 109.27,
+      "pm_t_end": 11.6,
+      "cumulative_discounted_co2_kt": 1638.7
+    }
+  },
+  "6_high_esg_low_impact": {
+    "2.1_circularity_innovation": {
+      "recycling_jobs_end": 608.9,
+      "crit_recycled_share_start": 0.357,
+      "crit_recycled_share_end": 0.158,
+      "recycling_fd_gbp_m_end": 69.58
+    },
+    "2.2_opportunities_challenges": {
+      "mines_opened": 2,
+      "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
+    },
+    "2.3_business_support": {
+      "recycling_capacity_proxy_fd": 69.58,
+      "named_recycler_companies": 5,
+      "named_downstream_companies": 7,
+      "avg_feedstock_score": 0.617,
+      "note": "firms needing finance/skills identified in ABM agent states"
+    },
+    "2.4_secure_supply": {
+      "crit_domestic_share_end": 0.011,
+      "crit_recycled_share_end": 0.158,
+      "crit_import_share_end": 0.831,
+      "crit_max_single_country_end": 0.838,
+      "vs_target_recycling_0.20": 0.158,
+      "vs_target_domestic_0.10": 0.011,
+      "vs_target_max_single_0.60": 0.838
+    },
+    "2.5_employment_regional_growth": {
+      "total_jobs_end": 1231.6,
+      "mining_jobs_end": 262.8,
+      "recycling_jobs_end": 608.9,
+      "named_company_employee_estimate": 13690.0,
+      "proposed_mining_jobs_from_company_evidence": 1000.0
+    },
+    "2.6_economic_benefits": {
+      "gva_total_end_gbp_m": 56.53,
+      "output_total_end_gbp_m": 142.0,
+      "cumulative_discounted_gva_gbp_m": 837.0,
+      "cumulative_discounted_output_gbp_m": 2097.1
+    },
+    "2.7_negative_impacts": {
+      "co2_kt_end": 111.5,
+      "pm_t_end": 11.86,
+      "cumulative_discounted_co2_kt": 1671.9
+    }
+  }
+}

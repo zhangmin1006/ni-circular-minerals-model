@@ -1,0 +1,20 @@
+{
+  "one_mine": {
+    "model_output": 7.3,
+    "anchor_output": 7.3,
+    "model_jobs": 73.05956851086006,
+    "anchor_jobs": 73.0,
+    "model_direct_mining_gva": 1.5762911979779677,
+    "anchor_gva": 1.6,
+    "model_total_gva": 2.8207283410810318
+  },
+  "two_mine_4b": {
+    "model_output": 43.0,
+    "anchor_output": 43.0,
+    "model_jobs": 430.3508830091756,
+    "anchor_jobs": 430.0,
+    "model_direct_mining_gva": 9.285002946993508,
+    "anchor_gva": 9.0,
+    "model_total_gva": 16.61524913239512
+  }
+}
