@@ -14,6 +14,9 @@ consultation questions 2.1–2.7. The three tiers from
   wages raise the mining development hurdle, recovery capacity lifts recycling
   productivity.
 
+**Full technical documentation** (architecture, equations, data sources, assumptions,
+validation): see [`../TECHNICAL_DOCUMENTATION.md`](../TECHNICAL_DOCUMENTATION.md).
+
 ## What it does
 - Runs six policy-scenario families over a 30-year horizon (STPR 3.5% discounting).
 - Each year: ABM agents decide under policy levers → physical material flows (MFA)
