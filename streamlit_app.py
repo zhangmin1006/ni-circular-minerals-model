@@ -473,6 +473,25 @@ with tab_q23:
             "d_total_jobs": "Δ jobs vs shock",
         }
         st.dataframe(sc23[list(sc_cols)].rename(columns=sc_cols), width="stretch")
+
+        sev_path = OUT / "q2_3_shock_severity.csv"
+        if sev_path.exists():
+            sweep = pd.read_csv(sev_path)
+            order = ["mild_cap80", "moderate_cap60", "severe_cap40", "extreme_cap20"]
+            pkgs = ["no_support", "upstream", "midstream", "full"]
+            gap_pivot = (sweep.pivot(index="severity", columns="support",
+                                     values="supply_gap_end").reindex(order)[pkgs])
+            st.markdown("**Resilience across shock severity** (import cap 80%→20%; "
+                        "supply gap, lower = more resilient)")
+            st.line_chart(gap_pivot)
+            st.info(
+                "Support is worth more the deeper the shock — but there's a ceiling: even full "
+                "cross-chain support can't fully offset an extreme (80% import loss) shock, because "
+                "NI's domestic + recovery capacity can't replace that volume. The best *single* "
+                "lever shifts with severity (midstream for mild shocks, upstream for severe), and "
+                "the residual gap argues for strategic stockpiles + international diversification."
+            )
+
         if memo23:
             with st.expander("Full Q2.3 findings memo (stage-by-stage support)"):
                 st.markdown(memo23)

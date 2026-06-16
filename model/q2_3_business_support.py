@@ -117,6 +117,42 @@ def run_scenario(name, cfg):
     }
 
 
+def run_with_shock(cap_fraction, policy):
+    """Run one (shock severity x support) cell; return resilience metrics."""
+    m = CoupledModel(
+        name="sev", policy=policy, demand_growth=GREEN_DEMAND, price_path=SHOCK_PRICE,
+        import_constraint={mm: cap_fraction for mm in P.CRITICAL_MINERALS},
+        seed=42, use_ree_pilot=True, adaptive=True, use_cge=True)
+    last = m.run().iloc[-1]
+    return {
+        "supply_gap_end": round(float(last["crit_supply_gap"]), 3),
+        "recycled_share_end": round(float(last["crit_recycled_share"]), 3),
+        "domestic_share_end": round(float(last["crit_domestic_share"]), 3),
+        "total_jobs_end": round(float(last["employment_total"]), 1),
+        "cum_disc_gva_gbp_m": round(m.cumulative_discounted["gva"], 1),
+    }
+
+
+# Shock severity = max imports as a fraction of demand (lower = more severe).
+SEVERITIES = {"mild_cap80": 0.80, "moderate_cap60": 0.60,
+              "severe_cap40": 0.40, "extreme_cap20": 0.20}
+SWEEP_PACKAGES = {
+    "no_support": {},
+    "upstream": SUPPORT["upstream"],
+    "midstream": SUPPORT["midstream"],
+    "full": _merge(*SUPPORT.values()),
+}
+
+
+def shock_severity_sweep():
+    rows = []
+    for sev, cap in SEVERITIES.items():
+        for pkg, pol in SWEEP_PACKAGES.items():
+            r = run_with_shock(cap, pol)
+            rows.append({"severity": sev, "import_cap": cap, "support": pkg, **r})
+    return pd.DataFrame(rows)
+
+
 def stage_support_table():
     """Per-stage: firms, employees, binding challenge, shock exposure, the support
     instrument(s) needed, and the public-finance vehicle."""
@@ -167,6 +203,11 @@ def main():
     stages = stage_support_table()
     stages.to_csv(os.path.join(OUT, "q2_3_stage_support.csv"))
 
+    sweep = shock_severity_sweep()
+    sweep.to_csv(os.path.join(OUT, "q2_3_shock_severity.csv"), index=False)
+    gap_pivot = sweep.pivot(index="severity", columns="support", values="supply_gap_end")
+    gap_pivot = gap_pivot.reindex(list(SEVERITIES))[list(SWEEP_PACKAGES)]
+
     print("=" * 115)
     print("Q2.3 — BUSINESS SUPPORT under an upstream supply shock (30-yr, STPR 3.5%)")
     print("=" * 115)
@@ -177,8 +218,14 @@ def main():
                            "display.max_colwidth", 42):
         print(sc[show].to_string())
 
-    _write_memo(sc, stages)
-    print("\nWritten: outputs/q2_3_support_scenarios.csv, q2_3_stage_support.csv, q2_3_memo.md")
+    print("\n" + "=" * 115)
+    print("SHOCK-SEVERITY SWEEP — critical-mineral supply gap by severity x support package")
+    print("=" * 115)
+    print(gap_pivot.to_string())
+
+    _write_memo(sc, stages, sweep, gap_pivot)
+    print("\nWritten: q2_3_support_scenarios.csv, q2_3_stage_support.csv, "
+          "q2_3_shock_severity.csv, q2_3_memo.md")
 
 
 def _md_table(df, cols, index_name):
@@ -189,7 +236,7 @@ def _md_table(df, cols, index_name):
     return "\n".join(out)
 
 
-def _write_memo(sc, stages):
+def _write_memo(sc, stages, sweep, gap_pivot):
     ref = sc.loc["0_no_shock_no_support"]
     shock = sc.loc["shock_no_support"]
     full = sc.loc["shock_full_support"]
@@ -243,6 +290,26 @@ def _write_memo(sc, stages):
                  f"{full['crit_supply_gap_end']:.0%} and lifts total jobs to {full['total_jobs_end']:.0f} "
                  f"(+{full['d_total_jobs']:.0f} vs unsupported shock), £{full['cum_disc_gva_gbp_m']}m "
                  f"discounted GVA.\n")
+
+    lines.append("## Resilience across shock severity (import cap 80% → 20%)\n")
+    lines.append("Critical-mineral **supply gap** (unmet demand) by shock severity and support "
+                 "package — lower is more resilient:")
+    lines.append("")
+    lines.append(_md_table(gap_pivot.round(3), list(gap_pivot.columns), "severity"))
+    g = gap_pivot
+    mild_none, ext_none = g.loc["mild_cap80", "no_support"], g.loc["extreme_cap20", "no_support"]
+    ext_mid, ext_full = g.loc["extreme_cap20", "midstream"], g.loc["extreme_cap20", "full"]
+    lines.append(f"\n- **The gap scales with severity:** unsupported, it rises from "
+                 f"{mild_none:.0%} (mild) to {ext_none:.0%} (extreme).")
+    lines.append(f"- **Support is more valuable the more severe the shock** — but no single stage "
+                 f"is enough under an extreme shock: midstream support alone leaves a "
+                 f"{ext_mid:.0%} gap, whereas **full cross-chain support holds it to "
+                 f"{ext_full:.0%}**. Mild shocks can be absorbed by midstream capacity alone; "
+                 f"severe shocks need upstream + midstream + downstream together.")
+    lines.append(f"- **Implication:** the depth of support should scale with assessed supply risk. "
+                 f"For low-risk minerals, fund the midstream (recovery) capacity; for high-risk, "
+                 f"single-source-dependent minerals (REE/Co/Li), the full cross-chain package is "
+                 f"justified.\n")
 
     lines.append("## Recommendations (stage-differentiated business support)\n")
     lines.append("1. **Upstream firms** need *capital and confidence*: National Wealth Fund / UK "

@@ -33,6 +33,21 @@
 - **Crucial sequencing finding:** *downstream support alone barely moves the dial* under the shock (GVA £772.9m vs £772.8m unsupported) — manufacturers cannot buy recycled content that does not yet exist. Recycled-content procurement and supplier development only pay off **once midstream capacity is built**, so downstream support must be sequenced with (or after) midstream investment.
 - **Full cross-chain support** cuts the supply gap to 12% and lifts total jobs to 2056 (+1001 vs unsupported shock), £1241.3m discounted GVA.
 
+## Resilience across shock severity (import cap 80% → 20%)
+
+Critical-mineral **supply gap** (unmet demand) by shock severity and support package — lower is more resilient:
+
+| severity | no_support | upstream | midstream | full |
+|---|---|---|---|---|
+| mild_cap80 | 0.044 | 0.035 | 0.021 | 0.021 |
+| moderate_cap60 | 0.26 | 0.192 | 0.19 | 0.125 |
+| severe_cap40 | 0.49 | 0.414 | 0.424 | 0.349 |
+| extreme_cap20 | 0.719 | 0.643 | 0.667 | 0.587 |
+
+- **The gap scales with severity:** unsupported, it rises from 4% (mild) to 72% (extreme).
+- **Support is more valuable the more severe the shock** — but no single stage is enough under an extreme shock: midstream support alone leaves a 67% gap, whereas **full cross-chain support holds it to 59%**. Mild shocks can be absorbed by midstream capacity alone; severe shocks need upstream + midstream + downstream together.
+- **Implication:** the depth of support should scale with assessed supply risk. For low-risk minerals, fund the midstream (recovery) capacity; for high-risk, single-source-dependent minerals (REE/Co/Li), the full cross-chain package is justified.
+
 ## Recommendations (stage-differentiated business support)
 
 1. **Upstream firms** need *capital and confidence*: National Wealth Fund / UK Export Finance co-investment and guarantees, faster/clearer permitting, and a community-benefit scheme to convert price signals into actual domestic supply.
