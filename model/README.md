@@ -104,6 +104,12 @@ benchmark to ~1e-11.
   capital pipeline (operating £914m + proposed £250m), Ionic's 400 tpa REE recycling
   capacity (floors recycling-sector output), and firm headcount-by-district that now shapes
   the spatial employment map (mining→Fermanagh & Omagh, manufacturing→Belfast, etc.).
+- **Strategy/evidence-grounded** (cited in `data_register.csv`): Vision 2035 Technical Annex
+  UK demand signals (Cu 178k→3.6Mt, Li 2.5k→339kt by 2035); 2023 supply concentration
+  (REE 74% China, Co 70% DRC, Li 44% Australia → MFA `imp_conc`); ~80% of UK-shredded
+  e-/auto-metals exported for processing; NI recycling rate 50.4%; Windsor Framework Art.13(4)
+  CRMA applicability; Curraghinalt 3.79 Moz Au + Sb/Te/Bi/Co — per GSNI/BGS *Critical Minerals
+  & the Circular Economy in NI* (OR25042, 2025) and the UK/EU strategies.
 - **Proxy** (flagged in `data_register.csv`): the I-O coefficient matrix (replace with a
   regionalised NISRA Supply-Use + Scottish 2017 table via FLQ+RAS), SAM sector structure,
   commodity prices, collection/recovery rates, deposit qualities, ABM behavioural

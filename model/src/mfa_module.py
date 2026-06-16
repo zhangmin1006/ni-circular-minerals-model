@@ -23,11 +23,14 @@ import seed_parameters as P
 # demand0: NI annual demand baseline; lifetime: yrs to end-of-life;
 # coll: collection rate; rec: recovery yield; dom0: domestic primary share;
 # imp_conc: max single-country import concentration (HHI proxy, 0-1).
+# imp_conc for REE/Li/Co anchored to 2023 global mine-supply concentration
+# (China 74% REE, Australia 44% Li, DRC 70% Co; BGS/Idoine et al. 2025, via the
+# GSNI "Critical Minerals & the Circular Economy in NI" briefing 2025).
 MINERAL_PARAMS = {
     #              demand0 lifetime coll  rec   dom0  imp_conc
-    "REE_magnet": ( 120.0,   10,   0.05, 0.85, 0.00, 0.85),
-    "Lithium":    ( 300.0,    8,   0.08, 0.50, 0.00, 0.55),
-    "Cobalt":     (  90.0,    8,   0.10, 0.55, 0.00, 0.65),
+    "REE_magnet": ( 120.0,   10,   0.05, 0.85, 0.00, 0.74),
+    "Lithium":    ( 300.0,    8,   0.08, 0.50, 0.00, 0.44),
+    "Cobalt":     (  90.0,    8,   0.10, 0.55, 0.00, 0.70),
     "Nickel":     ( 800.0,   12,   0.30, 0.60, 0.05, 0.40),
     "Copper":     (9000.0,   25,   0.45, 0.90, 0.02, 0.30),
     "Aluminium":  (12000.0,  20,   0.42, 0.75, 0.00, 0.35),

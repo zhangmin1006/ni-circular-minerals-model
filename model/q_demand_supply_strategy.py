@@ -292,8 +292,53 @@ def _write_memo(dem, gap, stages, capex):
                  "(Wrightbus, Seagate, Encirc, Spirit) and equipment capability (CDE, Terex) are "
                  "present, but the processing/recovery middle is thin — the priority gap to fund.\n")
 
-    lines.append("*Capacities are register-derived desk estimates; demand CAGRs are document-"
-                 "anchored. Replace with audited plant data and CMIC demand forecasts to calibrate.*")
+    lines.append("\n## NI-specific evidence base (opportunities)\n")
+    lines.append("- **Geology:** NI is the *most prospective area of the UK/Ireland for precious "
+                 "metals* (BGS). Curraghinalt (Sperrins, Tyrone) is NI's one known polymetallic "
+                 "deposit — 3.79 Moz Au measured+indicated plus ~15 kt copper over life and minor "
+                 "**antimony, tellurium, bismuth, cobalt**; the Mourne granites show **REE/critical-"
+                 "metal enrichment** potential; Pt/Pd anomalies in the Sperrins (GSNI Tellus).")
+    lines.append("- **Innovation ecosystem:** a genuine REE-recycling cluster — **Ionic "
+                 "Technologies** (QUB/Seren spin-out, 400 tpa REO target), **Plaswire** (turbine "
+                 "magnet+blade recycling), and **QUILL** (Queen's Ionic Liquids Lab). NI's named "
+                 "role in Vision 2035 is permanent-magnet recycling.")
+    lines.append("- **Logistics & feedstock:** Belfast Harbour (24.1 Mt cargo, 2024) is an offshore-"
+                 "wind **decommissioning hub** — an end-of-life turbine-magnet feedstock pipeline for "
+                 "Ionic/Plaswire.")
+    lines.append("- **Dual-market access:** under **Windsor Framework Art. 13(4)**, EU CRMA "
+                 "provisions could apply in NI (DBT, Apr 2025) — NI midstream/recycling could serve "
+                 "both the UK Vision 2035 and the EU CRMA 40%-processing / 25%-recycling pulls.\n")
+
+    lines.append("## NI-specific evidence base (challenges)\n")
+    lines.append("- **Midstream gap is the headline constraint:** ~**80% of UK-shredded automotive/"
+                 "electronic metals are exported for processing** for lack of UK midstream investment "
+                 "(BGS) — NI has one REE processor and none for Li/Co/Ni.")
+    lines.append("- **Supply concentration to displace:** 2023 mine supply was **74% China (REE), "
+                 "70% DRC (Co), 44% Australia (Li)** (BGS/Idoine 2025) — the strategic prize, but also "
+                 "why import prices/volumes are volatile.")
+    lines.append("- **Circular performance has stalled:** NI municipal recycling **~50.4% (2024/25), "
+                 "flat since 2019**, with energy-from-waste rising to 34.3% — competing with recycling "
+                 "for material and locking critical metals out of recovery.")
+    lines.append("- **Long, contested primary lead times:** ~20 years from discovery to mine globally, "
+                 "with declining grades; NI's best deposit (Curraghinalt) is constrained by social "
+                 "licence, and the **Mineral Development Act (NI) 1969 is under review** (gold/silver "
+                 "vested in the Crown, other minerals in DfE).\n")
+
+    lines.append("## Sources\n")
+    for s in (
+        "UK Critical Minerals Strategy — Vision 2035 (DBT, Jan 2026)",
+        "UK Critical Minerals Technical Annex — Annex 2 demand signals (DBT, 2026)",
+        "UK Modern Industrial Strategy (HMG, Jul 2025)",
+        "EU Critical Raw Materials Act (2024)",
+        "GSNI/BGS — Critical Minerals and the Circular Economy in Northern Ireland (OR25042, 2025)",
+        "BGS/Idoine et al. (2025) — global mine-supply concentration; IEA net-zero demand (2024)",
+        "Dalradian — Curraghinalt 2021 feasibility study; DAERA LAC municipal waste 2024/25",
+    ):
+        lines.append(f"- {s}")
+
+    lines.append("\n*Capacities are register-derived desk estimates; demand CAGRs are document-"
+                 "anchored (headline annual multiples, not the cumulative Annex-2 totals). Replace "
+                 "with audited plant data and CMIC mineral-by-mineral demand forecasts to calibrate.*")
 
     with open(os.path.join(OUT, "q_demand_supply_memo.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines))

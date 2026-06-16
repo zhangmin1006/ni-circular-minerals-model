@@ -6,18 +6,18 @@
 
 ## Opportunities — top-ranked minerals/pathways
 
-- **REE_magnet** (critical, score 0.642): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
+- **REE_magnet** (critical, score 0.621): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 - **Copper** (critical, score 0.598): Primary + recycling — key challenge: *Social licence / permitting (contested deposit)*.
-- **Lithium** (critical, score 0.566): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
-- **Cobalt** (critical, score 0.475): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
+- **Lithium** (critical, score 0.545): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
+- **Cobalt** (critical, score 0.485): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 - **Aluminium** (critical, score 0.447): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 
 | mineral | critical | opportunity_score | pathway | key_challenge | domestic_geology | import_dependence | named_miners |
 |---|---|---|---|---|---|---|---|
-| REE_magnet | True | 0.642 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.958 | — |
+| REE_magnet | True | 0.621 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.958 | — |
 | Copper | True | 0.598 | Primary + recycling | Social licence / permitting (contested deposit) | 0.883 | 0.575 | Dalradian Gold |
-| Lithium | True | 0.566 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.96 | — |
-| Cobalt | True | 0.475 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.945 | — |
+| Lithium | True | 0.545 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.96 | — |
+| Cobalt | True | 0.485 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.945 | — |
 | Aluminium | True | 0.447 | Recycling | Feedstock collection (low end-of-life capture) | 0.41 | 0.685 | — |
 | Nickel | True | 0.401 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.77 | — |
 | Antimony | True | 0.4 | Primary | Social licence / permitting (contested deposit) | 0.699 | 0.992 | Dalradian Gold; Conroy Gold and Natural Resources |
@@ -38,14 +38,14 @@ Ranked single-constraint unlocks:
 
 | scenario | label | mines_opened | projects_unlocked | crit_domestic_share_end | end_jobs | cum_disc_gva_gbp_m | d_cum_co2_kt |
 |---|---|---|---|---|---|---|---|
-| 0_current_constraints | Today's constraints (baseline) | 0 | — | 0.011 | 1147.7 | 788.3 | 0.0 |
-| permitting_reform | Faster, clearer permitting | 0 | — | 0.011 | 1147.7 | 788.3 | 0.0 |
-| finance_support | Finance: National Wealth Fund / UKEF co-investment | 1 | [geological-potential] Baryte | 0.011 | 1150.4 | 790.0 | 5.2 |
-| community_benefit | Community benefit + social licence | 1 | Dalradian Gold | 0.076 | 1763.2 | 996.4 | 635.2 |
-| skills_availability | Skills & expertise availability | 0 | — | 0.011 | 1147.5 | 788.3 | -0.2 |
-| energy_competitiveness | Competitive (green) energy cost | 0 | — | 0.011 | 1147.8 | 788.3 | 0.1 |
-| responsible_high_esg | High-ESG responsible development | 1 | Dalradian Gold | 0.076 | 1763.2 | 988.3 | 610.7 |
-| enabling_environment | All enablers together | 2 | Dalradian Gold; [geological-potential] Baryte | 0.076 | 1765.7 | 1014.5 | 689.1 |
+| 0_current_constraints | Today's constraints (baseline) | 0 | — | 0.011 | 1147.9 | 788.4 | 0.0 |
+| permitting_reform | Faster, clearer permitting | 0 | — | 0.011 | 1147.9 | 788.4 | 0.0 |
+| finance_support | Finance: National Wealth Fund / UKEF co-investment | 1 | [geological-potential] Baryte | 0.011 | 1150.6 | 790.1 | 5.2 |
+| community_benefit | Community benefit + social licence | 1 | Dalradian Gold | 0.076 | 1763.4 | 996.5 | 635.1 |
+| skills_availability | Skills & expertise availability | 0 | — | 0.011 | 1147.8 | 788.4 | -0.2 |
+| energy_competitiveness | Competitive (green) energy cost | 0 | — | 0.011 | 1148.0 | 788.4 | 0.1 |
+| responsible_high_esg | High-ESG responsible development | 1 | Dalradian Gold | 0.076 | 1763.4 | 988.4 | 610.7 |
+| enabling_environment | All enablers together | 2 | Dalradian Gold; [geological-potential] Baryte | 0.076 | 1766.0 | 1014.6 | 689.2 |
 
 ## Key findings
 
