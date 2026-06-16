@@ -26,8 +26,16 @@ class CoupledModel:
                  demand_plateau_years=None, import_constraint=None):
         self.name = name
         self.policy = policy
-        # upstream supply shock: {mineral: max import as fraction of demand}
-        self.import_constraint = import_constraint or {}
+        # upstream supply shock: {mineral: max import as fraction of demand}.
+        # A strategic stockpile / procurement reserve (Vision 2035 defence
+        # resilience measure) raises the effective import availability during a
+        # shock, buffering part of the lost supply. PROXY: full stockpile lever
+        # offsets up to 0.30 of demand.
+        stockpile = (policy or {}).get("strategic_stockpile", 0.0)
+        self.import_constraint = {
+            m: min(1.0, cap + 0.30 * stockpile)
+            for m, cap in (import_constraint or {}).items()
+        }
         self.start_year = start_year
         self.horizon = horizon
         self.seed = seed

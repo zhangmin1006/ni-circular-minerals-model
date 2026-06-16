@@ -477,19 +477,22 @@ with tab_q23:
         sev_path = OUT / "q2_3_shock_severity.csv"
         if sev_path.exists():
             sweep = pd.read_csv(sev_path)
-            order = ["mild_cap80", "moderate_cap60", "severe_cap40", "extreme_cap20"]
+            order = ["mild_half_supplier", "moderate_supplier_lost",
+                     "severe_+25pct", "extreme_+50pct"]
             pkgs = ["no_support", "upstream", "midstream", "full"]
             gap_pivot = (sweep.pivot(index="severity", columns="support",
                                      values="supply_gap_end").reindex(order)[pkgs])
-            st.markdown("**Resilience across shock severity** (import cap 80%→20%; "
-                        "supply gap, lower = more resilient)")
+            st.markdown("**Resilience across shock severity** (½ → 1.5× of the dominant supplier "
+                        "lost — grounded in 2023 concentration; supply gap, lower = more resilient)")
             st.line_chart(gap_pivot)
             st.info(
-                "Support is worth more the deeper the shock — but there's a ceiling: even full "
-                "cross-chain support can't fully offset an extreme (80% import loss) shock, because "
-                "NI's domestic + recovery capacity can't replace that volume. The best *single* "
-                "lever shifts with severity (midstream for mild shocks, upstream for severe), and "
-                "the residual gap argues for strategic stockpiles + international diversification."
+                "Support is worth more the deeper the shock — but there's a ceiling: even the full "
+                "package (incl. a Vision-2035 strategic stockpile) can't fully offset losing the "
+                "whole dominant supplier of the most concentrated minerals (REE 74% China, Co 70% "
+                "DRC), because NI's domestic + recovery capacity can't replace that volume. The best "
+                "*single* lever shifts with severity (midstream for mild, upstream for severe), and "
+                "the residual argues for stockpiles + international diversification (Vision 2035's "
+                "second objective)."
             )
 
         if memo23:

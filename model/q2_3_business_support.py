@@ -39,28 +39,59 @@ os.makedirs(OUT, exist_ok=True)
 GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_EV,
                 "Cobalt": 0.06, "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
 
-# Upstream supply shock: cap critical-mineral imports at 60% of demand + price spike.
-SHOCK_IMPORT_CAP = {m: 0.60 for m in P.CRITICAL_MINERALS}
+# ---------------------------------------------------------------------------
+# SHOCK — grounded in the strategy documents. Vision 2035 warns supply chains are
+# "vulnerable to shocks such as natural disasters, war or geopolitical fallout",
+# driven by concentration. We model a DOMINANT-SUPPLIER LOSS: per-mineral import
+# caps = 1 - (single-country share) using the cited 2023 concentration
+# (China 74% REE, DRC 70% Co, Australia 44% Li, ...; BGS/Idoine 2025 via GSNI
+# OR25042), plus a price spike. The most concentrated minerals are hit hardest.
+CONCENTRATION = {   # dominant single-country share of supply, 2023
+    "REE_magnet": 0.74, "Cobalt": 0.70, "Antimony": 0.70, "Aluminium": 0.35,
+    "Lithium": 0.44, "Nickel": 0.40, "Copper": 0.30,
+}
+
+
+def shock_caps(loss_factor=1.0):
+    """Import cap per critical mineral if `loss_factor` x the dominant supplier is
+    cut off (1.0 = lose the dominant single country entirely)."""
+    return {m: max(0.0, 1.0 - min(1.0, loss_factor * CONCENTRATION.get(m, 0.3)))
+            for m in P.CRITICAL_MINERALS}
+
+
+SHOCK_IMPORT_CAP = shock_caps(1.0)          # central: lose the dominant supplier
 SHOCK_PRICE = {"Lithium": 0.12, "REE_magnet": 0.11, "Cobalt": 0.10,
                "Nickel": 0.07, "Copper": 0.06}
 
-# Stage-targeted government support packages (the "support needed" per stage).
+# ---------------------------------------------------------------------------
+# SUPPORT — each lever mapped to a NAMED instrument in the UK strategy documents.
+#   finance_support  -> National Wealth Fund + UK Export Finance (Vision 2035)
+#   energy_cost_index-> British Industrial Competitiveness Scheme (BICS)
+#   permit_years     -> Environment Agency priority-tracked service
+#   skills_support   -> Skills England + DWP
+#   innovation_grant -> Innovate UK CLIMATES + Faraday/ReLiB R&D
+#   secondary_market_support -> UKEF offtake + secondary-materials marketplace
+#   collection_infrastructure/product_passport -> WEEE/DRS + EPR
+#   local_supplier_support -> supplier development (fixes Minviro leakage)
+#   community_benefit -> ESG/community-benefit (social licence; Curraghinalt)
+#   strategic_stockpile -> Vision 2035 defence stockpiling / procurement reserve
 SUPPORT = {
-    "upstream": {   # primary / mining firms
+    "upstream": {   # primary / mining firms: finance, permits, social licence
         "finance_support": 0.8, "exploration_grant": 0.12, "permit_years": 2,
         "community_benefit": 0.4,
     },
-    "midstream": {  # processing / recovery + collection (the binding capacity gap)
+    "midstream": {  # processing/recovery + collection: the binding capacity gap
         "recycling_grant": 0.4, "innovation_grant": 0.6, "energy_cost_index": 0.90,
         "secondary_market_support": 0.6, "collection_infrastructure": 1.0,
         "product_passport": 0.6,
     },
-    "downstream": {  # manufacturers using the material
+    "downstream": {  # manufacturers: supply security + secondary-material access
         "recycled_content_procurement": 0.5, "secondary_market_support": 0.5,
         "local_supplier_support": 0.7, "design_standards": 0.6,
     },
-    "enabling": {   # cross-cutting skills + supplier development
+    "enabling": {   # cross-cutting: skills + supplier development + stockpile
         "skills_support": 0.8, "local_supplier_support": 0.5,
+        "strategic_stockpile": 0.6,
     },
 }
 
@@ -117,12 +148,11 @@ def run_scenario(name, cfg):
     }
 
 
-def run_with_shock(cap_fraction, policy):
+def run_with_shock(caps, policy):
     """Run one (shock severity x support) cell; return resilience metrics."""
     m = CoupledModel(
         name="sev", policy=policy, demand_growth=GREEN_DEMAND, price_path=SHOCK_PRICE,
-        import_constraint={mm: cap_fraction for mm in P.CRITICAL_MINERALS},
-        seed=42, use_ree_pilot=True, adaptive=True, use_cge=True)
+        import_constraint=caps, seed=42, use_ree_pilot=True, adaptive=True, use_cge=True)
     last = m.run().iloc[-1]
     return {
         "supply_gap_end": round(float(last["crit_supply_gap"]), 3),
@@ -133,9 +163,9 @@ def run_with_shock(cap_fraction, policy):
     }
 
 
-# Shock severity = max imports as a fraction of demand (lower = more severe).
-SEVERITIES = {"mild_cap80": 0.80, "moderate_cap60": 0.60,
-              "severe_cap40": 0.40, "extreme_cap20": 0.20}
+# Shock severity = how much of the dominant single supplier is lost (loss factor).
+SEVERITIES = {"mild_half_supplier": 0.5, "moderate_supplier_lost": 1.0,
+              "severe_+25pct": 1.25, "extreme_+50pct": 1.5}
 SWEEP_PACKAGES = {
     "no_support": {},
     "upstream": SUPPORT["upstream"],
@@ -144,12 +174,27 @@ SWEEP_PACKAGES = {
 }
 
 
+def per_mineral_gap(caps=None):
+    """Per-mineral end-year supply gap under the (no-support) dominant-supplier
+    shock — shows how the aggregate masks concentrated-mineral exposure."""
+    caps = caps or SHOCK_IMPORT_CAP
+    m = CoupledModel(name="permineral", policy={}, demand_growth=GREEN_DEMAND,
+                     price_path=SHOCK_PRICE, import_constraint=caps, seed=42,
+                     use_ree_pilot=True, adaptive=True, use_cge=True)
+    m.run()
+    last = m.mfa.history[-len(m.mfa.minerals):]
+    return {r["mineral"]: round(r["supply_gap_share"], 3) for r in last
+            if r["mineral"] in P.CRITICAL_MINERALS and r["supply_gap_share"] > 0.001}
+
+
 def shock_severity_sweep():
     rows = []
-    for sev, cap in SEVERITIES.items():
+    for sev, factor in SEVERITIES.items():
+        caps = shock_caps(factor)
         for pkg, pol in SWEEP_PACKAGES.items():
-            r = run_with_shock(cap, pol)
-            rows.append({"severity": sev, "import_cap": cap, "support": pkg, **r})
+            r = run_with_shock(caps, pol)
+            rows.append({"severity": sev, "supplier_loss_factor": factor,
+                         "support": pkg, **r})
     return pd.DataFrame(rows)
 
 
@@ -177,15 +222,15 @@ def stage_support_table():
          "support_needed": "Capital grants, BICS energy support, R&D, offtake guarantees, collection/DRS infrastructure",
          "model_levers": "recycling_grant, energy_cost_index, innovation_grant, secondary_market_support, collection_infrastructure"},
         {"stage": "Downstream (manufacturers)", "firms": n_down, "employees": e_down,
-         "binding_challenge": "Input-cost/price volatility, supply insecurity, secondary-material access",
+         "binding_challenge": "Input-cost/price volatility, supply insecurity, secondary-material access, data/traceability",
          "shock_exposure": "Threat (input-cost squeeze + supply gap)",
-         "support_needed": "Recycled-content procurement, secondary-materials marketplace, supplier development, ecodesign",
+         "support_needed": "Recycled-content procurement, secondary-materials marketplace, supplier development, ecodesign, product-passport data",
          "model_levers": "recycled_content_procurement, secondary_market_support, local_supplier_support, design_standards"},
-        {"stage": "Enabling (equipment + skills)", "firms": "—", "employees": "—",
-         "binding_challenge": "Skills pipeline, market access for equipment makers",
-         "shock_exposure": "Indirect — enables the other stages to respond",
-         "support_needed": "Green-skills academy, cluster + supplier-development, export support",
-         "model_levers": "skills_support, local_supplier_support"},
+        {"stage": "Enabling (equipment + skills + reserves)", "firms": "—", "employees": "—",
+         "binding_challenge": "Skills pipeline, equipment market access, export finance, residual supply risk",
+         "shock_exposure": "Cross-cutting — lets the chain respond and buffers the residual",
+         "support_needed": "Green-skills academy (Skills England/DWP), cluster + supplier development, UKEF export support, strategic stockpile/procurement reserve",
+         "model_levers": "skills_support, local_supplier_support, strategic_stockpile"},
     ]
     return pd.DataFrame(rows).set_index("stage")
 
@@ -203,6 +248,7 @@ def main():
     stages = stage_support_table()
     stages.to_csv(os.path.join(OUT, "q2_3_stage_support.csv"))
 
+    pmg = per_mineral_gap()
     sweep = shock_severity_sweep()
     sweep.to_csv(os.path.join(OUT, "q2_3_shock_severity.csv"), index=False)
     gap_pivot = sweep.pivot(index="severity", columns="support", values="supply_gap_end")
@@ -223,7 +269,11 @@ def main():
     print("=" * 115)
     print(gap_pivot.to_string())
 
-    _write_memo(sc, stages, sweep, gap_pivot)
+    print("\nPer-mineral supply gap under the dominant-supplier shock (no support):")
+    print("  " + ", ".join(f"{k} {v:.0%}" for k, v in
+                           sorted(pmg.items(), key=lambda x: -x[1])))
+
+    _write_memo(sc, stages, sweep, gap_pivot, pmg)
     print("\nWritten: q2_3_support_scenarios.csv, q2_3_stage_support.csv, "
           "q2_3_shock_severity.csv, q2_3_memo.md")
 
@@ -236,7 +286,7 @@ def _md_table(df, cols, index_name):
     return "\n".join(out)
 
 
-def _write_memo(sc, stages, sweep, gap_pivot):
+def _write_memo(sc, stages, sweep, gap_pivot, pmg):
     ref = sc.loc["0_no_shock_no_support"]
     shock = sc.loc["shock_no_support"]
     full = sc.loc["shock_full_support"]
@@ -247,11 +297,15 @@ def _write_memo(sc, stages, sweep, gap_pivot):
 
     lines = []
     lines.append("# Q2.3 — What support do businesses need to participate in the minerals supply chain?\n")
-    lines.append("**Method:** an upstream supply shock (critical-mineral imports capped at 60% of "
-                 "demand + price spike, reflecting China 74% REE / DRC 70% Co / Australia 44% Li "
-                 "concentration) is run with no support and with stage-targeted government support, "
-                 "over 30 years. Firms are mapped to supply-chain stages; outcomes are read by stage. "
-                 "Figures are model behaviour, not forecasts.\n")
+    lines.append("**Method (grounded in the strategy documents):** Vision 2035 warns supply chains "
+                 "are *vulnerable to shocks such as natural disasters, war or geopolitical fallout* "
+                 "driven by concentration. We model a **dominant-supplier loss** — per-mineral import "
+                 "caps = 1 − (single-country share) using the cited 2023 concentration (China 74% REE, "
+                 "DRC 70% Co, Australia 44% Li; BGS/Idoine 2025) — plus a price spike. Support levers "
+                 "map to **named UK instruments** (NWF/UKEF, BICS, EA priority permitting, Skills "
+                 "England, CLIMATES/Faraday R&D, UKEF offtake, defence stockpiling). Firms are mapped "
+                 "to supply-chain stages; outcomes are read by stage. Figures are model behaviour, "
+                 "not forecasts.\n")
 
     lines.append("## The shock hits stages differently\n")
     lines.append(f"- Without support the shock opens a **critical-mineral supply gap of "
@@ -261,7 +315,13 @@ def _write_memo(sc, stages, sweep, gap_pivot):
     lines.append(f"- The same shock is an **opportunity for upstream and midstream firms**: higher "
                  f"prices lift recovery and mining viability (recycled share "
                  f"{ref['crit_recycled_share_end']:.0%} → {shock['crit_recycled_share_end']:.0%}), "
-                 f"but only if they have the finance/capacity to respond.\n")
+                 f"but only if they have the finance/capacity to respond.")
+    pmg_str = ", ".join(f"{k} {v:.0%}" for k, v in sorted(pmg.items(), key=lambda x: -x[1]))
+    lines.append(f"- **The aggregate gap masks acute, mineral-specific exposure.** Per mineral the "
+                 f"unmet-demand gap is: {pmg_str}. The most single-source-concentrated minerals "
+                 f"(REE, antimony, cobalt) lose almost their entire supply, while bulk metals "
+                 f"(copper, aluminium) are barely affected — so support should be *targeted by "
+                 f"mineral and by the firms that depend on it*, not spread evenly.\n")
 
     lines.append("## Support needed, by supply-chain stage\n")
     lines.append(_md_table(stages, ["firms", "employees", "binding_challenge",
@@ -286,19 +346,31 @@ def _write_memo(sc, stages, sweep, gap_pivot):
                  f"Recycled-content procurement and supplier development only pay off **once midstream "
                  f"capacity is built**, so downstream support must be sequenced with (or after) "
                  f"midstream investment.")
+    enab = sc.loc["shock_enabling_support"]
+    mids = sc.loc["shock_midstream_support"]
+    lines.append(f"- **Stockpile vs capability — two kinds of support do different jobs.** The "
+                 f"enabling package (which carries the Vision-2035 *strategic stockpile*) cuts the "
+                 f"aggregate gap cheaply to {enab['crit_supply_gap_end']:.0%} but builds no industry "
+                 f"(GVA £{enab['cum_disc_gva_gbp_m']}m, recycled share flat). Midstream support builds "
+                 f"lasting capability (GVA £{mids['cum_disc_gva_gbp_m']}m, recycled share to "
+                 f"{mids['crit_recycled_share_end']:.0%}) but takes time. **A stockpile is fast, cheap "
+                 f"insurance; midstream/upstream investment is the durable fix — the Department needs "
+                 f"both.**")
     lines.append(f"- **Full cross-chain support** cuts the supply gap to "
                  f"{full['crit_supply_gap_end']:.0%} and lifts total jobs to {full['total_jobs_end']:.0f} "
                  f"(+{full['d_total_jobs']:.0f} vs unsupported shock), £{full['cum_disc_gva_gbp_m']}m "
                  f"discounted GVA.\n")
 
-    lines.append("## Resilience across shock severity (import cap 80% → 20%)\n")
-    lines.append("Critical-mineral **supply gap** (unmet demand) by shock severity and support "
-                 "package — lower is more resilient:")
+    lines.append("## Resilience across shock severity (½ → 1.5× of the dominant supplier lost)\n")
+    lines.append("Critical-mineral **supply gap** (unmet demand) by shock severity (how much of the "
+                 "dominant single supplier is cut off) and support package — lower is more resilient. "
+                 "The `full` package includes the Vision-2035 strategic-stockpile/procurement reserve:")
     lines.append("")
     lines.append(_md_table(gap_pivot.round(3), list(gap_pivot.columns), "severity"))
     g = gap_pivot
-    mild_none, ext_none = g.loc["mild_cap80", "no_support"], g.loc["extreme_cap20", "no_support"]
-    ext_mid, ext_full = g.loc["extreme_cap20", "midstream"], g.loc["extreme_cap20", "full"]
+    mild_none = g.loc["mild_half_supplier", "no_support"]
+    ext_none = g.loc["extreme_+50pct", "no_support"]
+    ext_mid, ext_full = g.loc["extreme_+50pct", "midstream"], g.loc["extreme_+50pct", "full"]
     lines.append(f"\n- **The gap scales with severity:** unsupported, it rises from "
                  f"{mild_none:.0%} (mild) to {ext_none:.0%} (extreme).")
     lines.append(f"- **Support is more valuable the more severe the shock** — but no single stage "
@@ -324,7 +396,20 @@ def _write_memo(sc, stages, sweep, gap_pivot):
     lines.append("4. **Cross-cutting:** a green-skills academy and a minerals/circular cluster "
                  "(anchored on CDE/Terex equipment makers and QUB) so every stage can deliver.\n")
 
-    lines.append("*Behavioural thresholds and the shock magnitude are PROXY; calibrate with "
+    lines.append("## Sources\n")
+    for s in (
+        "UK Critical Minerals Strategy — Vision 2035 (DBT, Jan 2026): NWF/UKEF, BICS, EA "
+        "priority permitting, Skills England/DWP, defence stockpiling, offtake, partnerships",
+        "Model proposal Q2.3 taxonomy: finance, skills, data, permits, offtake, export, "
+        "recycling infrastructure, supplier-development support",
+        "GSNI/BGS — Critical Minerals and the Circular Economy in NI (OR25042, 2025): ~80% UK "
+        "metals exported for processing; supply concentration; ~20-yr lead times; declining grades",
+        "BGS/Idoine et al. (2025): 2023 single-country supply concentration (REE 74%, Co 70%, Li 44%)",
+        "Minviro Final Report: local-procurement leakage and skills constraints",
+        "Innovate UK CLIMATES (£15m) + Faraday/ReLiB (£34m); DEFRA DRS impact assessment",
+    ):
+        lines.append(f"- {s}")
+    lines.append("\n*Behavioural thresholds and the shock magnitude are PROXY; calibrate with "
                  "firm-level survey, trade-exposure and licensing data.*")
 
     with open(os.path.join(OUT, "q2_3_memo.md"), "w", encoding="utf-8") as f:
