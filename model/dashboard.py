@@ -104,7 +104,7 @@ with tab3:
 
 with tab4:
     st.subheader("Scenario comparison (decision dashboard)")
-    st.dataframe(comp, use_container_width=True)
+    st.dataframe(comp, width="stretch")
     if sp is not None:
         st.subheader(f"End-year jobs by council area — {focus}")
         gsp = sp[sp["scenario"] == focus].sort_values("end_jobs", ascending=False)

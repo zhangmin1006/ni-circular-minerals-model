@@ -7,6 +7,9 @@ Minerals Policy Model, its data sources and provenance, and the assumptions and
 limitations behind every component. It is written to be read alongside the code
 in `model/src/` and the data in `model/data/`.
 
+> For a 2–3 page non-technical, decision-maker overview of the findings, see
+> [`EXECUTIVE_SUMMARY.md`](EXECUTIVE_SUMMARY.md).
+
 > **Headline caveat.** This is a *policy-scenario simulator*, not a forecasting
 > tool. Real, sourced anchors are used for validation and control totals; almost
 > all economic-structure coefficients and behavioural parameters are **proxy**

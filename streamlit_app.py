@@ -483,7 +483,7 @@ with tab_q23:
             "$110/kg NdPr). Sequence: stockpile bridges while midstream + upstream capacity is built."
         )
         sc_cols = {
-            "label": "Scenario", "supply_gap_early7": "Gap (yrs 1–7)",
+            "label": "Scenario", "supply_gap_early5": "Gap (yrs 1–5)",
             "crit_supply_gap_end": "Gap (yr 30)",
             "crit_recycled_share_end": "Recycled", "crit_domestic_share_end": "Domestic",
             "total_jobs_end": "Total jobs", "cum_disc_gva_gbp_m": "Cum. GVA £m",

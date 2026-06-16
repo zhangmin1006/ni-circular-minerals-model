@@ -1,0 +1,147 @@
+# Northern Ireland Circular Minerals — Executive Summary
+
+**For:** Department for the Economy minerals & circular-economy consultation
+**What this is:** a decision-maker summary of findings from an integrated model of
+the NI minerals system (extraction → use → recycling). Figures illustrate model
+behaviour and policy direction under stated assumptions — they are **not
+forecasts**. The model is validated against the Minviro scenario evidence and the
+real NI baseline (mining GVA £108m, ~1,950 workers).
+
+---
+
+## The bottom line
+
+Northern Ireland's strongest minerals opportunity is **circular** — recovering
+critical minerals from end-of-life products and processing them — not primary
+mining. NI is **demand-rich but capacity-poor**: it has world-class research (QUB),
+a real rare-earth recycling firm (Ionic Technologies, Belfast), strong downstream
+manufacturers (Wrightbus, Seagate, Spirit) and a named place in the UK strategy,
+but only **one** critical-mineral processing asset and almost no domestic critical
+geology.
+
+The single most important action is to **build midstream processing and recovery
+capacity**, paired with fixing **feedstock collection**. Get those right and the
+demand surge from the energy transition becomes NI jobs and GVA; get them wrong and
+rising demand simply increases import dependence.
+
+---
+
+## What the Department asked, and what the model finds
+
+### 2.1 — How to support innovation for circularity (the best policy mix)
+
+- **Collection is the binding constraint, not processing capacity.** A smart
+  collection / deposit-return scheme is the **only single lever that reaches the
+  Vision-2035 20% recycling target** (and adds ~250 recycling jobs and ~£245m
+  discounted GVA). Subsidising recovery *plant* alone does almost nothing — NI's gap
+  is feedstock, not machines.
+- **Design standards are the best value for money.** Ecodesign / recycled-content
+  rules and product passports deliver the highest return (~£2.2 of GVA per £ of
+  public cost, robust across cost uncertainty) at low cost because they are mostly
+  regulatory.
+- **The mix beats any single lever.** A combined package lifts circular-economy jobs
+  by ~30% and crosses the recycling target.
+
+> **Do now (cheap, high return):** recycled-content procurement + design-for-
+> disassembly standards + product passports. **Then:** a Circular Innovation Fund
+> (R&D) and collection/DRS infrastructure to unblock feedstock.
+
+### 2.2 — Opportunities and challenges for sustainable development
+
+- **Opportunities** are led by the *circular* pathway — rare-earth magnets, lithium
+  and copper recovery — because NI has named capability (Ionic) and high import
+  dependence to displace. NI is also the most prospective part of the UK/Ireland for
+  precious metals (the Curraghinalt deposit holds 3.79 Moz of gold plus copper,
+  antimony, tellurium and cobalt).
+- **The binding challenge is social licence, not economics.** NI's best deposit
+  clears the commercial hurdle but is blocked by community opposition. In the model
+  a credible **community-benefit package** is the *only* lever that brings it
+  forward — and it delivers roughly **ten times** the value of finance, permitting
+  or skills support on their own (+£208m discounted GVA, +~600 jobs). Crucially it
+  can be done sustainably: pairing extraction with high-ESG conditions yields
+  similar value at lower impact.
+- **Critical-mineral security is mainly a recycling story.** NI has little domestic
+  critical-mineral geology, so the realistic prize is midstream + recycling, not new
+  primary mines.
+
+### 2.3 — What support businesses need to participate
+
+- **A supply shock hits the chain unevenly.** Losing a dominant overseas supplier
+  (the most concentrated minerals are 70–74% single-country) opens a critical-
+  mineral **supply gap that lands on downstream manufacturers** as cost and
+  insecurity — while it is an *opportunity* for recyclers and miners, if they have
+  the capacity to respond.
+- **The participation barrier is the "valley of death"** — moving from pilot to
+  commercial scale (exactly Ionic's position). The evidence-based unlocks are
+  **first-of-a-kind capital with cost-share + blended public–private finance**, and
+  **long-term offtake with a price floor** (as in the US DoD–MP Materials deal) to
+  give lenders the demand certainty that price volatility otherwise denies.
+- **Support must be sequenced and stage-specific:**
+  - *Upstream firms* need capital and confidence — NWF/UKEF co-investment, faster
+    permitting, community benefit.
+  - *Midstream processors/recyclers* (the binding gap) need scale-up capital,
+    energy-cost relief, R&D and offtake guarantees.
+  - *Downstream manufacturers* need recycled-content procurement and supplier
+    development — but **only after** midstream capacity exists (they cannot buy
+    secondary material that isn't yet produced).
+- **A stockpile is a bridge, not a fix.** Sized to real practice (~180 days, as
+  Japan and Korea hold), a strategic reserve buffers the first ~1–2 years of a shock
+  and then depletes — useful to *bridge* while capacity is built, never a substitute
+  for it.
+
+> **One-stop "strategic project" front door.** NI is uniquely placed: under the
+> Windsor Framework an NI project could access EU CRMA strategic-project status
+> (fast permitting, finance facilitation, offtake matchmaking) *and* the UK
+> NWF/UKEF/BICS offer — a genuine dual UK + EU market advantage.
+
+### Demand outlook (Vision 2035, EU CRMA, UK Industrial Strategy)
+
+UK demand for these minerals rises steeply to 2035 (copper roughly doubles, lithium
+many-fold). Under a supportive, sustainable policy stance the NI opportunity grows
+to ~2,000+ circular-economy jobs and ~£1.3bn discounted GVA. **But** rising demand
+*erodes* supply-security ratios unless capacity scales with it — reinforcing that
+the opportunity is only captured if the midstream gap is closed.
+
+---
+
+## Five recommendations
+
+1. **Build the midstream.** Fund first-of-a-kind / scale-up processing and recovery
+   capacity (cost-share + blended finance + offtake/price floor). This is the binding
+   gap and the highest-leverage action.
+2. **Fix feedstock collection.** A smart collection / deposit-return / WEEE scheme is
+   the only route to the 20% recycling target.
+3. **Lead with cheap demand-side rules.** Recycled-content procurement, ecodesign
+   standards and product passports — high return, low cost — sequenced ahead of, then
+   alongside, capacity.
+4. **Use community benefit to unlock contested deposits responsibly.** Pair any
+   primary development with high-ESG conditions and a genuine community-benefit
+   scheme; it is the binding constraint and the sustainable way through.
+5. **Create one front door and a thin safety net.** A single "strategic project"
+   designation (mirroring/accessing EU CRMA via Windsor) plus a modest ~180-day
+   strategic reserve and international diversification for the residual risk.
+
+---
+
+## Northern Ireland's distinctive advantages
+
+- A **real rare-earth recycling cluster**: Ionic Technologies (400 tpa target),
+  QUB's QUILL laboratory, and turbine-recycling firms.
+- **Belfast Harbour** as an offshore-wind decommissioning hub — a feedstock pipeline
+  for magnet recycling.
+- **Dual UK + EU market access** via the Windsor Framework — unique in the UK.
+- A **£1.16bn named-firm investment pipeline** already across the supply chain.
+
+---
+
+## How to read these numbers
+
+This is a policy simulator, not a forecast. The economic structure, behavioural
+parameters and many physical-flow figures are **proxy** values (flagged in the data
+register) pending NISRA input-output/SAM data, NI critical-mineral waste-flow data,
+and a firm-level survey. The model is **validated** against the Minviro anchors and
+passes a 38-check verification harness on every change. Swapping the proxies for
+collected data — same model — turns this into a calibrated decision tool.
+
+*Full method, equations, data sources and assumptions:
+[`TECHNICAL_DOCUMENTATION.md`](TECHNICAL_DOCUMENTATION.md).*
