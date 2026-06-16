@@ -1,0 +1,11 @@
+mineral,critical,opportunity_score,pathway,key_challenge,demand_growth_pa,domestic_geology,recovery_yield,import_dependence,single_country_conc,named_miners,price_gbp_t
+REE_magnet,True,0.642,Recycling,Feedstock collection (low end-of-life capture),0.08,0.0,0.85,0.958,0.85,—,90000.0
+Copper,True,0.598,Primary + recycling,Social licence / permitting (contested deposit),0.04,0.883,0.9,0.575,0.3,Dalradian Gold,8000.0
+Lithium,True,0.566,Recycling,Feedstock collection (low end-of-life capture),0.12,0.0,0.5,0.96,0.55,—,18000.0
+Cobalt,True,0.475,Recycling,Feedstock collection (low end-of-life capture),0.06,0.0,0.55,0.945,0.65,—,28000.0
+Aluminium,True,0.447,Recycling,Feedstock collection (low end-of-life capture),0.03,0.41,0.75,0.685,0.35,—,2200.0
+Nickel,True,0.401,Recycling,Feedstock collection (low end-of-life capture),0.05,0.0,0.6,0.77,0.4,—,16000.0
+Antimony,True,0.4,Primary,Social licence / permitting (contested deposit),0.0,0.699,0.4,0.992,0.7,Dalradian Gold; Conroy Gold and Natural Resources,11000.0
+Baryte,False,0.24,Primary,Finance & scale-up of primary project,0.0,0.593,0.1,0.7,0.45,—,250.0
+Zinc,False,0.197,Import-dependent,No domestic source — import-dependent,0.0,0.0,0.7,0.735,0.4,—,2500.0
+Salt,False,0.163,Primary,Finance & scale-up of primary project,0.0,0.624,0.0,0.05,0.2,Irish Salt Mining and Exploration,60.0

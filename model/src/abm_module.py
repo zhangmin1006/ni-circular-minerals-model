@@ -116,19 +116,32 @@ class MiningFirm(Firm):
         else:
             price_signal = observed
 
+        # Q2.2 constraint levers: finance support cuts the effective cost of
+        # capital (National Wealth Fund / UKEF co-investment & guarantees);
+        # community benefit raises social licence; skills availability eases the
+        # hurdle and shortens permitting (labour/expertise to deliver).
+        finance = pol.get("finance_support", 0.0)
+        community = pol.get("community_benefit", 0.0)
+        skills = pol.get("skills_support", 0.0)
+        eff_wacc = P.MINING_COST_OF_EQUITY * (1.0 - 0.5 * finance)
+
         margin = (self.deposit_quality * price_signal
                   + pol.get("exploration_grant", 0.0)
+                  + 0.05 * skills
                   - pol.get("esg_cost", 0.10)
                   - 0.12 * self.project_risk
-                  - P.MINING_COST_OF_EQUITY)
+                  - eff_wacc)
         social_licence = (self.model.social_licence
                           - pol.get("esg_cost", 0.0) * 0.5
-                          - 0.25 * self.project_risk)
+                          - 0.25 * self.project_risk
+                          + 0.30 * community)
 
         if margin > self.model.dev_hurdle and social_licence > SOCIAL_LICENCE_FLOOR:
             self.years_in_permitting += 1
-            # contested projects take longer to permit (risk-extended delay)
-            permit_years = max(1, pol.get("permit_years", 3)) + int(round(3 * self.project_risk))
+            # contested projects take longer to permit; skills availability and
+            # permitting reform shorten the (risk-extended) delay.
+            permit_years = (max(1, pol.get("permit_years", 3))
+                            + int(round(3 * self.project_risk * (1.0 - 0.5 * skills))))
             if self.years_in_permitting >= permit_years:
                 self.developed = True
                 self.newly_opened = True

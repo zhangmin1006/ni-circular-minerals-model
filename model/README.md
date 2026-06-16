@@ -63,6 +63,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `src/indicators.py` | Minviro validation + Q2.1–2.7 mapping |
 | `run_mvm.py` | scenario runner / entry point |
 | `q2_1_circularity_interventions.py` | **Q2.1 policy experiment** — tests seven circular-innovation interventions (materials recovery, secondary markets, recycling/collection, circular design, skills) individually + as a package; writes `outputs/q2_1_interventions.csv` and a findings memo `outputs/q2_1_memo.md` |
+| `q2_2_opportunities_challenges.py` | **Q2.2 experiment** — mineral-by-mineral opportunity ranking + constraint-relaxation scenarios (permitting, finance, community/social-licence, skills, energy) that identify the binding barrier; writes `outputs/q2_2_opportunity_ranking.csv`, `q2_2_constraint_scenarios.csv`, `q2_2_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `dashboard.py` | Streamlit interactive dashboard |
 
@@ -82,9 +83,11 @@ benchmark to ~1e-11.
   innovation fund vs collection/DRS vs secondary-market offtake vs design standards vs skills)
   by recycled-share lift, recycling GVA/jobs, circular-design uptake and GVA-ROI. New ABM levers:
   `innovation_grant`, `skills_support`, `secondary_market_support`.
-- **2.2 opportunities/challenges** — mines opened vs binding constraints: extraction-
-  supportive scenarios bring forward bulk/industrial prospects, while contested critical-
-  mineral deposits (e.g. Dalradian) stay blocked by weak social licence even under grants
+- **2.2 opportunities/challenges** — `q2_2_opportunities_challenges.py` ranks minerals by
+  opportunity and runs constraint-relaxation scenarios. Finding: contested critical-mineral
+  deposits (Dalradian) are blocked by **social licence, not economics** — a community-benefit
+  package is the binding unlock; bulk minerals advance under finance/permitting; critical-mineral
+  security is mainly a recycling/feedstock story (little domestic REE/Li/Co/Ni geology)
 - **2.3 business support** — recycling capacity build-out; **named-firm installed recycler capacity (tpa)**; firm states needing finance/skills
 - **2.4 secure supply** — critical-mineral domestic / recycled / import shares & single-country
   exposure vs Vision 2035 targets (10% domestic, 20% recycling, ≤60% single-country)

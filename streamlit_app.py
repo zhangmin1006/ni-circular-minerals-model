@@ -76,6 +76,26 @@ def generate_interventions():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_q22():
+    opp_path = OUT / "q2_2_opportunity_ranking.csv"
+    sc_path = OUT / "q2_2_constraint_scenarios.csv"
+    if not (opp_path.exists() and sc_path.exists()):
+        return None, None, None
+    opp = pd.read_csv(opp_path, index_col=0)
+    sc = pd.read_csv(sc_path, index_col=0)
+    memo_path = OUT / "q2_2_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return opp, sc, memo
+
+
+def generate_q22():
+    return subprocess.run(
+        [sys.executable, "q2_2_opportunities_challenges.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -193,9 +213,10 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_supply, tab_companies, tab_region, tab_data) = st.tabs(
-    ["Overview", "Q2.1 Interventions", "Supply Security", "Companies",
-     "Regional Jobs", "Data Quality"]
+(tab_overview, tab_q21, tab_q22, tab_supply, tab_companies, tab_region,
+ tab_data) = st.tabs(
+    ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Supply Security",
+     "Companies", "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -287,6 +308,65 @@ with tab_q21:
         if memo:
             with st.expander("Full findings memo (UK-anchored costs & calibration sources)"):
                 st.markdown(memo)
+
+
+with tab_q22:
+    st.subheader("Q2.2 — Opportunities & challenges for sustainable minerals development")
+    st.caption(
+        "A mineral-by-mineral opportunity ranking (demand, geology, circular potential, "
+        "strategic value) and constraint-relaxation scenarios that reveal the binding "
+        "barrier — relaxing one constraint at a time to see what unlocks development."
+    )
+    opp, sc, memo22 = load_q22()
+    if opp is None:
+        st.warning("Q2.2 results are not present in this deployment.")
+        if st.button("Run the Q2.2 experiment now"):
+            with st.spinner("Ranking opportunities and testing constraints..."):
+                res = generate_q22()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        st.markdown("**Opportunity ranking (higher = stronger opportunity)**")
+        st.bar_chart(opp["opportunity_score"])
+        opp_cols = {
+            "critical": "Critical", "opportunity_score": "Score", "pathway": "Pathway",
+            "key_challenge": "Key challenge", "domestic_geology": "Geology",
+            "import_dependence": "Import dep.", "named_miners": "Named miners",
+        }
+        st.dataframe(opp[list(opp_cols)].rename(columns=opp_cols), width="stretch")
+
+        st.markdown("**Constraint relaxation — what unlocks development?** "
+                    "(extra discounted GVA vs today's constraints)")
+        single = sc.drop(index="0_current_constraints", errors="ignore")
+        chart = single["d_cum_gva_gbp_m"]
+        chart.index = single["label"]
+        st.bar_chart(chart)
+
+        binding = single.drop(
+            index=["responsible_high_esg", "enabling_environment"], errors="ignore"
+        ).sort_values(["d_mines", "d_cum_gva_gbp_m"], ascending=False)
+        if len(binding):
+            b = binding.index[0]
+            st.success(
+                f"**Binding constraint: {sc.loc[b, 'label']}** — unlocks "
+                f"{sc.loc[b, 'projects_unlocked']} (+{int(sc.loc[b, 'd_mines'])} project(s), "
+                f"+£{sc.loc[b, 'd_cum_gva_gbp_m']}m discounted GVA, "
+                f"+{sc.loc[b, 'd_cum_co2_kt']} ktCO₂ trade-off)."
+            )
+        sc_cols = {
+            "label": "Scenario", "mines_opened": "Mines", "projects_unlocked": "Projects",
+            "crit_domestic_share_end": "Crit. domestic share", "end_jobs": "End jobs",
+            "cum_disc_gva_gbp_m": "Cum. GVA £m", "d_cum_co2_kt": "ΔCO₂ kt",
+        }
+        st.dataframe(sc[list(sc_cols)].rename(columns=sc_cols), width="stretch")
+
+        if memo22:
+            with st.expander("Full Q2.2 findings memo"):
+                st.markdown(memo22)
 
 
 with tab_supply:
