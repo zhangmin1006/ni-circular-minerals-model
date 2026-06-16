@@ -442,8 +442,29 @@ with tab_demand:
         }
         st.dataframe(gap[list(gap_cols)].rename(columns=gap_cols), width="stretch")
 
+        st.markdown("**NI evidence base** (strategy documents + GSNI/BGS briefing)")
+        e1, e2, e3, e4 = st.columns(4)
+        e1.metric("REE supply: single-country", "74%", "China, 2023", delta_color="off")
+        e2.metric("UK metals exported to process", "~80%", "midstream gap", delta_color="off")
+        e3.metric("NI recycling rate", "50.4%", "flat since 2019", delta_color="off")
+        e4.metric("Curraghinalt gold (M&I)", "3.79 Moz", "+Cu/Sb/Te/Co", delta_color="off")
+        evid = register[register["parameter"].str.startswith(
+            ("uk_demand", "iea_", "supply_concentration", "uk_metals", "ni_recycling",
+             "ni_windsor", "curraghinalt", "belfast_harbour"), na=False)]
+        if not evid.empty:
+            st.caption("Cited evidence rows (from data_register.csv):")
+            st.dataframe(evid[["parameter", "value", "unit", "source", "notes"]],
+                         width="stretch", hide_index=True)
+        st.caption(
+            "Opportunity drivers: NI is the UK/Ireland's most prospective area for precious "
+            "metals (Curraghinalt + Mourne REE potential); a REE-recycling cluster (Ionic, "
+            "QUILL, + Plaswire on turbine blades); Belfast Harbour offshore-wind decommissioning "
+            "feedstock; and possible **dual UK + EU market access** via Windsor Framework Art. 13(4). "
+            "Challenges: the ~80% processing-export gap, supply concentration to displace, stalled "
+            "recycling (energy-from-waste competing), and ~20-yr contested primary lead times."
+        )
         if memo_ds:
-            with st.expander("Full demand & supply findings memo (3-strategy analysis)"):
+            with st.expander("Full demand & supply findings memo (3-strategy analysis + sources)"):
                 st.markdown(memo_ds)
 
 

@@ -1,9 +1,9 @@
 scenario,label,mines_opened,projects_unlocked,domestic_minerals,crit_domestic_share_end,crit_recycled_share_end,single_country_exposure_end,end_jobs,cum_disc_gva_gbp_m,cum_disc_co2_kt,d_mines,d_cum_gva_gbp_m,d_cum_co2_kt
-0_current_constraints,Today's constraints (baseline),0,—,Salt,0.011,0.147,0.849,1147.9,788.4,1591.9,0,0.0,0.0
-permitting_reform,"Faster, clearer permitting",0,—,Salt,0.011,0.147,0.849,1147.9,788.4,1591.9,0,0.0,0.0
-finance_support,Finance: National Wealth Fund / UKEF co-investment,1,[geological-potential] Baryte,Baryte; Salt,0.011,0.147,0.849,1150.6,790.1,1597.1,1,1.7,5.2
-community_benefit,Community benefit + social licence,1,Dalradian Gold,Antimony; Copper; Salt,0.076,0.147,0.849,1763.4,996.5,2227.0,1,208.1,635.1
-skills_availability,Skills & expertise availability,0,—,Salt,0.011,0.147,0.849,1147.8,788.4,1591.7,0,0.0,-0.2
-energy_competitiveness,Competitive (green) energy cost,0,—,Salt,0.011,0.147,0.849,1148.0,788.4,1592.0,0,0.0,0.1
-responsible_high_esg,High-ESG responsible development,1,Dalradian Gold,Antimony; Copper; Salt,0.076,0.147,0.849,1763.4,988.4,2202.6,1,200.0,610.7
-enabling_environment,All enablers together,2,Dalradian Gold; [geological-potential] Baryte,Antimony; Baryte; Copper; Salt,0.076,0.147,0.849,1766.0,1014.6,2281.1,2,226.2,689.2
+0_current_constraints,Today's constraints (baseline),0,—,Salt,0.011,0.147,0.85,1147.7,788.3,1591.8,0,0.0,0.0
+permitting_reform,"Faster, clearer permitting",0,—,Salt,0.011,0.147,0.85,1147.7,788.3,1591.8,0,0.0,0.0
+finance_support,Finance: National Wealth Fund / UKEF co-investment,1,[geological-potential] Baryte,Baryte; Salt,0.011,0.147,0.85,1150.4,790.0,1597.0,1,1.7,5.2
+community_benefit,Community benefit + social licence,1,Dalradian Gold,Antimony; Copper; Salt,0.076,0.147,0.85,1763.2,996.4,2227.0,1,208.1,635.2
+skills_availability,Skills & expertise availability,0,—,Salt,0.011,0.147,0.85,1147.5,788.3,1591.6,0,0.0,-0.2
+energy_competitiveness,Competitive (green) energy cost,0,—,Salt,0.011,0.147,0.85,1147.8,788.3,1591.9,0,0.0,0.1
+responsible_high_esg,High-ESG responsible development,1,Dalradian Gold,Antimony; Copper; Salt,0.076,0.147,0.85,1763.2,988.3,2202.5,1,200.0,610.7
+enabling_environment,All enablers together,2,Dalradian Gold; [geological-potential] Baryte,Antimony; Baryte; Copper; Salt,0.076,0.147,0.85,1765.7,1014.5,2280.9,2,226.2,689.1

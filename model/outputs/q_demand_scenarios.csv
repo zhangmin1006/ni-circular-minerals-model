@@ -1,7 +1,7 @@
 scenario,label,mines_opened,projects_unlocked,crit_domestic_share_end,crit_recycled_share_end,crit_import_share_end,single_country_exposure_end,recycling_value_gbp_m_end,end_jobs,cum_disc_gva_gbp_m,cum_disc_co2_kt,meets_domestic_10pct,meets_recycling_20pct,meets_single_country_60pct,d_domestic_pp,d_recycled_pp,d_import_pp
-0_current,Current demand + current policy (reference),0,—,0.01,0.319,0.67,0.822,57.8,1008.6,770.7,1547.1,False,True,False,-6.7,-13.4,20.0
-sustainable_baseline_demand,Current demand + sustainable enabling policy,1,Dalradian Gold,0.077,0.453,0.47,0.778,82.4,1605.5,1172.3,2437.2,False,True,False,0.0,0.0,0.0
-uk_vision_2035,"UK Vision 2035 demand (Cu x2, Li +1100%)",1,Dalradian Gold,0.083,0.399,0.518,0.778,100.2,1965.6,1282.1,2714.3,False,True,False,0.6,-5.4,4.8
-eu_crma,EU CRMA pull + scarcity price premium,1,Dalradian Gold,0.083,0.388,0.529,0.778,105.2,2061.6,1311.1,2785.2,False,True,False,0.6,-6.5,5.9
-uk_industrial_strategy,UK Industrial Strategy (clean energy/defence/AM),1,Dalradian Gold,0.085,0.399,0.515,0.778,101.8,2025.0,1294.4,2762.4,False,True,False,0.8,-5.4,4.5
-combined_high_demand,Combined high demand (all three aligned),1,Dalradian Gold,0.082,0.388,0.53,0.778,106.7,2088.6,1316.6,2800.0,False,True,False,0.5,-6.5,6.0
+0_current,Current demand + current policy (reference),0,—,0.01,0.319,0.67,0.823,57.8,1008.5,770.6,1547.0,False,True,False,-6.7,-13.4,20.0
+sustainable_baseline_demand,Current demand + sustainable enabling policy,1,Dalradian Gold,0.077,0.453,0.47,0.779,82.3,1605.2,1172.2,2436.9,False,True,False,0.0,0.0,0.0
+uk_vision_2035,"UK Vision 2035 demand (Cu x2, Li +1100%)",1,Dalradian Gold,0.055,0.439,0.505,0.779,103.0,1890.5,1229.1,2545.1,False,True,False,-2.2,-1.4,3.5
+eu_crma,EU CRMA pull + scarcity price premium,1,Dalradian Gold,0.054,0.434,0.512,0.779,108.5,1974.4,1249.0,2588.1,False,True,False,-2.3,-1.9,4.2
+uk_industrial_strategy,UK Industrial Strategy (clean energy/defence/AM),1,Dalradian Gold,0.057,0.435,0.507,0.779,104.5,1926.7,1239.8,2575.4,False,True,False,-2.0,-1.8,3.7
+combined_high_demand,Combined high demand (all three aligned),1,Dalradian Gold,0.054,0.433,0.513,0.779,109.0,1986.5,1252.6,2598.3,False,True,False,-2.3,-2.0,4.3

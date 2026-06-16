@@ -38,14 +38,14 @@ Ranked single-constraint unlocks:
 
 | scenario | label | mines_opened | projects_unlocked | crit_domestic_share_end | end_jobs | cum_disc_gva_gbp_m | d_cum_co2_kt |
 |---|---|---|---|---|---|---|---|
-| 0_current_constraints | Today's constraints (baseline) | 0 | — | 0.011 | 1147.9 | 788.4 | 0.0 |
-| permitting_reform | Faster, clearer permitting | 0 | — | 0.011 | 1147.9 | 788.4 | 0.0 |
-| finance_support | Finance: National Wealth Fund / UKEF co-investment | 1 | [geological-potential] Baryte | 0.011 | 1150.6 | 790.1 | 5.2 |
-| community_benefit | Community benefit + social licence | 1 | Dalradian Gold | 0.076 | 1763.4 | 996.5 | 635.1 |
-| skills_availability | Skills & expertise availability | 0 | — | 0.011 | 1147.8 | 788.4 | -0.2 |
-| energy_competitiveness | Competitive (green) energy cost | 0 | — | 0.011 | 1148.0 | 788.4 | 0.1 |
-| responsible_high_esg | High-ESG responsible development | 1 | Dalradian Gold | 0.076 | 1763.4 | 988.4 | 610.7 |
-| enabling_environment | All enablers together | 2 | Dalradian Gold; [geological-potential] Baryte | 0.076 | 1766.0 | 1014.6 | 689.2 |
+| 0_current_constraints | Today's constraints (baseline) | 0 | — | 0.011 | 1147.7 | 788.3 | 0.0 |
+| permitting_reform | Faster, clearer permitting | 0 | — | 0.011 | 1147.7 | 788.3 | 0.0 |
+| finance_support | Finance: National Wealth Fund / UKEF co-investment | 1 | [geological-potential] Baryte | 0.011 | 1150.4 | 790.0 | 5.2 |
+| community_benefit | Community benefit + social licence | 1 | Dalradian Gold | 0.076 | 1763.2 | 996.4 | 635.2 |
+| skills_availability | Skills & expertise availability | 0 | — | 0.011 | 1147.5 | 788.3 | -0.2 |
+| energy_competitiveness | Competitive (green) energy cost | 0 | — | 0.011 | 1147.8 | 788.3 | 0.1 |
+| responsible_high_esg | High-ESG responsible development | 1 | Dalradian Gold | 0.076 | 1763.2 | 988.3 | 610.7 |
+| enabling_environment | All enablers together | 2 | Dalradian Gold; [geological-potential] Baryte | 0.076 | 1765.7 | 1014.5 | 689.1 |
 
 ## Key findings
 

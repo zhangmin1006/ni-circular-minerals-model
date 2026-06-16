@@ -1,8 +1,8 @@
 mineral,proj_2035_demand_t,ni_processing_capacity_tpa,capacity_coverage,has_primary_prospect,has_collection_route,key_gap
-REE_magnet,333.0,400.0,1.202,False,True,Processing capacity exists (Ionic) but feedstock-limited
-Lithium,3181.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
-Cobalt,195.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
-Nickel,1471.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
-Copper,17991.0,0.0,0.0,True,True,"No NI processing capacity — collection exists, recovery absent"
-Aluminium,17080.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
+REE_magnet,256.0,400.0,1.56,False,True,Processing capacity exists (Ionic) but feedstock-limited
+Lithium,2488.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
+Cobalt,199.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
+Nickel,2013.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
+Copper,13146.0,0.0,0.0,True,True,"No NI processing capacity — collection exists, recovery absent"
+Aluminium,26715.0,0.0,0.0,False,True,"No NI processing capacity — collection exists, recovery absent"
 Antimony,40.0,0.0,0.0,True,False,Primary prospect only — no processing/recovery capacity

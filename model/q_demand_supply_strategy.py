@@ -50,12 +50,41 @@ PLATEAU = 9   # demand grows to ~2035 then holds
 BASE_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_EV,
                "Cobalt": 0.06, "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
 
-# Document-anchored demand-growth paths (CAGR to 2035).
-VISION = {"Copper": 0.08, "Lithium": 0.30, "REE_magnet": 0.12, "Cobalt": 0.09,
-          "Nickel": 0.07, "Aluminium": 0.04}                  # Vision 2035
-INDUSTRIAL = {"Copper": 0.09, "Lithium": 0.25, "REE_magnet": 0.12, "Cobalt": 0.08,
-              "Nickel": 0.07, "Aluminium": 0.05}              # clean energy/defence/AM
-CRMA = {m: round(v * 1.10, 3) for m, v in VISION.items()}     # EU-wide pull on top
+# Demand-growth paths DERIVED FROM the Vision 2035 Critical Minerals Technical
+# Annex (Annex 2), not hand-set. The annex gives UK growth-sector demand at
+# 2024/2027/2030/2035; these are CUMULATIVE totals (the aluminium AM cumulative
+# 6.36 Mt reconciles with the 8.0 Mt 2035 total), so annual demand in a window =
+# increment / years. We take the implied annual demand in the first (2025-27) and
+# last (2031-35) windows and derive an annual-demand CAGR over the ~7-yr gap
+# between their midpoints. Cross-checks against IEA net-zero (Cu ~2x, Li ~9x by
+# 2040): copper ~4%/yr and lithium ~26%/yr land in the right range.
+ANNEX_DEMAND_T = {   # mineral: cumulative UK demand (t) at 2024, 2027, 2030, 2035
+    "Copper":     (178400, 922200, 1953000, 3619000),
+    "Lithium":    (2525, 28680, 113400, 339200),
+    "Cobalt":     (6089, 34010, 76610, 163000),
+    "Nickel":     (50430, 182700, 416100, 867200),
+    "REE_magnet": (1161, 7788, 18020, 37940),
+    "Aluminium":  (578300, 1875000, 3966000, 8003000),
+}
+
+
+def _annex_cagr(series):
+    y24, y27, y30, y35 = series
+    annual_early = (y27 - y24) / 3.0      # ~2025-27 average annual demand
+    annual_late = (y35 - y30) / 5.0       # ~2031-35 average annual demand
+    return round((annual_late / annual_early) ** (1 / 7.0) - 1.0, 3)
+
+
+ANNEX_CAGR = {m: _annex_cagr(s) for m, s in ANNEX_DEMAND_T.items()}
+
+VISION = dict(ANNEX_CAGR)                                      # UK Vision 2035 demand
+# UK Industrial Strategy: same UK demand, weighted up for clean-energy grid (Cu)
+# and defence/EV magnets (REE) which the IS-8 emphasises.
+INDUSTRIAL = dict(ANNEX_CAGR)
+INDUSTRIAL["Copper"] = round(ANNEX_CAGR["Copper"] * 1.15, 3)
+INDUSTRIAL["REE_magnet"] = round(ANNEX_CAGR["REE_magnet"] * 1.15, 3)
+# EU CRMA: the same demand plus a Europe-wide pull and a scarcity price premium.
+CRMA = {m: round(v * 1.10, 3) for m, v in VISION.items()}
 CRMA_PRICE = {m: 0.04 for m in ("Lithium", "REE_magnet", "Cobalt", "Nickel", "Copper")}
 COMBINED = {m: max(VISION.get(m, 0), INDUSTRIAL.get(m, 0), CRMA.get(m, 0))
             for m in set(VISION) | set(INDUSTRIAL) | set(CRMA)}
@@ -242,7 +271,16 @@ def _write_memo(dem, gap, stages, capex):
                  "premium for UK/NI midstream and recycling.")
     lines.append("- **UK Industrial Strategy:** IS-8 growth sectors (Advanced Manufacturing "
                  "£4.3bn, Clean Energy, Defence) drive EV/offshore-wind/battery demand; **Belfast "
-                 "named as a critical-minerals cluster**.\n")
+                 "named as a critical-minerals cluster**.")
+    cagr_str = ", ".join(f"{m} {g:.0%}" for m, g in sorted(
+        ANNEX_CAGR.items(), key=lambda x: -x[1]))
+    lines.append(f"\n**Demand growth is derived from the Technical Annex (Annex 2), not hand-set.** "
+                 f"The annex's cumulative UK demand at 2024/2027/2030/2035 is differenced to implied "
+                 f"annual demand, and an annual-demand CAGR is taken over the ~7-yr gap between the "
+                 f"first and last windows: {cagr_str}. These cross-check against IEA net-zero "
+                 f"(copper ~2x, lithium ~9x by 2040). The Industrial-Strategy run weights Cu/REE up "
+                 f"15% (clean-energy/defence emphasis); the CRMA run adds a 10% EU pull + scarcity "
+                 f"price premium; demand plateaus after 2035.\n")
 
     lines.append("## Part A — Demand-side opportunities for sustainable development\n")
     lines.append(_md_table(dem, ["label", "mines_opened", "projects_unlocked",
