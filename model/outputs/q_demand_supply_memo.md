@@ -25,6 +25,18 @@ Scenarios derive demand growth from the **UK Critical Minerals Strategy (Vision 
 
 **The catch (links to Part B):** higher demand *erodes the supply-security ratios* unless capacity scales with it — recycled share falls from 45% (today's demand) to 43%, and import share rises from 47% to 51%, because demand outruns NI's thin processing/recovery capacity. Demand-side opportunity is real but only captured if the supply-side capacity gap is closed.
 
+## Demand sensitivity (how much does the demand assumption matter?)
+
+Varying the annex-derived demand ±50% moves end-year jobs across **1540–2400** (central 1890) and discounted GVA across **£1147–1350m** (central £1229m). Varying *only lithium* (the steepest, most uncertain CAGR) ±50% moves GVA only £1211–1268m — small, because lithium's NI tonnage base is tiny vs copper/aluminium. **The opportunity scales with overall demand, but the headline qualitative findings — Dalradian unlocked by community benefit, recycled share eroding as demand outruns capacity — are robust across the band.**
+
+| demand case | crit_recycled_share_end | crit_import_share_end | end_jobs | cum_disc_gva_gbp_m |
+|---|---|---|---|---|
+| all_demand_-50% | 0.468 | 0.467 | 1539.9 | 1146.9 |
+| lithium_-50% | 0.45 | 0.492 | 1842.3 | 1211.4 |
+| central_annex | 0.439 | 0.505 | 1890.5 | 1229.1 |
+| lithium_+50% | 0.416 | 0.533 | 2002.5 | 1268.3 |
+| all_demand_+50% | 0.413 | 0.54 | 2400.1 | 1349.6 |
+
 ## Part B — Supply & capacity challenges (current circular supply chain)
 
 NI capital pipeline across the chain: £1164.0m (operating £914.0m + proposed £250.0m).

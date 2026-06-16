@@ -1,0 +1,6 @@
+scenario,label,mines_opened,projects_unlocked,crit_domestic_share_end,crit_recycled_share_end,crit_import_share_end,single_country_exposure_end,recycling_value_gbp_m_end,end_jobs,cum_disc_gva_gbp_m,cum_disc_co2_kt,meets_domestic_10pct,meets_recycling_20pct,meets_single_country_60pct
+all_demand_-50%,all_demand_-50%,1,Dalradian Gold,0.065,0.468,0.467,0.779,81.0,1539.9,1146.9,2359.8,False,True,False
+lithium_-50%,lithium_-50%,1,Dalradian Gold,0.058,0.45,0.492,0.779,99.3,1842.3,1211.4,2515.8,False,True,False
+central_annex,central_annex,1,Dalradian Gold,0.055,0.439,0.505,0.779,103.0,1890.5,1229.1,2545.1,False,True,False
+lithium_+50%,lithium_+50%,1,Dalradian Gold,0.051,0.416,0.533,0.779,111.7,2002.5,1268.3,2609.8,False,True,False
+all_demand_+50%,all_demand_+50%,1,Dalradian Gold,0.047,0.413,0.54,0.779,136.3,2400.1,1349.6,2803.9,False,True,False

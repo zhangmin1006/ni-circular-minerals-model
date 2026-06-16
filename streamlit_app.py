@@ -442,6 +442,30 @@ with tab_demand:
         }
         st.dataframe(gap[list(gap_cols)].rename(columns=gap_cols), width="stretch")
 
+        sens_path = OUT / "q_demand_sensitivity.csv"
+        if sens_path.exists():
+            sens = pd.read_csv(sens_path, index_col=0)
+            st.markdown("**Demand sensitivity** — annex-derived central case ±50% "
+                        "(lithium alone, and all demand)")
+            s1, s2 = st.columns(2)
+            with s1:
+                st.caption("Discounted GVA £m by demand case")
+                st.bar_chart(sens["cum_disc_gva_gbp_m"])
+            with s2:
+                st.caption("Recycled vs import share by demand case")
+                st.bar_chart(sens[["crit_recycled_share_end", "crit_import_share_end"]])
+            if "central_annex" in sens.index:
+                c = sens.loc["central_annex"]
+                lo, hi = sens.loc["all_demand_-50%"], sens.loc["all_demand_+50%"]
+                st.caption(
+                    f"±50% on all demand moves jobs {lo['end_jobs']:.0f}–{hi['end_jobs']:.0f} "
+                    f"(central {c['end_jobs']:.0f}) and GVA £{lo['cum_disc_gva_gbp_m']:.0f}–"
+                    f"{hi['cum_disc_gva_gbp_m']:.0f}m. Lithium alone ±50% barely moves GVA "
+                    f"(tiny NI tonnage base). The qualitative findings hold across the band; "
+                    f"higher demand consistently erodes the recycled share — reinforcing the "
+                    f"capacity-gap message."
+                )
+
         st.markdown("**NI evidence base** (strategy documents + GSNI/BGS briefing)")
         e1, e2, e3, e4 = st.columns(4)
         e1.metric("REE supply: single-country", "74%", "China, 2023", delta_color="off")

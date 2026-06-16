@@ -206,6 +206,25 @@ def stage_summary():
     return pd.DataFrame(rows).set_index("stage"), capex
 
 
+def demand_sensitivity():
+    """How sensitive is the opportunity to the (uncertain) demand assumption?
+    Vary the steepest CAGR (lithium) +/-50%, and the whole demand path +/-50%,
+    around the annex-derived central case, all under the sustainable policy."""
+    def scaled(mult, only=None):
+        return {m: round(v * (mult if (only is None or m == only) else 1.0), 3)
+                for m, v in VISION.items()}
+    cases = {
+        "all_demand_-50%": scaled(0.5),
+        "lithium_-50%": scaled(0.5, only="Lithium"),
+        "central_annex": dict(VISION),
+        "lithium_+50%": scaled(1.5, only="Lithium"),
+        "all_demand_+50%": scaled(1.5),
+    }
+    rows = [run_scenario(n, {"demand": d, "policy": SUSTAINABLE, "price": {}, "label": n})
+            for n, d in cases.items()]
+    return pd.DataFrame(rows).set_index("scenario")
+
+
 def main():
     rows = [run_scenario(n, c) for n, c in SCENARIOS.items()]
     dem = pd.DataFrame(rows).set_index("scenario")
@@ -221,6 +240,9 @@ def main():
     gap = supply_capacity_gap()
     gap.to_csv(os.path.join(OUT, "q_supply_capacity_gap.csv"))
     stages, capex = stage_summary()
+
+    sens = demand_sensitivity()
+    sens.to_csv(os.path.join(OUT, "q_demand_sensitivity.csv"))
 
     print("=" * 110)
     print("PART A — DEMAND-SIDE OPPORTUNITY SCENARIOS (sustainable policy stance; demand to ~2035)")
@@ -239,8 +261,14 @@ def main():
         print(gap.to_string())
     print("\nSupply-chain stage map:")
     print(stages[["firms", "employees"]].to_string())
+    print("\n" + "=" * 110)
+    print("DEMAND SENSITIVITY (annex-derived central +/-50% on lithium and on all demand)")
+    print("=" * 110)
+    with pd.option_context("display.width", 230, "display.max_columns", None):
+        print(sens[["crit_recycled_share_end", "crit_import_share_end", "end_jobs",
+                    "cum_disc_gva_gbp_m"]].to_string())
 
-    _write_memo(dem, gap, stages, capex)
+    _write_memo(dem, gap, stages, capex, sens)
     print("\nWritten: outputs/q_demand_scenarios.csv, q_supply_capacity_gap.csv, q_demand_supply_memo.md")
 
 
@@ -252,7 +280,7 @@ def _md_table(df, cols, index_name):
     return "\n".join(out)
 
 
-def _write_memo(dem, gap, stages, capex):
+def _write_memo(dem, gap, stages, capex, sens):
     lines = []
     lines.append("# Demand-side opportunities & supply-side challenges for sustainable "
                  "minerals development\n")
@@ -305,6 +333,24 @@ def _write_memo(dem, gap, stages, capex):
                  f"{base['crit_import_share_end']:.0%} to {dem.loc[top, 'crit_import_share_end']:.0%}, "
                  f"because demand outruns NI's thin processing/recovery capacity. Demand-side "
                  f"opportunity is real but only captured if the supply-side capacity gap is closed.\n")
+
+    lines.append("## Demand sensitivity (how much does the demand assumption matter?)\n")
+    c = sens.loc["central_annex"]
+    jobs_lo, jobs_hi = sens.loc["all_demand_-50%", "end_jobs"], sens.loc["all_demand_+50%", "end_jobs"]
+    gva_lo, gva_hi = sens.loc["all_demand_-50%", "cum_disc_gva_gbp_m"], sens.loc["all_demand_+50%", "cum_disc_gva_gbp_m"]
+    li_lo, li_hi = sens.loc["lithium_-50%", "cum_disc_gva_gbp_m"], sens.loc["lithium_+50%", "cum_disc_gva_gbp_m"]
+    lines.append(f"Varying the annex-derived demand ±50% moves end-year jobs across "
+                 f"**{jobs_lo:.0f}–{jobs_hi:.0f}** (central {c['end_jobs']:.0f}) and discounted GVA "
+                 f"across **£{gva_lo:.0f}–{gva_hi:.0f}m** (central £{c['cum_disc_gva_gbp_m']:.0f}m). "
+                 f"Varying *only lithium* (the steepest, most uncertain CAGR) ±50% moves GVA only "
+                 f"£{li_lo:.0f}–{li_hi:.0f}m — small, because lithium's NI tonnage base is tiny vs "
+                 f"copper/aluminium. **The opportunity scales with overall demand, but the headline "
+                 f"qualitative findings — Dalradian unlocked by community benefit, recycled share "
+                 f"eroding as demand outruns capacity — are robust across the band.**")
+    lines.append("")
+    lines.append(_md_table(sens, ["crit_recycled_share_end", "crit_import_share_end",
+                                  "end_jobs", "cum_disc_gva_gbp_m"], "demand case"))
+    lines.append("")
 
     lines.append("## Part B — Supply & capacity challenges (current circular supply chain)\n")
     lines.append(f"NI capital pipeline across the chain: £{capex['total_gbp_m']}m "
