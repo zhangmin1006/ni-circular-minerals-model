@@ -15,6 +15,7 @@ import seed_parameters as P
 from io_module import DynamicIO
 from mfa_module import MFA, MINERAL_PRICE_GBP_PER_T
 from abm_module import MineralsABM
+from company_data import firm_recycling_output_floor_gbp_m
 from spatial_module import allocate_jobs, DISTRICTS
 
 
@@ -38,6 +39,10 @@ class CoupledModel:
             from cge_module import CGE
             self.cge = CGE()
         self.cge_feedback_price = 1.0     # CGE->ABM price feedback (Tier-3 loop)
+        # Firm-grounded floor on recycling output (Ionic 400 tpa REE plant etc.):
+        # the recycling sector cannot be smaller than the named NI plants imply.
+        self.firm_recycling_floor = firm_recycling_output_floor_gbp_m(
+            MINERAL_PRICE_GBP_PER_T, rows=self.abm.company_register)
         self.records = []
 
     def _price_index(self, t):
@@ -50,13 +55,17 @@ class CoupledModel:
             for m in P.MINERALS
         }
 
-    def _final_demand_vector(self, mfa_rows):
-        """Convert physical flows to an I-O final-demand vector (£m)."""
+    def _final_demand_vector(self, mfa_rows, ramp=1.0):
+        """Convert physical flows to an I-O final-demand vector (£m). The
+        recycling sector is floored at the named-plant capacity (ramped in over
+        the horizon) so reported circular activity is grounded in real firms."""
         fd = np.zeros(P.N)
         for r in mfa_rows:
             price = MINERAL_PRICE_GBP_PER_T[r["mineral"]] / 1e6  # £m per tonne
             fd[P.S["Mining_Quarrying"]] += r["domestic_primary_t"] * price
             fd[P.S["Recycling_Secondary"]] += r["recycled_t"] * price
+        rec = P.S["Recycling_Secondary"]
+        fd[rec] = max(fd[rec], self.firm_recycling_floor * ramp)
         return fd
 
     def run(self):
@@ -91,7 +100,9 @@ class CoupledModel:
                 local_procurement_gain=local_proc_gain,
                 productivity_gain=0.005,
             )
-            fd = self._final_demand_vector(mfa_rows)
+            # plant ramp-up: floor reaches full installed capacity over ~5 years
+            ramp = min(1.0, 0.4 + 0.12 * t)
+            fd = self._final_demand_vector(mfa_rows, ramp=ramp)
             imp = self.io.impact(fd, induced=True)
 
             # --- Tier-3: CGE economy-wide adjustment + feedback to ABM ---
@@ -140,6 +151,7 @@ class CoupledModel:
                 "crit_import_share": sec_crit["import_share"],
                 "crit_max_single_country": sec_crit["max_single_country_exposure"],
                 "recycled_share_all": sec["recycled_share"],
+                "recycling_substitution": sig.get("recycling_substitution", 0.0),
                 **sig.get("company_context", {}),
                 "cge_wage_index": cge_wage,
                 "cge_gva_total_gbp_m": cge_gva,

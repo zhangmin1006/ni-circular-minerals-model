@@ -17,7 +17,16 @@ streamlit_app.py
 
 The app uses the root `requirements.txt` and `.streamlit/config.toml`. It reads
 the committed model outputs from `model/outputs/`; if those outputs are missing,
-the app can regenerate them by running `model/run_mvm.py`.
+the app can regenerate them by running `model/run_mvm.py` (and the Q2.1 experiment
+via `model/q2_1_circularity_interventions.py`).
+
+### Tabs
+Overview · **Q2.1 Interventions** (circular-innovation policy mix + ROI band) ·
+Supply Security · Companies · Regional Jobs · Data Quality.
+
+### One-click deploy link
+Once pushed to GitHub, deploy with:
+`https://share.streamlit.io/deploy?repository=<owner>/<repo>&branch=<branch>&mainModule=streamlit_app.py`
 
 ## Local Run
 

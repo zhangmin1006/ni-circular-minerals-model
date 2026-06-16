@@ -54,6 +54,7 @@ def map_to_questions(df, cumulative):
             "recycling_capacity_proxy_fd": round(last["recycling_fd_gbp_m"], 2),
             "named_recycler_companies": int(last.get("company_recycler_count", 0)),
             "named_downstream_companies": int(last.get("company_downstream_count", 0)),
+            "named_recycler_capacity_tpa": round(last.get("company_recycler_capacity_tpa", 0.0), 0),
             "avg_feedstock_score": round(last.get("avg_feedstock_score", 0.0), 3),
             "note": "firms needing finance/skills identified in ABM agent states",
         },
@@ -79,6 +80,9 @@ def map_to_questions(df, cumulative):
             "output_total_end_gbp_m": round(last["output_total_gbp_m"], 2),
             "cumulative_discounted_gva_gbp_m": round(cumulative["gva"], 1),
             "cumulative_discounted_output_gbp_m": round(cumulative["output"], 1),
+            "firm_capex_pipeline_gbp_m": round(last.get("company_capex_pipeline_gbp_m", 0.0), 1),
+            "firm_capex_operating_gbp_m": round(last.get("company_capex_operating_gbp_m", 0.0), 1),
+            "firm_capex_proposed_gbp_m": round(last.get("company_capex_proposed_gbp_m", 0.0), 1),
         },
         "2.7_negative_impacts": {
             "co2_kt_end": round(last["co2_kt"], 2),

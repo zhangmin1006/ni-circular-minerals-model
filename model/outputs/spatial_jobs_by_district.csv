@@ -1,67 +1,67 @@
 scenario,district,end_jobs
-1_baseline,Antrim & Newtownabbey,116.6
-1_baseline,Ards & North Down,58.3
-1_baseline,"Armagh, Banbridge & Craigavon",132.9
-1_baseline,Belfast,148.2
-1_baseline,Causeway Coast & Glens,76.9
-1_baseline,Derry City & Strabane,82.4
-1_baseline,Fermanagh & Omagh,83.8
-1_baseline,Lisburn & Castlereagh,74.0
-1_baseline,Mid & East Antrim,98.2
-1_baseline,Mid Ulster,147.0
-1_baseline,"Newry, Mourne & Down",83.0
-2_circular_innovation,Antrim & Newtownabbey,137.3
-2_circular_innovation,Ards & North Down,68.1
-2_circular_innovation,"Armagh, Banbridge & Craigavon",154.4
-2_circular_innovation,Belfast,176.9
-2_circular_innovation,Causeway Coast & Glens,86.9
-2_circular_innovation,Derry City & Strabane,93.6
-2_circular_innovation,Fermanagh & Omagh,92.2
-2_circular_innovation,Lisburn & Castlereagh,87.2
-2_circular_innovation,Mid & East Antrim,114.0
-2_circular_innovation,Mid Ulster,166.5
-2_circular_innovation,"Newry, Mourne & Down",93.2
-3_primary_extraction,Antrim & Newtownabbey,117.4
-3_primary_extraction,Ards & North Down,58.9
-3_primary_extraction,"Armagh, Banbridge & Craigavon",134.3
-3_primary_extraction,Belfast,148.9
-3_primary_extraction,Causeway Coast & Glens,78.1
-3_primary_extraction,Derry City & Strabane,83.6
-3_primary_extraction,Fermanagh & Omagh,85.6
-3_primary_extraction,Lisburn & Castlereagh,74.5
-3_primary_extraction,Mid & East Antrim,99.2
-3_primary_extraction,Mid Ulster,149.3
-3_primary_extraction,"Newry, Mourne & Down",84.4
-4_integrated_circular_primary,Antrim & Newtownabbey,133.2
-4_integrated_circular_primary,Ards & North Down,66.3
-4_integrated_circular_primary,"Armagh, Banbridge & Craigavon",150.6
-4_integrated_circular_primary,Belfast,170.7
-4_integrated_circular_primary,Causeway Coast & Glens,85.7
-4_integrated_circular_primary,Derry City & Strabane,92.1
-4_integrated_circular_primary,Fermanagh & Omagh,91.9
-4_integrated_circular_primary,Lisburn & Castlereagh,84.6
-4_integrated_circular_primary,Mid & East Antrim,111.2
-4_integrated_circular_primary,Mid Ulster,164.0
-4_integrated_circular_primary,"Newry, Mourne & Down",92.1
-5_supply_shock,Antrim & Newtownabbey,129.8
-5_supply_shock,Ards & North Down,64.6
-5_supply_shock,"Armagh, Banbridge & Craigavon",146.7
-5_supply_shock,Belfast,166.5
-5_supply_shock,Causeway Coast & Glens,83.3
-5_supply_shock,Derry City & Strabane,89.6
-5_supply_shock,Fermanagh & Omagh,89.2
-5_supply_shock,Lisburn & Castlereagh,82.4
-5_supply_shock,Mid & East Antrim,108.3
-5_supply_shock,Mid Ulster,159.5
-5_supply_shock,"Newry, Mourne & Down",89.5
-6_high_esg_low_impact,Antrim & Newtownabbey,131.9
-6_high_esg_low_impact,Ards & North Down,65.7
-6_high_esg_low_impact,"Armagh, Banbridge & Craigavon",149.2
-6_high_esg_low_impact,Belfast,168.9
-6_high_esg_low_impact,Causeway Coast & Glens,85.0
-6_high_esg_low_impact,Derry City & Strabane,91.4
-6_high_esg_low_impact,Fermanagh & Omagh,91.4
-6_high_esg_low_impact,Lisburn & Castlereagh,83.7
-6_high_esg_low_impact,Mid & East Antrim,110.2
-6_high_esg_low_impact,Mid Ulster,162.8
-6_high_esg_low_impact,"Newry, Mourne & Down",91.4
+1_baseline,Antrim & Newtownabbey,141.7
+1_baseline,Ards & North Down,41.9
+1_baseline,"Armagh, Banbridge & Craigavon",117.4
+1_baseline,Belfast,175.2
+1_baseline,Causeway Coast & Glens,51.7
+1_baseline,Derry City & Strabane,57.9
+1_baseline,Fermanagh & Omagh,145.8
+1_baseline,Lisburn & Castlereagh,49.5
+1_baseline,Mid & East Antrim,85.6
+1_baseline,Mid Ulster,114.4
+1_baseline,"Newry, Mourne & Down",166.5
+2_circular_innovation,Antrim & Newtownabbey,199.4
+2_circular_innovation,Ards & North Down,56.3
+2_circular_innovation,"Armagh, Banbridge & Craigavon",160.1
+2_circular_innovation,Belfast,246.6
+2_circular_innovation,Causeway Coast & Glens,66.5
+2_circular_innovation,Derry City & Strabane,75.1
+2_circular_innovation,Fermanagh & Omagh,160.0
+2_circular_innovation,Lisburn & Castlereagh,67.5
+2_circular_innovation,Mid & East Antrim,108.6
+2_circular_innovation,Mid Ulster,141.6
+2_circular_innovation,"Newry, Mourne & Down",232.0
+3_primary_extraction,Antrim & Newtownabbey,141.8
+3_primary_extraction,Ards & North Down,42.0
+3_primary_extraction,"Armagh, Banbridge & Craigavon",117.6
+3_primary_extraction,Belfast,175.3
+3_primary_extraction,Causeway Coast & Glens,51.9
+3_primary_extraction,Derry City & Strabane,58.1
+3_primary_extraction,Fermanagh & Omagh,146.7
+3_primary_extraction,Lisburn & Castlereagh,49.6
+3_primary_extraction,Mid & East Antrim,85.9
+3_primary_extraction,Mid Ulster,114.8
+3_primary_extraction,"Newry, Mourne & Down",166.7
+4_integrated_circular_primary,Antrim & Newtownabbey,180.4
+4_integrated_circular_primary,Ards & North Down,51.6
+4_integrated_circular_primary,"Armagh, Banbridge & Craigavon",146.1
+4_integrated_circular_primary,Belfast,223.1
+4_integrated_circular_primary,Causeway Coast & Glens,61.7
+4_integrated_circular_primary,Derry City & Strabane,69.6
+4_integrated_circular_primary,Fermanagh & Omagh,156.0
+4_integrated_circular_primary,Lisburn & Castlereagh,61.6
+4_integrated_circular_primary,Mid & East Antrim,101.2
+4_integrated_circular_primary,Mid Ulster,133.0
+4_integrated_circular_primary,"Newry, Mourne & Down",210.5
+5_supply_shock,Antrim & Newtownabbey,172.5
+5_supply_shock,Ards & North Down,49.6
+5_supply_shock,"Armagh, Banbridge & Craigavon",140.2
+5_supply_shock,Belfast,213.3
+5_supply_shock,Causeway Coast & Glens,59.7
+5_supply_shock,Derry City & Strabane,67.2
+5_supply_shock,Fermanagh & Omagh,153.8
+5_supply_shock,Lisburn & Castlereagh,59.1
+5_supply_shock,Mid & East Antrim,98.0
+5_supply_shock,Mid Ulster,129.1
+5_supply_shock,"Newry, Mourne & Down",201.5
+6_high_esg_low_impact,Antrim & Newtownabbey,180.2
+6_high_esg_low_impact,Ards & North Down,51.5
+6_high_esg_low_impact,"Armagh, Banbridge & Craigavon",145.9
+6_high_esg_low_impact,Belfast,222.8
+6_high_esg_low_impact,Causeway Coast & Glens,61.6
+6_high_esg_low_impact,Derry City & Strabane,69.4
+6_high_esg_low_impact,Fermanagh & Omagh,155.3
+6_high_esg_low_impact,Lisburn & Castlereagh,61.5
+6_high_esg_low_impact,Mid & East Antrim,100.9
+6_high_esg_low_impact,Mid Ulster,132.5
+6_high_esg_low_impact,"Newry, Mourne & Down",210.1

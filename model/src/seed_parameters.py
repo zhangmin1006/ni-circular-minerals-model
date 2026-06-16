@@ -10,6 +10,7 @@ control totals and validation. See ../data/data_register.csv for provenance.
 """
 
 import numpy as np
+import data_register as DR
 
 # ---------------------------------------------------------------------------
 # 1. SECTORS (aggregated NI economy for the MVM I-O)
@@ -98,20 +99,42 @@ PRODUCTS = ["EV_battery", "Permanent_magnet", "Electronics_WEEE",
             "Wind_turbine", "Vehicle_ELV", "Industrial_equipment"]
 
 # ---------------------------------------------------------------------------
-# 6. Real anchors & policy targets (from data_register.csv) — for validation
+# 6. Real anchors & policy targets — READ FROM data_register.csv
+#    (single source of truth; the literals after the comma are fallbacks used
+#    only if a register row is absent/non-numeric, so the model never crashes).
 # ---------------------------------------------------------------------------
 ANCHORS = {
-    "ni_mining_gva_2018_gbp_m": 108.0,
-    "ni_mining_workers": 1950.0,
-    "ni_total_jobs_2023": 816562.0,
-    "scen_onemine": {"jobs": 73.0, "output": 7.3, "gva": 1.6},
-    "scen_twomine_4b": {"jobs": 430.0, "output": 43.0, "gva": 9.0},
+    "ni_mining_gva_2018_gbp_m": DR.value("ni_mining_quarrying_gva_2018", 108.0),
+    "ni_mining_workers": DR.value("ni_mining_quarrying_workers", 1950.0),
+    "ni_total_jobs_2023": DR.value("ni_total_employee_jobs_2023", 816562.0),
+    "scen_onemine": {
+        "jobs": DR.value("scen_onemine_jobs_pa", 73.0),
+        "output": DR.value("scen_onemine_output_pa", 7.3),
+        "gva": DR.value("scen_onemine_gva_pa", 1.6),
+    },
+    "scen_twomine_4b": {
+        "jobs": DR.value("scen4b_jobs_pa", 430.0),
+        "output": DR.value("scen4b_output_pa", 43.0),
+        "gva": DR.value("scen4b_gva_pa", 9.0),
+    },
 }
 TARGETS_2035 = {  # Vision 2035 (GOV.UK)
-    "domestic_share": 0.10,
-    "recycling_share": 0.20,
-    "max_single_country": 0.60,
+    "domestic_share": DR.value("uk_target_domestic_share_2035", 0.10),
+    "recycling_share": DR.value("uk_target_recycling_share_2035", 0.20),
+    "max_single_country": DR.value("uk_target_max_single_country_2035", 0.60),
 }
-STPR = 0.035                 # Social Time Preference Rate (Green Book/NIGEAE)
-MINING_COST_OF_EQUITY = 0.1126
-HORIZON = 30                 # years
+STPR = DR.value("stpr_discount_rate", 0.035)          # Social Time Preference Rate
+MINING_COST_OF_EQUITY = DR.value("mining_cost_of_equity_nominal", 0.1126)
+HORIZON = int(DR.value("model_horizon_years", 30))    # years
+
+# Circular-economy & demand parameters now sourced from the register too, so the
+# MFA and scenario runner stop carrying their own copies (see data_register.csv).
+RECOVERY_YIELDS = {                                   # spent-product recovery yield
+    "REE_magnet": DR.value("recovery_yield_ree_magnet", 0.85),
+    "Lithium": DR.value("recovery_yield_lithium", 0.50),
+    "Copper": DR.value("recovery_yield_copper", 0.90),
+}
+COLLECTION_RATE_WEEE = DR.value("collection_rate_weee", 0.30)
+LOCAL_PROCUREMENT_SHARE_MINING = DR.value("local_procurement_share_mining", 0.45)
+DEMAND_GROWTH_EV = DR.value("ni_demand_growth_ev", 0.12)      # battery-metal driver
+DEMAND_GROWTH_WIND = DR.value("ni_demand_growth_wind", 0.08)  # magnet/REE driver

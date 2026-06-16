@@ -11,6 +11,7 @@ quarrying activity concentrate; services follow population.
 
 import numpy as np
 import seed_parameters as P
+from company_data import firm_district_employment
 
 DISTRICTS = [
     "Antrim & Newtownabbey",
@@ -58,7 +59,39 @@ def _build_shares():
     # Agriculture rural-tilted:
     tilt("Agriculture",
          [0.07, 0.05, 0.13, 0.01, 0.10, 0.09, 0.14, 0.04, 0.07, 0.17, 0.13])
+
+    # Blend the proxy shares for the three minerals-relevant sectors toward the
+    # ACTUAL geography of named NI firms (Dalradian/Mannok/FP McCann -> west;
+    # Ionic/Bryson -> Belfast; Wrightbus -> Mid & East Antrim; Seagate -> Derry;
+    # Spirit/H&W -> Belfast). Confidence/lifecycle weighting is applied upstream.
+    _blend_firm_geography(shares, weight=FIRM_BLEND_WEIGHT)
     return shares
+
+
+# How strongly the named-firm map overrides the population-tilted proxy for the
+# minerals-relevant sectors (0 = proxy only, 1 = firm map only).
+FIRM_BLEND_WEIGHT = 0.5
+_FIRM_BLEND_SECTORS = ("Mining_Quarrying", "Recycling_Secondary", "Manufacturing")
+
+
+def _blend_firm_geography(shares, weight):
+    firm_emp = firm_district_employment()
+    idx = {d: i for i, d in enumerate(DISTRICTS)}
+    for sector in _FIRM_BLEND_SECTORS:
+        emp_by_district = firm_emp.get(sector)
+        if not emp_by_district:
+            continue
+        firm_vec = np.zeros(len(DISTRICTS))
+        for district, emp in emp_by_district.items():
+            if district in idx:
+                firm_vec[idx[district]] = emp
+        if firm_vec.sum() <= 0:
+            continue
+        firm_vec /= firm_vec.sum()
+        col = P.S[sector]
+        blended = (1.0 - weight) * shares[:, col] + weight * firm_vec
+        shares[:, col] = blended / blended.sum()
+
 
 SHARES = _build_shares()
 

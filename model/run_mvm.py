@@ -20,8 +20,10 @@ OUT = os.path.join(os.path.dirname(__file__), "outputs")
 os.makedirs(OUT, exist_ok=True)
 
 # --- demand growth paths (Vision 2035 drivers) -----------------------------
-GREEN_DEMAND = {"REE_magnet": 0.08, "Lithium": 0.12, "Cobalt": 0.06,
-                "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
+# Battery-metal growth keyed to the register's EV-uptake driver, magnet/REE
+# growth to the wind-deployment driver (data_register.csv).
+GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_EV,
+                "Cobalt": 0.06, "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
 
 # --- six scenario families (proposal section 7) ----------------------------
 SCENARIOS = {
@@ -113,8 +115,10 @@ def main():
         comp.append({
             "scenario": name,
             "cum_disc_GVA_£m": q["2.6_economic_benefits"]["cumulative_discounted_gva_gbp_m"],
+            "firm_capex_pipeline_£m": q["2.6_economic_benefits"]["firm_capex_pipeline_gbp_m"],
             "end_jobs": q["2.5_employment_regional_growth"]["total_jobs_end"],
             "recycling_jobs": q["2.5_employment_regional_growth"]["recycling_jobs_end"],
+            "named_recycler_capacity_tpa": q["2.3_business_support"]["named_recycler_capacity_tpa"],
             "named_company_employee_estimate": q["2.5_employment_regional_growth"]["named_company_employee_estimate"],
             "named_recycler_companies": q["2.3_business_support"]["named_recycler_companies"],
             "named_downstream_companies": q["2.3_business_support"]["named_downstream_companies"],

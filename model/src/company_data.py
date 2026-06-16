@@ -29,9 +29,30 @@ def load_company_register(path=REGISTER_PATH):
         return list(csv.DictReader(f, skipinitialspace=True))
 
 
+# Map the register's mineral/product tags to a model sector, so firm headcounts
+# can be folded into the spatial employment layer.
+ROLE_SECTOR = {
+    "critical_mineral_recycler": "Recycling_Secondary",
+    "waste_recycler": "Recycling_Secondary",
+    "mining_exploration": "Mining_Quarrying",
+    "mining_operator": "Mining_Quarrying",
+    "quarry_mineral_processor": "Mining_Quarrying",
+    "quarry_materials": "Mining_Quarrying",
+    "downstream_manufacturer": "Manufacturing",
+    "supply_chain_manufacturer": "Manufacturing",
+}
+# Lifecycle stages that are not yet producing get down-weighted when used as
+# real evidence (e.g. Dalradian's proposed mine).
+LIFECYCLE_WEIGHT = {
+    "operating": 1.0, "scale_up": 0.9, "transition": 0.8, "care_and_maintenance": 0.5,
+    "exploration": 0.4, "proposed": 0.5,
+}
+
+
 def company_context(rows=None):
     rows = rows or load_company_register()
     counts = companies_by_role(rows)
+    capex = firm_capital_pipeline(rows)
     return {
         "company_count": len(rows),
         "company_mining_count": sum(counts[r] for r in MINING_ROLES),
@@ -41,6 +62,11 @@ def company_context(rows=None):
         "company_proposed_mining_jobs": round(sum(
             _number(r, "employee_estimate") for r in rows
             if r["role"] in MINING_ROLES and r.get("lifecycle_stage") == "proposed"), 0),
+        "company_capex_pipeline_gbp_m": capex["total_gbp_m"],
+        "company_capex_operating_gbp_m": capex["operating_gbp_m"],
+        "company_capex_proposed_gbp_m": capex["proposed_gbp_m"],
+        "company_recycler_capacity_tpa": round(
+            sum(recycler_installed_capacity_t(rows).values()), 0),
         "avg_recycler_capacity_score": _weighted_score(
             rows, "capacity_score", RECYCLING_ROLES),
         "avg_feedstock_score": _weighted_score(rows, "feedstock_score", RECYCLING_ROLES),
@@ -51,6 +77,79 @@ def company_context(rows=None):
         "avg_planning_risk_score": _weighted_score(
             rows, "planning_risk_score", MINING_ROLES),
     }
+
+
+def firm_capital_pipeline(rows=None):
+    """Investment (£m) named in the register, split by lifecycle, so Q2.6 can
+    report a firm-grounded capital pipeline (Dalradian £250m, Mannok £330m,
+    Seagate £115m, Wrightbus £25m, Spirit £439m...)."""
+    rows = rows or load_company_register()
+    total = operating = proposed = 0.0
+    for r in rows:
+        inv = _number(r, "investment_gbp_m")
+        if inv <= 0:
+            continue
+        total += inv
+        if r.get("lifecycle_stage") in ("proposed", "exploration"):
+            proposed += inv
+        else:
+            operating += inv
+    return {
+        "total_gbp_m": round(total, 1),
+        "operating_gbp_m": round(operating, 1),
+        "proposed_gbp_m": round(proposed, 1),
+    }
+
+
+def recycler_installed_capacity_t(rows=None):
+    """Installed secondary-processing capacity (tonnes/yr) by tracked mineral,
+    from named recyclers' reported plant capacity (currently Ionic's 400 tpa
+    separated rare-earth oxide plant in Belfast)."""
+    rows = rows or load_company_register()
+    cap = defaultdict(float)
+    for r in rows:
+        if r["role"] not in RECYCLING_ROLES:
+            continue
+        tpa = _number(r, "annual_capacity_tonnes")
+        if tpa <= 0:
+            continue
+        minerals = _minerals(r)
+        if "REE_magnet" in minerals:
+            cap["REE_magnet"] += tpa
+    return {m: v for m, v in cap.items() if m in P.MINERALS}
+
+
+def firm_recycling_output_floor_gbp_m(prices, rows=None):
+    """A firm-grounded floor (£m/yr) on recycling-sector output, from installed
+    plant capacity x commodity price x a capacity-score utilisation factor.
+    Used so the recycling sector's economic activity is never below what named
+    NI plants already represent, regardless of modelled domestic end-of-life."""
+    rows = rows or load_company_register()
+    floor = 0.0
+    util = _weighted_score(rows, "capacity_score", RECYCLING_ROLES) or 0.5
+    for mineral, tpa in recycler_installed_capacity_t(rows).items():
+        price_m = prices.get(mineral, 0.0) / 1e6      # £m per tonne
+        floor += tpa * price_m * util
+    return round(floor, 3)
+
+
+def firm_district_employment(rows=None):
+    """Confidence- and lifecycle-weighted firm headcount by (sector, district),
+    for grounding the spatial employment allocation in real firm locations."""
+    rows = rows or load_company_register()
+    out = defaultdict(lambda: defaultdict(float))
+    for r in rows:
+        sector = ROLE_SECTOR.get(r["role"])
+        district = (r.get("district") or "").strip()
+        if not sector or not district or district == "Multiple":
+            continue
+        emp = _number(r, "employee_estimate")
+        if emp <= 0:
+            continue
+        weight = (CONFIDENCE.get(r.get("evidence_status"), 0.75)
+                  * LIFECYCLE_WEIGHT.get(r.get("lifecycle_stage"), 1.0))
+        out[sector][district] += emp * weight
+    return {sector: dict(d) for sector, d in out.items()}
 
 
 def companies_by_role(rows=None):
@@ -95,19 +194,62 @@ def deposit_quality_by_mineral(rows=None):
     }
 
 
+# Which tracked minerals a recycler addresses, inferred from its feedstock tags.
+FEEDSTOCK_MINERALS = {
+    "REE_magnet": {"REE_magnet"},
+    "WEEE_batteries_ELV_feedstock": {"Lithium", "Cobalt", "Nickel", "Copper", "Aluminium"},
+    "commercial_recyclables": {"Copper", "Aluminium"},
+    "Glass_cullet": set(),   # bulk circularity, no tracked critical mineral
+}
+
+
+def recycler_targets(products, universe=None):
+    """Tracked minerals a recycler with these feedstock tags can address."""
+    universe = universe or P.MINERALS
+    targets = set()
+    for tag in products:
+        targets |= FEEDSTOCK_MINERALS.get(tag, set())
+    return {m for m in targets if m in universe}
+
+
+SCORE_COLUMNS = (
+    "resource_score", "capacity_score", "feedstock_score", "demand_score",
+    "local_procurement_score", "planning_risk_score", "skills_intensity_score",
+    "circularity_score",
+)
+
+
+def parse_firm(row):
+    """Normalise one register row into a typed firm record for the ABM agents."""
+    products = _minerals(row)
+    return {
+        "name": (row.get("company") or "").strip(),
+        "role": (row.get("role") or "").strip(),
+        "sector": (row.get("sector") or "").strip(),
+        "district": (row.get("district") or "").strip(),
+        "lifecycle": (row.get("lifecycle_stage") or "").strip(),
+        "products": products,
+        "minerals": {m for m in products if m in P.MINERALS},
+        "recycler_targets": recycler_targets(products),
+        "employees": _number(row, "employee_estimate"),
+        "investment_gbp_m": _number(row, "investment_gbp_m"),
+        "capacity_tonnes": _number(row, "annual_capacity_tonnes"),
+        "confidence": CONFIDENCE.get(row.get("evidence_status"), 0.75),
+        "scores": {c[:-6]: _score(row, c) for c in SCORE_COLUMNS},  # drop "_score"
+    }
+
+
+def parse_firms(rows=None):
+    return [parse_firm(r) for r in (rows or load_company_register())]
+
+
 def recycler_focus_minerals(rows=None):
     rows = rows or load_company_register()
     focus = set()
     for row in rows:
         if row["role"] not in RECYCLING_ROLES:
             continue
-        minerals = _minerals(row)
-        if "REE_magnet" in minerals:
-            focus.add("REE_magnet")
-        if "WEEE_batteries_ELV_feedstock" in minerals:
-            focus.update({"Lithium", "Cobalt", "Nickel", "Copper", "Aluminium"})
-        if "commercial_recyclables" in minerals:
-            focus.update({"Copper", "Aluminium"})
+        focus |= recycler_targets(_minerals(row))
     return sorted(focus.intersection(P.CRITICAL_MINERALS), key=P.CRITICAL_MINERALS.index)
 
 
@@ -118,15 +260,7 @@ def recycler_capacity_by_mineral(rows=None):
         if row["role"] not in RECYCLING_ROLES:
             continue
         score = 0.55 * _score(row, "capacity_score") + 0.45 * _score(row, "feedstock_score")
-        minerals = _minerals(row)
-        targets = set()
-        if "REE_magnet" in minerals:
-            targets.add("REE_magnet")
-        if "WEEE_batteries_ELV_feedstock" in minerals:
-            targets.update({"Lithium", "Cobalt", "Nickel", "Copper", "Aluminium"})
-        if "commercial_recyclables" in minerals:
-            targets.update({"Copper", "Aluminium"})
-        for mineral in targets:
+        for mineral in recycler_targets(_minerals(row)):
             if mineral in P.CRITICAL_MINERALS:
                 mineral_scores[mineral].append(score)
     return {m: round(_mean(v), 3) for m, v in mineral_scores.items()}

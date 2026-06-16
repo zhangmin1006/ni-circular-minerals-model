@@ -14,6 +14,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
@@ -55,6 +58,24 @@ def load_outputs():
     return ts, comp, company, register, questions, validation, spatial
 
 
+@st.cache_data(show_spinner=False)
+def load_interventions():
+    path = OUT / "q2_1_interventions.csv"
+    if not path.exists():
+        return None, None
+    df = pd.read_csv(path, index_col=0)
+    memo_path = OUT / "q2_1_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return df, memo
+
+
+def generate_interventions():
+    return subprocess.run(
+        [sys.executable, "q2_1_circularity_interventions.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -87,6 +108,26 @@ def ensure_outputs():
 
 def label_scenario(name: str) -> str:
     return SCENARIO_LABELS.get(name, name)
+
+
+def _roi_band_figure(plot: pd.DataFrame):
+    """Horizontal ROI plot: central point with a high-cost/low-cost whisker."""
+    d = plot.sort_values("gva_roi_central")
+    central = d["gva_roi_central"].to_numpy(dtype=float)
+    lo = d["gva_roi_pessimistic"].to_numpy(dtype=float)   # high cost -> low ROI
+    hi = d["gva_roi_optimistic"].to_numpy(dtype=float)     # low cost -> high ROI
+    y = range(len(d))
+    fig, ax = plt.subplots(figsize=(8, 0.5 * len(d) + 1.2))
+    ax.errorbar(central, y, xerr=[central - lo, hi - central], fmt="o",
+                color="#006A6A", ecolor="#9CC", elinewidth=3, capsize=4)
+    ax.axvline(1.0, color="#B00", linestyle="--", linewidth=1, label="break-even (ROI = 1)")
+    ax.set_yticks(list(y))
+    ax.set_yticklabels(d.index)
+    ax.set_xlabel("Discounted GVA per £ public cost (ROI)")
+    ax.legend(loc="lower right", fontsize=8)
+    ax.margins(y=0.1)
+    fig.tight_layout()
+    return fig
 
 
 def metric_card(col, label, value, help_text=None):
@@ -152,8 +193,9 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-tab_overview, tab_supply, tab_companies, tab_region, tab_data = st.tabs(
-    ["Overview", "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
+(tab_overview, tab_q21, tab_supply, tab_companies, tab_region, tab_data) = st.tabs(
+    ["Overview", "Q2.1 Interventions", "Supply Security", "Companies",
+     "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -171,6 +213,81 @@ with tab_overview:
 
     st.subheader("Scenario comparison")
     st.dataframe(format_columns(comp), width="stretch", hide_index=True)
+
+with tab_q21:
+    st.subheader("Q2.1 — Supporting innovation for circularity")
+    st.caption(
+        "How can the Department support innovation in materials recovery, secondary "
+        "materials markets, recycling and circular design? Seven NI-government "
+        "interventions, each mapped to the firm-grounded ABM levers, run individually "
+        "and as a combined package over 30 years (STPR 3.5%)."
+    )
+    iv, memo = load_interventions()
+    if iv is None:
+        st.warning("Q2.1 intervention results are not present in this deployment.")
+        if st.button("Run the Q2.1 experiment now"):
+            with st.spinner("Running seven interventions over 30 years..."):
+                res = generate_interventions()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        plot = iv.drop(index="0_baseline", errors="ignore")
+        best_roi = plot["gva_roi_central"].idxmax()
+        best_share = plot["d_recycled_share_pp"].idxmax()
+        target = 0.20
+
+        k1, k2, k3 = st.columns(3)
+        k1.metric("Best value-for-money (GVA ROI)", best_roi,
+                  f"{plot.loc[best_roi, 'gva_roi_central']:.2f}x central")
+        k2.metric("Biggest recycled-share lift", best_share,
+                  f"+{plot.loc[best_share, 'd_recycled_share_pp']:.1f} pp")
+        hit = [i for i in plot.index if plot.loc[i, "crit_recycled_share_end"] >= target]
+        k3.metric("Meets Vision-2035 20% target", ", ".join(hit) if hit else "none alone")
+
+        left, right = st.columns(2)
+        with left:
+            st.markdown("**Critical-mineral recycled share (end-year)**")
+            st.bar_chart(plot["crit_recycled_share_end"])
+            st.caption(f"Vision-2035 target = {target:.0%} (dashed expectation).")
+        with right:
+            st.markdown("**Extra discounted GVA vs baseline (£m)**")
+            st.bar_chart(plot["d_cum_gva_gbp_m"])
+
+        st.markdown("**Innovation ROI with cost-uncertainty band** "
+                    "(GVA per £ public cost; whisker = high-cost to low-cost bound)")
+        st.pyplot(_roi_band_figure(plot))
+        st.caption(
+            "An intervention whose whole band stays above 1.0 is robustly value-positive; "
+            "one straddling 1.0 (e.g. smart collection / DRS) is sensitive to programme cost."
+        )
+
+        show_cols = {
+            "theme": "Theme",
+            "crit_recycled_share_end": "Recycled share",
+            "secondary_value_gbp_m_end": "Secondary value £m",
+            "recycling_jobs_end": "Recycling jobs",
+            "circular_design_uptake_end": "Design uptake",
+            "d_cum_gva_gbp_m": "ΔGVA £m",
+            "disc_public_cost_gbp_m": "Public cost £m",
+            "gva_roi_central": "ROI (central)",
+            "gva_roi_range": "ROI (band)",
+        }
+        st.dataframe(iv[list(show_cols)].rename(columns=show_cols), width="stretch")
+
+        c1, c2 = st.columns([1, 3])
+        c1.download_button(
+            "Download intervention results",
+            iv.to_csv().encode("utf-8"),
+            "q2_1_interventions.csv", "text/csv",
+        )
+        if memo:
+            with st.expander("Full findings memo (UK-anchored costs & calibration sources)"):
+                st.markdown(memo)
+
 
 with tab_supply:
     st.subheader(f"Critical-mineral supply security: {focus_label}")

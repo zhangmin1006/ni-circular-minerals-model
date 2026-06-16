@@ -50,6 +50,13 @@ MINERAL_PRICE_GBP_PER_T = {
 class MFA:
     def __init__(self, use_ree_pilot=False):
         params = {k: v for k, v in MINERAL_PARAMS.items()}
+        # Recovery yields are now read from data_register.csv (single source of
+        # truth) rather than the literals above, for the minerals the register
+        # tracks (REE_magnet, Lithium, Copper).
+        for mineral, yield_ in P.RECOVERY_YIELDS.items():
+            if mineral in params and yield_ is not None:
+                d0, life, coll, _rec, dom0, imp = params[mineral]
+                params[mineral] = (d0, life, coll, yield_, dom0, imp)
         prices = dict(MINERAL_PRICE_GBP_PER_T)
         if use_ree_pilot:
             # ground the REE_magnet thread in the pilot dataset

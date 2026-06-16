@@ -6,6 +6,8 @@ consultation questions 2.1–2.7. The three tiers from
 `../NI_Circular_Minerals_Model_Plan.md` are now all implemented:
 
 - **Tier 1 (MVM)** — ABM → MFA → dynamic I-O, validated against Minviro anchors.
+  The ABM is **firm-grounded**: each agent is a named NI operator from
+  `company_register.csv`, so policy results emerge from real firms' attributes.
 - **Tier 2** — adaptive agents; NI SAM; recursive-dynamic CGE (CES/Armington) with
   benchmark replication; spatial (11 council-area) employment layer.
 - **Tier 3** — full ABM↔I-O↔CGE feedback: CGE prices feed back to agent decisions,
@@ -48,17 +50,19 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `data/data_register.csv` | every parameter → value → **source → status (real/proxy/gap)** |
 | `data/company_register.csv` | named NI operators, public/desk-estimated scale signals, material streams, and planning/procurement scores |
 | `data/ree_pilot.py` | REE/NdFeB permanent-magnet pilot data (researched values + provenance tags) |
-| `src/seed_parameters.py` | sectors, minerals, coefficients, real anchors & targets |
-| `src/company_data.py` | loads company evidence and turns it into cautious ABM calibration signals for mining risk, recycler capacity, downstream demand, and procurement |
+| `src/data_register.py` | loads `data_register.csv` as the **single source of truth** for anchors, targets, recovery yields, collection rate and demand-growth drivers |
+| `src/seed_parameters.py` | sectors, minerals, coefficients; real anchors & targets **read from the data register** |
+| `src/company_data.py` | loads company evidence → ABM calibration signals (mining risk, recycler capacity, downstream demand, procurement) **plus firm capital pipeline, installed recycler capacity, recycling output floor, and firm employment-by-district** |
 | `src/io_module.py` | dynamic Leontief I-O: Type I/II multipliers, GVA/jobs/CO₂/PM satellites |
 | `src/mfa_module.py` | Material Flow Account: stock-flow per mineral, supply shares |
-| `src/abm_module.py` | mesa agents: mining (real-option), recyclers, councils, manufacturers; adaptive expectations + imitation |
+| `src/abm_module.py` | **firm-grounded** mesa agents — one per named NI operator (Dalradian, Ionic, Wrightbus, Re-Gen, Irish Salt ...) parsed from the register; real-option mining, recycler processors/collectors, downstream + equipment manufacturers, plus geological-potential proxies for uncovered minerals |
 | `src/sam_module.py` | builds a balanced NI SAM from the I-O + institutional accounts |
 | `src/cge_module.py` | recursive-dynamic CGE (CD value added, Hosoe Armington CES, export demand) + PE fallback |
 | `src/spatial_module.py` | allocate sectoral jobs to the 11 NI council areas |
 | `src/coupling.py` | annual soft-link loop ABM→MFA→I-O→CGE feedback + spatial + indicators |
 | `src/indicators.py` | Minviro validation + Q2.1–2.7 mapping |
 | `run_mvm.py` | scenario runner / entry point |
+| `q2_1_circularity_interventions.py` | **Q2.1 policy experiment** — tests seven circular-innovation interventions (materials recovery, secondary markets, recycling/collection, circular design, skills) individually + as a package; writes `outputs/q2_1_interventions.csv` and a findings memo `outputs/q2_1_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `dashboard.py` | Streamlit interactive dashboard |
 
@@ -73,19 +77,29 @@ model compares like-with-like. The SAM balances to 0.0; the CGE replicates its
 benchmark to ~1e-11.
 
 ## How outputs map to the seven questions
-- **2.1 circularity** — recycling jobs, secondary-material value, critical recycled share over time
-- **2.2 opportunities/challenges** — mines opened vs binding constraints in the ABM
-- **2.3 business support** — recycling capacity build-out; firm states needing finance/skills
+- **2.1 circularity** — recycling jobs, secondary-material value, critical recycled share over
+  time; **`q2_1_circularity_interventions.py` ranks the policy mix** (recovery grants vs R&D
+  innovation fund vs collection/DRS vs secondary-market offtake vs design standards vs skills)
+  by recycled-share lift, recycling GVA/jobs, circular-design uptake and GVA-ROI. New ABM levers:
+  `innovation_grant`, `skills_support`, `secondary_market_support`.
+- **2.2 opportunities/challenges** — mines opened vs binding constraints: extraction-
+  supportive scenarios bring forward bulk/industrial prospects, while contested critical-
+  mineral deposits (e.g. Dalradian) stay blocked by weak social licence even under grants
+- **2.3 business support** — recycling capacity build-out; **named-firm installed recycler capacity (tpa)**; firm states needing finance/skills
 - **2.4 secure supply** — critical-mineral domestic / recycled / import shares & single-country
   exposure vs Vision 2035 targets (10% domestic, 20% recycling, ≤60% single-country)
-- **2.5 employment/regional growth** — total, mining, recycling jobs; **by council area** (spatial layer), plus named-company context counts
-- **2.6 economic benefits** — GVA, output, cumulative discounted GVA; CGE economy-wide wage response
+- **2.5 employment/regional growth** — total, mining, recycling jobs; **by council area** (spatial shares now blended with the actual named-firm geography), plus named-company context counts
+- **2.6 economic benefits** — GVA, output, cumulative discounted GVA; CGE economy-wide wage response; **firm capital-investment pipeline (operating vs proposed)**
 - **2.7 negative impacts** — CO₂, PM, cumulative discounted CO₂
 
 ## IMPORTANT — data status
 - **Real / sourced** (validation & control totals): Minviro scenario anchors, NI mining
   GVA £108m / 1,950 workers, Vision 2035 targets, STPR 3.5%, mining cost of equity 11.26%,
   REE/NdFeB pilot anchors (Ionic Technologies, Belfast).
+- **Firm-grounded** (from `company_register.csv`, web/desk-verified): a £1,164m named-firm
+  capital pipeline (operating £914m + proposed £250m), Ionic's 400 tpa REE recycling
+  capacity (floors recycling-sector output), and firm headcount-by-district that now shapes
+  the spatial employment map (mining→Fermanagh & Omagh, manufacturing→Belfast, etc.).
 - **Proxy** (flagged in `data_register.csv`): the I-O coefficient matrix (replace with a
   regionalised NISRA Supply-Use + Scottish 2017 table via FLQ+RAS), SAM sector structure,
   commodity prices, collection/recovery rates, deposit qualities, ABM behavioural

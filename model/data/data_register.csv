@@ -20,17 +20,27 @@ tellus_elements_mapped,55,count,real,GSNI Tellus programme,via model proposal.do
 io_technical_coefficients,NA,matrix,proxy,PLACEHOLDER,Regionalise NISRA Supply-Use + Scottish 2017 I-O via FLQ+RAS,GAP - needs construction; Minviro used Scottish 2017 as proxy
 io_employment_coefficients,NA,vector,proxy,PLACEHOLDER,Derive from BRES + GVA control totals,Anchored to real mining 1950 workers / GVA 108m
 io_co2_coefficients,NA,vector,proxy,PLACEHOLDER,NAEI / DAERA GHG inventory + ecoinvent/EXIOBASE,Environmental satellite account
-local_procurement_share_mining,0.45,fraction,proxy,PLACEHOLDER,Firm-level supplier survey (to commission),Minviro flags leakage risk; key ABM lever
-collection_rate_weee,0.30,fraction,proxy,PLACEHOLDER,DAERA LACMW + EA producer responsibility + recycler survey,GAP at NI level - UK-scaled proxy
-recovery_yield_ree_magnet,0.85,fraction,proxy,PLACEHOLDER,Ionic Technologies / Met4Tech / QUB process data,REE from spent permanent magnets
-recovery_yield_lithium,0.50,fraction,proxy,PLACEHOLDER,UK Technology Metals Observatory,Battery recycling
-recovery_yield_copper,0.90,fraction,proxy,PLACEHOLDER,EXIOBASE / industry data,Mature recycling route
+local_procurement_share_mining,0.45,fraction,proxy,PLACEHOLDER,Firm-level supplier survey (to commission),"Minviro flags leakage risk; key ABM lever. WIRED: seed_parameters.LOCAL_PROCUREMENT_SHARE_MINING"
+collection_rate_weee,0.25,fraction,desk_verified,UN Global E-waste Monitor 2024 / DAERA,"UK documented WEEE collection/recycling ~22-25% (UN 2024); revised down from 0.30. WIRED: seed_parameters.COLLECTION_RATE_WEEE"
+recovery_yield_ree_magnet,0.85,fraction,desk_verified,Met4Tech / Ionic Technologies / QUB process data,"REE from spent permanent magnets (process yield, not collection). WIRED: MFA recovery yield via seed_parameters.RECOVERY_YIELDS"
+recovery_yield_lithium,0.50,fraction,desk_verified,Faraday/ReLiB (GBP34m EV-battery recycling programme) / UK Technology Metals Observatory,"Battery black-mass recovery. WIRED: MFA recovery yield via seed_parameters.RECOVERY_YIELDS"
+recovery_yield_copper,0.90,fraction,desk_verified,EXIOBASE / industry data,"Mature recycling route. WIRED: MFA recovery yield via seed_parameters.RECOVERY_YIELDS"
 in_use_stock_ree_tonnes,NA,tonnes,gap,PLACEHOLDER,UK MFA scaled to NI population/industry,Needs stock-flow construction
-ni_demand_growth_ev,0.12,fraction_pa,proxy,PLACEHOLDER,NI energy scenarios / EV uptake stats,Demand driver scenario
-ni_demand_growth_wind,0.08,fraction_pa,proxy,PLACEHOLDER,NI wind deployment / grid investment,Demand driver scenario
+ni_demand_growth_ev,0.12,fraction_pa,proxy,PLACEHOLDER,NI energy scenarios / EV uptake stats,"Demand driver scenario. WIRED: run_mvm GREEN_DEMAND Lithium growth"
+ni_demand_growth_wind,0.08,fraction_pa,proxy,PLACEHOLDER,NI wind deployment / grid investment,"Demand driver scenario. WIRED: run_mvm GREEN_DEMAND REE_magnet growth"
 company_register_count,20,companies,web_verified,Desk research June 2026,model/data/company_register.csv,"Named NI operators in recycling, exploration/mining, quarry/minerals, materials-processing equipment, and downstream demand sectors"
 company_employee_estimate,NA,persons,proxy,Desk research June 2026,model/data/company_register.csv,"Uses public reporting where available and desk estimates otherwise; replace with BRES/company accounts/survey data"
 company_capacity_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Heuristic capacity and feedstock scores; replace with turnover, employment, tonnage, plant capacity and survey data"
 company_local_procurement_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Heuristic local-procurement scores; replace with firm-level supplier survey"
 company_planning_risk_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Planning/social/environmental risk score used in mining agent development trigger; replace with planning/licensing and community evidence"
 company_downstream_demand_signal,NA,multiplier,proxy,Desk research June 2026,model/src/company_data.py,"Uses named downstream firms and materials-processing equipment firms to modestly lift demand baselines until real NI sector demand data are collected"
+company_capex_pipeline_gbp_m,1164,GBP_million,desk_verified,Desk research June 2026,model/data/company_register.csv (investment_gbp_m),"Sum of named-firm investment: operating 914 (Mannok 330, Spirit 439, Seagate 115, Wrightbus 25) + proposed 250 (Dalradian). Reported in Q2.6 via company_data.firm_capital_pipeline; replace with audited capex"
+company_recycler_installed_capacity_ree_tpa,400,tonnes_pa,web_verified,Desk research June 2026,model/data/company_register.csv (Ionic Technologies),"Ionic Belfast separated-REE-oxide plant target; grounds MFA recycler capacity and the recycling output floor via company_data.recycler_installed_capacity_t"
+recycling_output_floor_gbp_m,21.2,GBP_million,proxy,Desk research June 2026,model/src/company_data.py,"Installed plant capacity x commodity price x capacity-score utilisation; floors the I-O recycling final-demand (ramped over ~5 yrs) so circular activity is not below named NI plants"
+firm_spatial_employment_weights,NA,index,desk_verified,Desk research June 2026,model/src/spatial_module.py,"District employment shares for Mining/Recycling/Manufacturing blended 50/50 with named-firm headcount-by-location (confidence- and lifecycle-weighted); replace with NISRA BRES by district"
+q2_1_drs_collection_uplift_pp,17.5,percentage_points,desk_verified,DEFRA DRS impact assessment / industry reporting,"Container return 70-75% to >90% within 3 yrs (+15-20pp). Calibrates the collection_infrastructure lever effect in the ABM; critical-mineral streams set at the lower end"
+q2_1_ree_recycling_share_demand,0.01,fraction,desk_verified,European Parliament STU(2015)518777 / earth.org,"Only ~1% of REE demand met from recycling globally; anchors why critical recycled share stays feedstock-constrained"
+q2_1_cost_innovation_grant_gbp_m_yr,5,GBP_million_pa,proxy,Innovate UK CLIMATES GBP15m + Faraday/ReLiB GBP34m,"NI-scale annual R&D fund at lever intensity 1.0; used for relative ROI in q2_1_circularity_interventions.py LEVER_COST"
+q2_1_cost_recycling_grant_gbp_m_yr,7,GBP_million_pa,proxy,Vision 2035 DBT GBP50m extraction/processing/recycling (+GBP165m invested),"NI-scale annual recovery-plant capital grant at intensity 1.0; LEVER_COST"
+q2_1_cost_collection_infra_gbp_m_yr,9,GBP_million_pa,proxy,DEFRA DRS IA GBP632m set-up / GBP1.065bn-yr running (England+NI drinks),"NI WEEE/critical-stream collection programme at intensity 1.0; LEVER_COST"
+q2_1_cost_skills_support_gbp_m_yr,4,GBP_million_pa,proxy,DfE green-skills bootcamps ~GBP3152/learner,"NI circular-minerals skills programme at intensity 1.0; LEVER_COST"
