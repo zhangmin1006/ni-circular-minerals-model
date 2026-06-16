@@ -22,13 +22,17 @@ from spatial_module import allocate_jobs, DISTRICTS
 class CoupledModel:
     def __init__(self, name, policy, price_path=None, demand_growth=None,
                  start_year=2026, horizon=P.HORIZON, seed=0,
-                 use_ree_pilot=False, adaptive=False, use_cge=False):
+                 use_ree_pilot=False, adaptive=False, use_cge=False,
+                 demand_plateau_years=None):
         self.name = name
         self.policy = policy
         self.start_year = start_year
         self.horizon = horizon
         self.seed = seed
         self.demand_growth = demand_growth or {}      # per-mineral annual demand growth
+        # Years after which demand growth plateaus (e.g. 9 -> growth runs to 2035
+        # then holds), so strong document-anchored CAGRs don't compound unrealistically.
+        self.demand_plateau_years = demand_plateau_years
         self.price_path = price_path or {}            # per-mineral price index by year offset
         self.use_cge = use_cge
         self.io = DynamicIO()
@@ -50,8 +54,9 @@ class CoupledModel:
 
     def _demand_multiplier(self, t):
         company_signal = getattr(self.abm, "downstream_demand_signal", 1.0)
+        teff = t if self.demand_plateau_years is None else min(t, self.demand_plateau_years)
         return {
-            m: company_signal * (1.0 + self.demand_growth.get(m, 0.0)) ** t
+            m: company_signal * (1.0 + self.demand_growth.get(m, 0.0)) ** teff
             for m in P.MINERALS
         }
 

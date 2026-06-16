@@ -64,6 +64,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `run_mvm.py` | scenario runner / entry point |
 | `q2_1_circularity_interventions.py` | **Q2.1 policy experiment** — tests seven circular-innovation interventions (materials recovery, secondary markets, recycling/collection, circular design, skills) individually + as a package; writes `outputs/q2_1_interventions.csv` and a findings memo `outputs/q2_1_memo.md` |
 | `q2_2_opportunities_challenges.py` | **Q2.2 experiment** — mineral-by-mineral opportunity ranking + constraint-relaxation scenarios (permitting, finance, community/social-licence, skills, energy) that identify the binding barrier; writes `outputs/q2_2_opportunity_ranking.csv`, `q2_2_constraint_scenarios.csv`, `q2_2_memo.md` |
+| `q_demand_supply_strategy.py` | **Demand & supply analysis** — demand-growth scenarios from UK Vision 2035, the EU CRMA and the UK Industrial Strategy (run to ~2035 then plateau) for the sustainable-mining opportunity, plus a current circular-supply-chain capacity-gap table; writes `outputs/q_demand_scenarios.csv`, `q_supply_capacity_gap.csv`, `q_demand_supply_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `dashboard.py` | Streamlit interactive dashboard |
 

@@ -96,6 +96,26 @@ def generate_q22():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_demand_supply():
+    dem_path = OUT / "q_demand_scenarios.csv"
+    gap_path = OUT / "q_supply_capacity_gap.csv"
+    if not (dem_path.exists() and gap_path.exists()):
+        return None, None, None
+    dem = pd.read_csv(dem_path, index_col=0)
+    gap = pd.read_csv(gap_path, index_col=0)
+    memo_path = OUT / "q_demand_supply_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return dem, gap, memo
+
+
+def generate_demand_supply():
+    return subprocess.run(
+        [sys.executable, "q_demand_supply_strategy.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -213,10 +233,10 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_q22, tab_supply, tab_companies, tab_region,
- tab_data) = st.tabs(
-    ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Supply Security",
-     "Companies", "Regional Jobs", "Data Quality"]
+(tab_overview, tab_q21, tab_q22, tab_demand, tab_supply, tab_companies,
+ tab_region, tab_data) = st.tabs(
+    ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Demand & Supply",
+     "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -367,6 +387,64 @@ with tab_q22:
         if memo22:
             with st.expander("Full Q2.2 findings memo"):
                 st.markdown(memo22)
+
+
+with tab_demand:
+    st.subheader("Demand-side opportunities & supply-side capacity challenges")
+    st.caption(
+        "Demand scenarios from the UK Critical Minerals Strategy (Vision 2035), the "
+        "EU Critical Raw Materials Act and the UK Industrial Strategy, run under a "
+        "sustainable enabling-policy stance (demand grows to ~2035 then plateaus); "
+        "plus the current circular supply chain's capacity gap by mineral."
+    )
+    dem, gap, memo_ds = load_demand_supply()
+    if dem is None:
+        st.warning("Demand/supply results are not present in this deployment.")
+        if st.button("Run the demand & supply analysis now"):
+            with st.spinner("Running strategy demand scenarios + capacity analysis..."):
+                res = generate_demand_supply()
+            if res.returncode:
+                st.error("The analysis failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        st.markdown("**Part A — demand-side opportunity (by strategy scenario)**")
+        d1, d2 = st.columns(2)
+        with d1:
+            st.caption("Discounted GVA £m")
+            chart = dem["cum_disc_gva_gbp_m"].copy(); chart.index = dem["label"]
+            st.bar_chart(chart)
+        with d2:
+            st.caption("Critical recycled vs import share (end-year)")
+            st.bar_chart(dem[["crit_recycled_share_end", "crit_import_share_end"]])
+        st.info(
+            "Tension: stronger strategy demand grows jobs and GVA, but **erodes the "
+            "recycled share and raises import dependence** unless processing/recovery "
+            "capacity scales with it — see the capacity gap below."
+        )
+        dem_cols = {
+            "label": "Scenario", "mines_opened": "Mines", "crit_domestic_share_end": "Domestic",
+            "crit_recycled_share_end": "Recycled", "crit_import_share_end": "Import",
+            "end_jobs": "End jobs", "cum_disc_gva_gbp_m": "Cum. GVA £m",
+        }
+        st.dataframe(dem[list(dem_cols)].rename(columns=dem_cols), width="stretch")
+
+        st.markdown("**Part B — current circular supply chain: capacity coverage of 2035 demand**")
+        st.caption("Coverage = NI processing capacity ÷ projected 2035 demand "
+                   "(only REE has any; the battery metals have none).")
+        st.bar_chart(gap["capacity_coverage"])
+        gap_cols = {
+            "proj_2035_demand_t": "2035 demand t", "ni_processing_capacity_tpa": "NI capacity tpa",
+            "capacity_coverage": "Coverage", "has_primary_prospect": "Primary?",
+            "has_collection_route": "Collection?", "key_gap": "Key gap",
+        }
+        st.dataframe(gap[list(gap_cols)].rename(columns=gap_cols), width="stretch")
+
+        if memo_ds:
+            with st.expander("Full demand & supply findings memo (3-strategy analysis)"):
+                st.markdown(memo_ds)
 
 
 with tab_supply:
