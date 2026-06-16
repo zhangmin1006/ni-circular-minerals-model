@@ -220,9 +220,9 @@ def stage_support_table():
          "support_needed": "NWF/UKEF co-investment, exploration grant, faster permitting, community-benefit scheme",
          "model_levers": "finance_support, exploration_grant, permit_years, community_benefit"},
         {"stage": "Midstream (processing/recovery + collection)", "firms": n_mid, "employees": e_mid,
-         "binding_challenge": "Capacity gap (1 processor), feedstock collection, energy cost",
+         "binding_challenge": "Pilot->commercial 'valley of death'; capacity gap (1 processor); feedstock; energy",
          "shock_exposure": "Opportunity (substitution) — but capacity-constrained",
-         "support_needed": "Capital grants, BICS energy support, R&D, offtake guarantees, collection/DRS infrastructure",
+         "support_needed": "First-of-a-kind/scale-up capital (cost-share + blended finance), BICS energy, R&D, long-term offtake+price floor, collection/DRS",
          "model_levers": "recycling_grant, energy_cost_index, innovation_grant, secondary_market_support, collection_infrastructure"},
         {"stage": "Downstream (manufacturers)", "firms": n_down, "employees": e_down,
          "binding_challenge": "Input-cost/price volatility, supply insecurity, secondary-material access, data/traceability",
@@ -399,26 +399,39 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
     lines.append("1. **Upstream firms** need *capital and confidence*: National Wealth Fund / UK "
                  "Export Finance co-investment and guarantees, faster/clearer permitting, and a "
                  "community-benefit scheme to convert price signals into actual domestic supply.")
-    lines.append("2. **Midstream processors/recyclers** (the binding capacity gap) need *capex + "
-                 "operating-cost relief + demand certainty*: capital grants, BICS-style energy "
-                 "support, R&D co-funding, and — critically — **long-term offtake with a price "
-                 "floor**. The model shows demand-side support only works once capacity exists; "
-                 "real practice agrees: the US DoD–MP Materials deal used a **10-year offtake at a "
-                 "$110/kg NdPr price floor** to de-risk a magnet-materials plant. Price volatility "
-                 "is exactly what keeps private lenders out, so **state-capital tools (offtake, "
-                 "price floors, equity)** are the proven unlock for midstream.")
+    lines.append("2. **Midstream processors/recyclers** (the binding capacity gap) need help to "
+                 "**cross the 'valley of death' from pilot to commercial scale** — the single "
+                 "biggest barrier to a firm like Ionic moving from a 400 tpa pilot to a commercial "
+                 "plant. The decisive instruments are: (a) **first-of-a-kind (FOAK) / scale-up "
+                 "capital with cost-share** (cf. US DOE Critical Minerals Accelerator: 20% cost "
+                 "share at prototype, 50% at pilot/demonstration) and **blended public–private "
+                 "finance** (cf. US–Australia $500m fund) that crowds in private capital; (b) "
+                 "**long-term offtake with a price floor** to give lenders demand certainty (cf. US "
+                 "DoD–MP Materials: 10-yr offtake at $110/kg NdPr); plus BICS energy relief, R&D "
+                 "co-funding and collection/DRS feedstock. Price volatility is what keeps private "
+                 "lenders out, so **state-capital tools (offtake, price floors, equity, cost-share) "
+                 "are the proven unlock** — and they must be *structural and recurring*, not one-off.")
     lines.append("3. **Downstream manufacturers** need *supply security and secondary-material "
                  "access*: recycled-content procurement, a secondary-materials marketplace, "
                  "supplier-development support, and ecodesign standards — sequenced *after* "
                  "midstream capacity so there is secondary material to buy.")
-    lines.append("4. **Cross-cutting:** a green-skills academy and a minerals/circular cluster "
+    lines.append("4. **Lower the cost of participating — a single 'strategic project' front door.** "
+                 "The EU CRMA bundles, behind one designation, **faster permitting (15 months for "
+                 "processing/recycling, 27 for extraction), facilitated access to finance, and "
+                 "government-run offtake matchmaking**. A firm should get all three from one decision, "
+                 "not chase them separately. NI is uniquely placed: under **Windsor Framework Art. "
+                 "13(4)** an NI project could access EU CRMA strategic-project status *and* the UK "
+                 "NWF/UKEF/BICS offer — a genuine dual-market participation advantage.")
+    lines.append("5. **Cross-cutting:** a green-skills academy and a minerals/circular cluster "
                  "(anchored on CDE/Terex equipment makers and QUB); and a **strategic stockpile "
                  "sized to ~180 days** (Japan/Korea practice) as a *bridge* for the most "
                  "concentrated minerals (REE/Co) while domestic capacity is built — not a substitute "
                  "for it. International diversification (Vision 2035) covers the residual.")
-    lines.append("\n**Overarching:** support must be *structural and recurring*, not one-off — "
-                 "evidence is that one-off federal investments do not by themselves secure supply; "
-                 "it is the standing offtake/finance/skills institutions that do.\n")
+    lines.append("\n**Overarching:** the participation barrier is the **pilot-to-commercial valley "
+                 "of death**, and the fix is *structural, recurring* support (cost-share FOAK "
+                 "finance + offtake + a one-stop strategic-project route), not one-off grants — "
+                 "evidence is that one-off investments do not by themselves secure supply; standing "
+                 "finance/offtake/skills institutions do.\n")
 
     lines.append("## Sources\n")
     for s in (
@@ -435,6 +448,11 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
         "Offtake/price floor: US DoD–MP Materials 10-yr offtake at $110/kg NdPr (CSIS 2025)",
         "State-capital tools (offtake, price floors, equity) de-risk price-volatile midstream; "
         "one-off investments alone do not secure supply (Resources for the Future, 2025)",
+        "Pilot->commercial 'valley of death' + FOAK cost-share: US DOE Critical Minerals "
+        "Accelerator (20% prototype / 50% pilot cost share); blended finance US–Australia $500m "
+        "fund (Third Way; DOE 2025)",
+        "Strategic-project package: EU CRMA faster permitting (15 mo processing / 27 mo extraction) "
+        "+ finance facilitation + offtake matchmaking (European Commission 2025)",
     ):
         lines.append(f"- {s}")
     lines.append("\n*Behavioural thresholds and the shock magnitude are PROXY; calibrate with "

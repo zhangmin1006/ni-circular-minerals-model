@@ -450,6 +450,16 @@ with tab_q23:
             "binding_challenge": "Binding challenge", "shock_exposure": "Shock exposure",
             "support_needed": "Support needed", "model_levers": "Model levers"}),
             width="stretch")
+        st.markdown(
+            "**Getting businesses into the chain — the key participation barrier** is the "
+            "*pilot-to-commercial 'valley of death'* (e.g. Ionic's 400 tpa pilot → a commercial "
+            "plant). Evidence-based unlocks: **first-of-a-kind / scale-up capital with cost-share** "
+            "(US DOE Accelerator: 20% prototype, 50% pilot) + **blended public–private finance** "
+            "(US–Australia $500m fund); **long-term offtake + price floor** (US DoD–MP Materials, "
+            "$110/kg NdPr); and a **one-stop 'strategic project' route** bundling fast permitting "
+            "(EU CRMA: 15 mo processing), finance facilitation and offtake matchmaking — which an NI "
+            "project could access via **Windsor Framework Art. 13(4)** alongside the UK NWF/UKEF/BICS offer."
+        )
 
         st.markdown("**Effect of each support package (under the shock)**")
         c1, c2 = st.columns(2)
