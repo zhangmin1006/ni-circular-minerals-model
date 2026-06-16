@@ -1,0 +1,8 @@
+scenario,label,crit_supply_gap_end,crit_recycled_share_end,crit_domestic_share_end,crit_import_share_end,single_country_exposure_end,recycling_substitution_end,mining_jobs_end,recycling_jobs_end,manufacturing_jobs_end,total_jobs_end,cum_disc_gva_gbp_m,d_supply_gap_pp,d_total_jobs,d_cum_gva_gbp_m
+0_no_shock_no_support,"No shock, no support (reference)",0.0,0.147,0.011,0.843,0.85,0.011,261.2,552.2,48.2,1147.7,788.3,-26.0,92.5,15.5
+shock_no_support,"Upstream shock, no support",0.26,0.129,0.011,0.6,0.522,0.066,259.7,489.7,44.1,1055.2,772.8,0.0,0.0,0.0
+shock_upstream_support,Shock + upstream (primary) support,0.192,0.132,0.076,0.6,0.522,0.066,720.0,504.8,67.2,1693.4,991.3,-6.8,638.2,218.5
+shock_midstream_support,Shock + midstream (processing/collection) support,0.19,0.199,0.011,0.6,0.522,0.666,263.9,751.1,61.2,1438.6,1015.0,-7.0,383.4,242.2
+shock_downstream_support,Shock + downstream (manufacturer) support,0.26,0.129,0.011,0.6,0.522,0.582,258.4,490.6,44.1,1054.9,772.9,0.0,-0.3,0.1
+shock_enabling_support,Shock + enabling (skills/supplier) support,0.26,0.129,0.011,0.6,0.522,0.469,259.0,490.2,44.1,1055.0,772.8,0.0,-0.2,0.0
+shock_full_support,Shock + full cross-chain support,0.125,0.199,0.076,0.599,0.522,0.666,722.8,753.4,83.4,2056.5,1241.3,-13.5,1001.3,468.5

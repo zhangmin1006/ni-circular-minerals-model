@@ -64,7 +64,8 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `run_mvm.py` | scenario runner / entry point |
 | `q2_1_circularity_interventions.py` | **Q2.1 policy experiment** — tests seven circular-innovation interventions (materials recovery, secondary markets, recycling/collection, circular design, skills) individually + as a package; writes `outputs/q2_1_interventions.csv` and a findings memo `outputs/q2_1_memo.md` |
 | `q2_2_opportunities_challenges.py` | **Q2.2 experiment** — mineral-by-mineral opportunity ranking + constraint-relaxation scenarios (permitting, finance, community/social-licence, skills, energy) that identify the binding barrier; writes `outputs/q2_2_opportunity_ranking.csv`, `q2_2_constraint_scenarios.csv`, `q2_2_memo.md` |
-| `q_demand_supply_strategy.py` | **Demand & supply analysis** — demand-growth scenarios from UK Vision 2035, the EU CRMA and the UK Industrial Strategy (run to ~2035 then plateau) for the sustainable-mining opportunity, plus a current circular-supply-chain capacity-gap table; writes `outputs/q_demand_scenarios.csv`, `q_supply_capacity_gap.csv`, `q_demand_supply_memo.md` |
+| `q_demand_supply_strategy.py` | **Demand & supply analysis** — demand-growth scenarios from UK Vision 2035, the EU CRMA and the UK Industrial Strategy (run to ~2035 then plateau) for the sustainable-mining opportunity, plus a current circular-supply-chain capacity-gap table and a demand-sensitivity sweep; writes `outputs/q_demand_scenarios.csv`, `q_supply_capacity_gap.csv`, `q_demand_sensitivity.csv`, `q_demand_supply_memo.md` |
+| `q2_3_business_support.py` | **Q2.3 experiment** — an upstream supply shock (import constraint + price spike) run with stage-targeted government support; reports the supply gap and jobs/GVA by stage (upstream/midstream/downstream/enabling) and the support each stage needs; writes `outputs/q2_3_support_scenarios.csv`, `q2_3_stage_support.csv`, `q2_3_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `dashboard.py` | Streamlit interactive dashboard |
 
@@ -89,7 +90,11 @@ benchmark to ~1e-11.
   deposits (Dalradian) are blocked by **social licence, not economics** — a community-benefit
   package is the binding unlock; bulk minerals advance under finance/permitting; critical-mineral
   security is mainly a recycling/feedstock story (little domestic REE/Li/Co/Ni geology)
-- **2.3 business support** — recycling capacity build-out; **named-firm installed recycler capacity (tpa)**; firm states needing finance/skills
+- **2.3 business support** — `q2_3_business_support.py` runs an upstream supply shock and
+  stage-targeted support: the shock opens a critical-mineral supply gap that hits **downstream**
+  firms; **midstream** support closes it (recovery capacity), **upstream** support brings domestic
+  primary forward, and **downstream** support only pays off once midstream capacity exists
+  (sequencing). Plus named-firm installed recycler capacity (tpa)
 - **2.4 secure supply** — critical-mineral domestic / recycled / import shares & single-country
   exposure vs Vision 2035 targets (10% domestic, 20% recycling, ≤60% single-country)
 - **2.5 employment/regional growth** — total, mining, recycling jobs; **by council area** (spatial shares now blended with the actual named-firm geography), plus named-company context counts

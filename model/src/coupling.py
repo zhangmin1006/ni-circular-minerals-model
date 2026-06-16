@@ -23,9 +23,11 @@ class CoupledModel:
     def __init__(self, name, policy, price_path=None, demand_growth=None,
                  start_year=2026, horizon=P.HORIZON, seed=0,
                  use_ree_pilot=False, adaptive=False, use_cge=False,
-                 demand_plateau_years=None):
+                 demand_plateau_years=None, import_constraint=None):
         self.name = name
         self.policy = policy
+        # upstream supply shock: {mineral: max import as fraction of demand}
+        self.import_constraint = import_constraint or {}
         self.start_year = start_year
         self.horizon = horizon
         self.seed = seed
@@ -91,6 +93,7 @@ class CoupledModel:
                 collection_boost=sig["collection_boost"],
                 recovery_boost=sig["recovery_boost"],
                 new_domestic=sig["new_domestic"],
+                import_constraint=self.import_constraint,
             )
             sec = self.mfa.supply_security_summary(mfa_rows)
             sec_crit = self._critical_supply_summary(mfa_rows)
@@ -148,12 +151,14 @@ class CoupledModel:
                 "employment_total": imp["employment_total"],
                 "recycling_jobs": imp["employment_by_sector"][P.S["Recycling_Secondary"]],
                 "mining_jobs": imp["employment_by_sector"][P.S["Mining_Quarrying"]],
+                "manufacturing_jobs": imp["employment_by_sector"][P.S["Manufacturing"]],
                 "co2_kt": imp["co2_total"],
                 "pm_t": imp["pm_total"],
                 "mines_opened": sig["mines_opened_cumulative"],
                 "crit_recycled_share": sec_crit["recycled_share"],
                 "crit_domestic_share": sec_crit["domestic_share"],
                 "crit_import_share": sec_crit["import_share"],
+                "crit_supply_gap": sec_crit["supply_gap_share"],
                 "crit_max_single_country": sec_crit["max_single_country_exposure"],
                 "recycled_share_all": sec["recycled_share"],
                 "recycling_substitution": sig.get("recycling_substitution", 0.0),
@@ -172,5 +177,6 @@ class CoupledModel:
             "recycled_share": sum(r["recycled_t"] for r in crit) / tot,
             "domestic_share": sum(r["domestic_primary_t"] for r in crit) / tot,
             "import_share": sum(r["imports_t"] for r in crit) / tot,
+            "supply_gap_share": sum(r.get("unmet_demand_t", 0.0) for r in crit) / tot,
             "max_single_country_exposure": max(r["single_country_exposure"] for r in crit),
         }

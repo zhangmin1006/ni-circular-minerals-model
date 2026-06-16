@@ -116,6 +116,26 @@ def generate_demand_supply():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_q23():
+    sc_path = OUT / "q2_3_support_scenarios.csv"
+    stage_path = OUT / "q2_3_stage_support.csv"
+    if not (sc_path.exists() and stage_path.exists()):
+        return None, None, None
+    sc = pd.read_csv(sc_path, index_col=0)
+    stages = pd.read_csv(stage_path, index_col=0)
+    memo_path = OUT / "q2_3_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return sc, stages, memo
+
+
+def generate_q23():
+    return subprocess.run(
+        [sys.executable, "q2_3_business_support.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -233,10 +253,10 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_q22, tab_demand, tab_supply, tab_companies,
+(tab_overview, tab_q21, tab_q22, tab_q23, tab_demand, tab_supply, tab_companies,
  tab_region, tab_data) = st.tabs(
-    ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Demand & Supply",
-     "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
+    ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Q2.3 Business Support",
+     "Demand & Supply", "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -387,6 +407,75 @@ with tab_q22:
         if memo22:
             with st.expander("Full Q2.2 findings memo"):
                 st.markdown(memo22)
+
+
+with tab_q23:
+    st.subheader("Q2.3 — Business support across the supply chain")
+    st.caption(
+        "What support do firms at each supply-chain stage need to participate and "
+        "withstand an upstream supply shock (critical-mineral imports capped at 60% "
+        "of demand + price spike)? Stage-targeted government support packages, run "
+        "over 30 years."
+    )
+    sc23, stages23, memo23 = load_q23()
+    if sc23 is None:
+        st.warning("Q2.3 results are not present in this deployment.")
+        if st.button("Run the Q2.3 experiment now"):
+            with st.spinner("Running the supply shock + stage-support packages..."):
+                res = generate_q23()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        if "shock_no_support" in sc23.index:
+            shock = sc23.loc["shock_no_support"]
+            k1, k2, k3 = st.columns(3)
+            k1.metric("Supply gap under shock (no support)",
+                      f"{shock['crit_supply_gap_end']:.0%}", "unmet critical-mineral demand",
+                      delta_color="off")
+            if "shock_full_support" in sc23.index:
+                full = sc23.loc["shock_full_support"]
+                k2.metric("Supply gap with full support",
+                          f"{full['crit_supply_gap_end']:.0%}",
+                          f"{(full['crit_supply_gap_end']-shock['crit_supply_gap_end'])*100:.0f} pp")
+                k3.metric("Jobs protected (full vs unsupported)",
+                          f"+{full['total_jobs_end']-shock['total_jobs_end']:.0f}")
+
+        st.markdown("**Support needed by supply-chain stage**")
+        st.dataframe(stages23.rename(columns={
+            "firms": "Firms", "employees": "Employees",
+            "binding_challenge": "Binding challenge", "shock_exposure": "Shock exposure",
+            "support_needed": "Support needed", "model_levers": "Model levers"}),
+            width="stretch")
+
+        st.markdown("**Effect of each support package (under the shock)**")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.caption("Critical-mineral supply gap (lower = more resilient)")
+            st.bar_chart(sc23["crit_supply_gap_end"])
+        with c2:
+            st.caption("Jobs by stage (end-year)")
+            st.bar_chart(sc23[["mining_jobs_end", "recycling_jobs_end",
+                               "manufacturing_jobs_end"]])
+        st.info(
+            "Sequencing insight: **downstream support alone barely helps under the shock** — "
+            "manufacturers can't buy recycled content that doesn't exist yet. It pays off only "
+            "once **midstream processing/recovery capacity** is built. Upstream support brings "
+            "domestic primary forward; full cross-chain support roughly halves the supply gap."
+        )
+        sc_cols = {
+            "label": "Scenario", "crit_supply_gap_end": "Supply gap",
+            "crit_recycled_share_end": "Recycled", "crit_domestic_share_end": "Domestic",
+            "total_jobs_end": "Total jobs", "cum_disc_gva_gbp_m": "Cum. GVA £m",
+            "d_total_jobs": "Δ jobs vs shock",
+        }
+        st.dataframe(sc23[list(sc_cols)].rename(columns=sc_cols), width="stretch")
+        if memo23:
+            with st.expander("Full Q2.3 findings memo (stage-by-stage support)"):
+                st.markdown(memo23)
 
 
 with tab_demand:

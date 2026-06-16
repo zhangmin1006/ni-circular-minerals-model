@@ -78,13 +78,20 @@ class MFA:
         self.history = []
 
     def step(self, year, demand_multiplier=None,
-             collection_boost=None, recovery_boost=None, new_domestic=None):
+             collection_boost=None, recovery_boost=None, new_domestic=None,
+             import_constraint=None):
         """Advance one year. Optional dicts override per-mineral behaviour
-        (these are the levers the ABM/policy layer pushes)."""
+        (these are the levers the ABM/policy layer pushes).
+
+        `import_constraint` models an UPSTREAM SUPPLY SHOCK: {mineral: max import
+        as a fraction of demand}. If domestic + recycled + (capped) imports cannot
+        meet demand, the shortfall is recorded as `unmet_demand_t` (the supply gap
+        that hits downstream firms) rather than being silently imported."""
         demand_multiplier = demand_multiplier or {}
         collection_boost = collection_boost or {}
         recovery_boost = recovery_boost or {}
         new_domestic = new_domestic or {}
+        import_constraint = import_constraint or {}
 
         rows = []
         for m in self.minerals:
@@ -106,16 +113,24 @@ class MFA:
             # imports close the balance (can't recycle/extract more than demand)
             supplied_secondary = min(recycled, demand)
             remaining = max(0.0, demand - supplied_secondary - domestic_primary)
-            imports = remaining
+            # upstream supply shock: cap available imports -> any shortfall is unmet
+            cap = import_constraint.get(m)
+            if cap is not None:
+                imports = min(remaining, max(0.0, cap) * demand)
+            else:
+                imports = remaining
+            unmet = remaining - imports                  # supply gap (downstream hit)
 
             # supply shares (for Vision 2035 indicators / Q2.4)
             recycled_share = supplied_secondary / demand if demand else 0.0
             domestic_share = domestic_primary / demand if demand else 0.0
             import_share = imports / demand if demand else 0.0
+            supply_gap_share = unmet / demand if demand else 0.0
             single_country_exposure = import_share * imp_conc
 
-            # update in-use stock and age the inflow history
-            inflow = demand  # what enters use this year
+            # update in-use stock and age the inflow history (only supplied material
+            # enters use; unmet demand does not)
+            inflow = demand - unmet
             self.stock[m] += inflow - eol
             self._inflow_hist[m].append(inflow)
             self._inflow_hist[m].pop(0)
@@ -129,12 +144,14 @@ class MFA:
                 "eol_arisings_t": eol,
                 "collected_t": collected,
                 "in_use_stock_t": self.stock[m],
+                "unmet_demand_t": unmet,
                 "domestic_share": domestic_share,
                 "recycled_share": recycled_share,
                 "import_share": import_share,
+                "supply_gap_share": supply_gap_share,
                 "single_country_exposure": single_country_exposure,
-                "mass_balance_ok": abs((domestic_primary + imports + supplied_secondary)
-                                       - demand) < 1e-6,
+                "mass_balance_ok": abs((domestic_primary + imports + supplied_secondary
+                                        + unmet) - demand) < 1e-6,
             })
         self.history.extend(rows)
         return rows
@@ -146,6 +163,7 @@ class MFA:
             "recycled_share": sum(r["recycled_t"] for r in rows) / tot,
             "domestic_share": sum(r["domestic_primary_t"] for r in rows) / tot,
             "import_share": sum(r["imports_t"] for r in rows) / tot,
+            "supply_gap_share": sum(r.get("unmet_demand_t", 0.0) for r in rows) / tot,
             "max_single_country_exposure": max(r["single_country_exposure"] for r in rows),
         }
 
