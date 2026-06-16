@@ -454,20 +454,26 @@ with tab_q23:
         st.markdown("**Effect of each support package (under the shock)**")
         c1, c2 = st.columns(2)
         with c1:
-            st.caption("Critical-mineral supply gap (lower = more resilient)")
-            st.bar_chart(sc23["crit_supply_gap_end"])
+            st.caption("Supply gap: early shock (yrs 1–7) vs end-state (yr 30)")
+            if "supply_gap_early7" in sc23.columns:
+                st.bar_chart(sc23[["supply_gap_early7", "crit_supply_gap_end"]])
+            else:
+                st.bar_chart(sc23["crit_supply_gap_end"])
         with c2:
             st.caption("Jobs by stage (end-year)")
             st.bar_chart(sc23[["mining_jobs_end", "recycling_jobs_end",
                                "manufacturing_jobs_end"]])
         st.info(
-            "Sequencing insight: **downstream support alone barely helps under the shock** — "
-            "manufacturers can't buy recycled content that doesn't exist yet. It pays off only "
-            "once **midstream processing/recovery capacity** is built. Upstream support brings "
-            "domestic primary forward; full cross-chain support roughly halves the supply gap."
+            "Two insights: (1) **the strategic stockpile is a bridge, not a fix** — it slashes the "
+            "*early* gap (enabling: 6%→1%) but, as a finite reserve, depletes, so the *end-state* "
+            "gap returns and no industry is built. (2) **Downstream support alone barely helps** — "
+            "manufacturers can't buy recycled content that doesn't exist; it pays off only once "
+            "**midstream capacity** is built. Sequence: stockpile to bridge while midstream + "
+            "upstream capacity is built; full support does both."
         )
         sc_cols = {
-            "label": "Scenario", "crit_supply_gap_end": "Supply gap",
+            "label": "Scenario", "supply_gap_early7": "Gap (yrs 1–7)",
+            "crit_supply_gap_end": "Gap (yr 30)",
             "crit_recycled_share_end": "Recycled", "crit_domestic_share_end": "Domestic",
             "total_jobs_end": "Total jobs", "cum_disc_gva_gbp_m": "Cum. GVA £m",
             "d_total_jobs": "Δ jobs vs shock",

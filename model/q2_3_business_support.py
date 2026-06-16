@@ -134,6 +134,7 @@ def run_scenario(name, cfg):
     last = df.iloc[-1]
     return {
         "scenario": name, "label": cfg["label"],
+        "supply_gap_early7": round(float(df.iloc[:7]["crit_supply_gap"].mean()), 3),
         "crit_supply_gap_end": round(float(last["crit_supply_gap"]), 3),
         "crit_recycled_share_end": round(float(last["crit_recycled_share"]), 3),
         "crit_domestic_share_end": round(float(last["crit_domestic_share"]), 3),
@@ -153,8 +154,10 @@ def run_with_shock(caps, policy):
     m = CoupledModel(
         name="sev", policy=policy, demand_growth=GREEN_DEMAND, price_path=SHOCK_PRICE,
         import_constraint=caps, seed=42, use_ree_pilot=True, adaptive=True, use_cge=True)
-    last = m.run().iloc[-1]
+    df = m.run()
+    last = df.iloc[-1]
     return {
+        "supply_gap_early7": round(float(df.iloc[:7]["crit_supply_gap"].mean()), 3),
         "supply_gap_end": round(float(last["crit_supply_gap"]), 3),
         "recycled_share_end": round(float(last["crit_recycled_share"]), 3),
         "domestic_share_end": round(float(last["crit_domestic_share"]), 3),
@@ -257,9 +260,9 @@ def main():
     print("=" * 115)
     print("Q2.3 — BUSINESS SUPPORT under an upstream supply shock (30-yr, STPR 3.5%)")
     print("=" * 115)
-    show = ["label", "crit_supply_gap_end", "crit_recycled_share_end", "crit_domestic_share_end",
-            "mining_jobs_end", "recycling_jobs_end", "manufacturing_jobs_end",
-            "cum_disc_gva_gbp_m"]
+    show = ["label", "supply_gap_early7", "crit_supply_gap_end", "crit_recycled_share_end",
+            "crit_domestic_share_end", "mining_jobs_end", "recycling_jobs_end",
+            "manufacturing_jobs_end", "cum_disc_gva_gbp_m"]
     with pd.option_context("display.width", 240, "display.max_columns", None,
                            "display.max_colwidth", 42):
         print(sc[show].to_string())
@@ -328,9 +331,9 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
                                     "shock_exposure", "support_needed", "model_levers"], "stage"))
 
     lines.append("\n## What the model says each support package does (under the shock)\n")
-    lines.append(_md_table(sc, ["label", "crit_supply_gap_end", "crit_recycled_share_end",
-                                "crit_domestic_share_end", "total_jobs_end", "cum_disc_gva_gbp_m",
-                                "d_total_jobs"], "scenario"))
+    lines.append(_md_table(sc, ["label", "supply_gap_early7", "crit_supply_gap_end",
+                                "crit_recycled_share_end", "crit_domestic_share_end",
+                                "total_jobs_end", "cum_disc_gva_gbp_m", "d_total_jobs"], "scenario"))
     lines.append(f"\n- **Most resilience per single package:** `{best}` "
                  f"({sc.loc[best, 'label']}) — +{sc.loc[best, 'd_total_jobs']:.0f} jobs vs the "
                  f"unsupported shock.")
@@ -348,14 +351,22 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
                  f"midstream investment.")
     enab = sc.loc["shock_enabling_support"]
     mids = sc.loc["shock_midstream_support"]
-    lines.append(f"- **Stockpile vs capability — two kinds of support do different jobs.** The "
-                 f"enabling package (which carries the Vision-2035 *strategic stockpile*) cuts the "
-                 f"aggregate gap cheaply to {enab['crit_supply_gap_end']:.0%} but builds no industry "
-                 f"(GVA £{enab['cum_disc_gva_gbp_m']}m, recycled share flat). Midstream support builds "
-                 f"lasting capability (GVA £{mids['cum_disc_gva_gbp_m']}m, recycled share to "
-                 f"{mids['crit_recycled_share_end']:.0%}) but takes time. **A stockpile is fast, cheap "
-                 f"insurance; midstream/upstream investment is the durable fix — the Department needs "
-                 f"both.**")
+    ups = sc.loc["shock_upstream_support"]
+    lines.append(f"- **Stockpile = a bridge, not a fix (finite, depleting reserve).** The enabling "
+                 f"package's Vision-2035 *strategic stockpile* slashes the **early-shock** gap "
+                 f"(first 7 yrs) from {shock['supply_gap_early7']:.0%} to {enab['supply_gap_early7']:.0%}, "
+                 f"but once the reserve depletes the **end-state** gap is back to "
+                 f"{enab['crit_supply_gap_end']:.0%} (= unsupported) and it builds no industry "
+                 f"(GVA £{enab['cum_disc_gva_gbp_m']}m). By contrast, midstream support gives durable "
+                 f"protection (end gap {mids['crit_supply_gap_end']:.0%}, recycled share "
+                 f"{mids['crit_recycled_share_end']:.0%}, GVA £{mids['cum_disc_gva_gbp_m']}m) but little "
+                 f"*immediate* relief (early gap {mids['supply_gap_early7']:.0%}); upstream mining gives "
+                 f"**no early relief at all** (early gap {ups['supply_gap_early7']:.0%} — mines take "
+                 f"years to permit/build).")
+    lines.append(f"- **So the sequencing is: stockpile to bridge the first years while midstream + "
+                 f"upstream capacity is built.** Full support uses the stockpile early (gap "
+                 f"{full['supply_gap_early7']:.0%}) and the new capacity later (end gap "
+                 f"{full['crit_supply_gap_end']:.0%}).")
     lines.append(f"- **Full cross-chain support** cuts the supply gap to "
                  f"{full['crit_supply_gap_end']:.0%} and lifts total jobs to {full['total_jobs_end']:.0f} "
                  f"(+{full['d_total_jobs']:.0f} vs unsupported shock), £{full['cum_disc_gva_gbp_m']}m "

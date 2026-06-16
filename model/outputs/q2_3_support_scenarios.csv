@@ -1,8 +1,8 @@
-scenario,label,crit_supply_gap_end,crit_recycled_share_end,crit_domestic_share_end,crit_import_share_end,single_country_exposure_end,recycling_substitution_end,mining_jobs_end,recycling_jobs_end,manufacturing_jobs_end,total_jobs_end,cum_disc_gva_gbp_m,d_supply_gap_pp,d_total_jobs,d_cum_gva_gbp_m
-0_no_shock_no_support,"No shock, no support (reference)",0.0,0.147,0.011,0.843,0.85,0.011,261.2,552.2,48.2,1147.7,788.3,-20.4,78.5,16.8
-shock_no_support,"Upstream shock, no support",0.204,0.135,0.011,0.65,0.246,0.066,259.9,499.1,44.7,1069.2,771.5,0.0,0.0,0.0
-shock_upstream_support,Shock + upstream (primary) support,0.155,0.135,0.076,0.634,0.246,0.066,719.9,500.7,66.9,1687.4,989.6,-4.9,618.2,218.1
-shock_midstream_support,Shock + midstream (processing/collection) support,0.136,0.204,0.011,0.65,0.246,0.666,263.7,739.2,60.4,1421.2,1008.8,-6.8,352.0,237.3
-shock_downstream_support,Shock + downstream (manufacturer) support,0.204,0.135,0.011,0.65,0.246,0.582,258.6,500.1,44.7,1068.8,771.6,0.0,-0.4,0.1
-shock_enabling_support,Shock + enabling (skills/supplier) support,0.043,0.145,0.011,0.801,0.383,0.469,259.9,531.0,46.8,1115.2,781.0,-16.1,46.0,9.5
-shock_full_support,Shock + full cross-chain support,0.037,0.208,0.076,0.679,0.383,0.666,723.4,781.0,85.2,2097.1,1247.7,-16.7,1027.9,476.2
+scenario,label,supply_gap_early7,crit_supply_gap_end,crit_recycled_share_end,crit_domestic_share_end,crit_import_share_end,single_country_exposure_end,recycling_substitution_end,mining_jobs_end,recycling_jobs_end,manufacturing_jobs_end,total_jobs_end,cum_disc_gva_gbp_m,d_supply_gap_pp,d_total_jobs,d_cum_gva_gbp_m
+0_no_shock_no_support,"No shock, no support (reference)",0.0,0.0,0.147,0.011,0.843,0.85,0.011,261.2,552.2,48.2,1147.7,788.3,-20.4,78.5,16.8
+shock_no_support,"Upstream shock, no support",0.057,0.204,0.135,0.011,0.65,0.246,0.066,259.9,499.1,44.7,1069.2,771.5,0.0,0.0,0.0
+shock_upstream_support,Shock + upstream (primary) support,0.057,0.155,0.135,0.076,0.634,0.246,0.066,719.9,500.7,66.9,1687.4,989.6,-4.9,618.2,218.1
+shock_midstream_support,Shock + midstream (processing/collection) support,0.017,0.136,0.204,0.011,0.65,0.246,0.666,263.7,739.2,60.4,1421.2,1008.8,-6.8,352.0,237.3
+shock_downstream_support,Shock + downstream (manufacturer) support,0.057,0.204,0.135,0.011,0.65,0.246,0.582,258.6,500.1,44.7,1068.8,771.6,0.0,-0.4,0.1
+shock_enabling_support,Shock + enabling (skills/supplier) support,0.01,0.204,0.136,0.011,0.65,0.246,0.469,259.2,500.6,44.8,1070.4,775.2,0.0,1.2,3.7
+shock_full_support,Shock + full cross-chain support,0.008,0.111,0.204,0.076,0.609,0.246,0.666,722.6,743.4,82.7,2041.7,1238.3,-9.3,972.5,466.8

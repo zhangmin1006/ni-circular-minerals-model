@@ -18,6 +18,13 @@ from abm_module import MineralsABM
 from company_data import firm_recycling_output_floor_gbp_m
 from spatial_module import allocate_jobs, DISTRICTS
 
+# Strategic stockpile (PROXY): at full lever it tops up imports by STOCKPILE_RATE
+# of demand per shock year, drawn from a finite reserve of STOCKPILE_DEPTH
+# fraction-of-demand-years -> covers ~STOCKPILE_DEPTH/STOCKPILE_RATE = 7 years
+# before depleting, after which the supply gap reopens.
+STOCKPILE_RATE = 0.30
+STOCKPILE_DEPTH = 2.1
+
 
 class CoupledModel:
     def __init__(self, name, policy, price_path=None, demand_growth=None,
@@ -28,14 +35,14 @@ class CoupledModel:
         self.policy = policy
         # upstream supply shock: {mineral: max import as fraction of demand}.
         # A strategic stockpile / procurement reserve (Vision 2035 defence
-        # resilience measure) raises the effective import availability during a
-        # shock, buffering part of the lost supply. PROXY: full stockpile lever
-        # offsets up to 0.30 of demand.
-        stockpile = (policy or {}).get("strategic_stockpile", 0.0)
-        self.import_constraint = {
-            m: min(1.0, cap + 0.30 * stockpile)
-            for m, cap in (import_constraint or {}).items()
-        }
+        # resilience measure) is a FINITE reserve that draws down during a shock:
+        # it tops up imports by up to STOCKPILE_RATE x lever of demand per year
+        # until the reserve (STOCKPILE_DEPTH x lever, in fraction-of-demand-years)
+        # is exhausted -- then the gap reopens. So it is short-term insurance only.
+        self._stockpile = (policy or {}).get("strategic_stockpile", 0.0)
+        self.import_constraint = dict(import_constraint or {})       # base caps
+        self._reserve = {m: self._stockpile * STOCKPILE_DEPTH
+                         for m in self.import_constraint}
         self.start_year = start_year
         self.horizon = horizon
         self.seed = seed
@@ -95,13 +102,22 @@ class CoupledModel:
             self.abm.step()
             sig = self.abm.signals
 
+            # draw down the finite strategic reserve to top up imports this year
+            eff_constraint = {}
+            for m, base in self.import_constraint.items():
+                release = 0.0
+                if base < 1.0 and self._reserve.get(m, 0.0) > 0.0:
+                    release = min(STOCKPILE_RATE * self._stockpile, self._reserve[m])
+                    self._reserve[m] -= release
+                eff_constraint[m] = min(1.0, base + release)
+
             mfa_rows = self.mfa.step(
                 year,
                 demand_multiplier=self._demand_multiplier(t),
                 collection_boost=sig["collection_boost"],
                 recovery_boost=sig["recovery_boost"],
                 new_domestic=sig["new_domestic"],
-                import_constraint=self.import_constraint,
+                import_constraint=eff_constraint,
             )
             sec = self.mfa.supply_security_summary(mfa_rows)
             sec_crit = self._critical_supply_summary(mfa_rows)
