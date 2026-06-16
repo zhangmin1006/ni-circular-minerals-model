@@ -25,8 +25,9 @@ Overview · **Q2.1 Interventions** (circular-innovation policy mix + ROI band) �
 Supply Security · Companies · Regional Jobs · Data Quality.
 
 ### One-click deploy link
-Once pushed to GitHub, deploy with:
-`https://share.streamlit.io/deploy?repository=<owner>/<repo>&branch=<branch>&mainModule=streamlit_app.py`
+Repo: <https://github.com/zhangmin1006/ni-circular-minerals-model> (private).
+Deploy this app (sign in to Streamlit with the same GitHub account):
+<https://share.streamlit.io/deploy?repository=zhangmin1006/ni-circular-minerals-model&branch=master&mainModule=streamlit_app.py>
 
 ## Local Run
 
