@@ -67,6 +67,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `q_demand_supply_strategy.py` | **Demand & supply analysis** — demand-growth scenarios from UK Vision 2035, the EU CRMA and the UK Industrial Strategy (run to ~2035 then plateau) for the sustainable-mining opportunity, plus a current circular-supply-chain capacity-gap table and a demand-sensitivity sweep; writes `outputs/q_demand_scenarios.csv`, `q_supply_capacity_gap.csv`, `q_demand_sensitivity.csv`, `q_demand_supply_memo.md` |
 | `q2_3_business_support.py` | **Q2.3 experiment** — a document-grounded upstream shock (dominant-supplier loss; per-mineral import caps = 1−concentration from BGS/Idoine 2025) + price spike, run with stage-targeted support mapped to **named UK instruments** (NWF/UKEF, BICS, EA permitting, Skills England, CLIMATES/Faraday, UKEF offtake, Vision-2035 stockpile); reports the supply gap (aggregate + per-mineral) and jobs/GVA by stage, and a severity sweep (½→1.5× of the supplier lost); writes `outputs/q2_3_*.csv`, `q2_3_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
+| `verify_model.py` | **verification & validation harness** — 38 invariant checks (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity ranges); exits non-zero on any failure |
 | `dashboard.py` | Streamlit interactive dashboard |
 
 ## Validation (I-O core vs Minviro)
