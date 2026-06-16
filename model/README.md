@@ -115,6 +115,10 @@ benchmark to ~1e-11.
   e-/auto-metals exported for processing; NI recycling rate 50.4%; Windsor Framework Art.13(4)
   CRMA applicability; Curraghinalt 3.79 Moz Au + Sb/Te/Bi/Co — per GSNI/BGS *Critical Minerals
   & the Circular Economy in NI* (OR25042, 2025) and the UK/EU strategies.
+- **Business-support evidence (Q2.3)**: strategic-stockpile targets (Japan/JOGMEC 60–180 days,
+  Korea/KOMIR 100 days) calibrate the stockpile lever; the US DoD–MP Materials 10-yr offtake at
+  $110/kg NdPr and the finding that state-capital tools (offtake/price floors/equity) de-risk
+  price-volatile midstream — informing the recommended support mix.
 - **Proxy** (flagged in `data_register.csv`): the I-O coefficient matrix (replace with a
   regionalised NISRA Supply-Use + Scottish 2017 table via FLQ+RAS), SAM sector structure,
   commodity prices, collection/recovery rates, deposit qualities, ABM behavioural

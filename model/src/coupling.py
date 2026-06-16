@@ -18,12 +18,14 @@ from abm_module import MineralsABM
 from company_data import firm_recycling_output_floor_gbp_m
 from spatial_module import allocate_jobs, DISTRICTS
 
-# Strategic stockpile (PROXY): at full lever it tops up imports by STOCKPILE_RATE
-# of demand per shock year, drawn from a finite reserve of STOCKPILE_DEPTH
-# fraction-of-demand-years -> covers ~STOCKPILE_DEPTH/STOCKPILE_RATE = 7 years
-# before depleting, after which the supply gap reopens.
+# Strategic stockpile, sized to REAL strategic-reserve targets: Japan/JOGMEC holds
+# 60 days (up to 180 for high-risk minerals), Korea/KOMIR ~100 days. At full lever
+# the reserve is STOCKPILE_DEPTH = 0.5 demand-years (~180 days, the high-risk
+# target); it tops up imports by up to STOCKPILE_RATE of demand per shock year and
+# then DEPLETES (~1.5-2 yr of cover), after which the supply gap reopens. So the
+# stockpile is a short bridge, never a durable fix.
 STOCKPILE_RATE = 0.30
-STOCKPILE_DEPTH = 2.1
+STOCKPILE_DEPTH = 0.5
 
 
 class CoupledModel:

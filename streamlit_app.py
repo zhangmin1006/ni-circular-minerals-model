@@ -454,9 +454,9 @@ with tab_q23:
         st.markdown("**Effect of each support package (under the shock)**")
         c1, c2 = st.columns(2)
         with c1:
-            st.caption("Supply gap: early shock (yrs 1–7) vs end-state (yr 30)")
-            if "supply_gap_early7" in sc23.columns:
-                st.bar_chart(sc23[["supply_gap_early7", "crit_supply_gap_end"]])
+            st.caption("Supply gap: early shock (yrs 1–5) vs end-state (yr 30)")
+            if "supply_gap_early5" in sc23.columns:
+                st.bar_chart(sc23[["supply_gap_early5", "crit_supply_gap_end"]])
             else:
                 st.bar_chart(sc23["crit_supply_gap_end"])
         with c2:
@@ -464,12 +464,13 @@ with tab_q23:
             st.bar_chart(sc23[["mining_jobs_end", "recycling_jobs_end",
                                "manufacturing_jobs_end"]])
         st.info(
-            "Two insights: (1) **the strategic stockpile is a bridge, not a fix** — it slashes the "
-            "*early* gap (enabling: 6%→1%) but, as a finite reserve, depletes, so the *end-state* "
-            "gap returns and no industry is built. (2) **Downstream support alone barely helps** — "
-            "manufacturers can't buy recycled content that doesn't exist; it pays off only once "
-            "**midstream capacity** is built. Sequence: stockpile to bridge while midstream + "
-            "upstream capacity is built; full support does both."
+            "Two insights: (1) **the strategic stockpile is a thin, short bridge** — sized to real "
+            "targets (Japan 60–180 days, Korea 100 days) it only trims the *early* gap and depletes "
+            "in ~1.5–2 yr, so the *end-state* gap returns and no industry is built. (2) **Downstream "
+            "support alone barely helps** — manufacturers can't buy recycled content that doesn't "
+            "exist; it pays off only once **midstream capacity** is built. The proven midstream "
+            "unlock is **long-term offtake + a price floor** (cf. US DoD–MP Materials, 10-yr / "
+            "$110/kg NdPr). Sequence: stockpile bridges while midstream + upstream capacity is built."
         )
         sc_cols = {
             "label": "Scenario", "supply_gap_early7": "Gap (yrs 1–7)",

@@ -134,7 +134,7 @@ def run_scenario(name, cfg):
     last = df.iloc[-1]
     return {
         "scenario": name, "label": cfg["label"],
-        "supply_gap_early7": round(float(df.iloc[:7]["crit_supply_gap"].mean()), 3),
+        "supply_gap_early5": round(float(df.iloc[:5]["crit_supply_gap"].mean()), 3),
         "crit_supply_gap_end": round(float(last["crit_supply_gap"]), 3),
         "crit_recycled_share_end": round(float(last["crit_recycled_share"]), 3),
         "crit_domestic_share_end": round(float(last["crit_domestic_share"]), 3),
@@ -157,7 +157,7 @@ def run_with_shock(caps, policy):
     df = m.run()
     last = df.iloc[-1]
     return {
-        "supply_gap_early7": round(float(df.iloc[:7]["crit_supply_gap"].mean()), 3),
+        "supply_gap_early5": round(float(df.iloc[:5]["crit_supply_gap"].mean()), 3),
         "supply_gap_end": round(float(last["crit_supply_gap"]), 3),
         "recycled_share_end": round(float(last["crit_recycled_share"]), 3),
         "domestic_share_end": round(float(last["crit_domestic_share"]), 3),
@@ -260,7 +260,7 @@ def main():
     print("=" * 115)
     print("Q2.3 — BUSINESS SUPPORT under an upstream supply shock (30-yr, STPR 3.5%)")
     print("=" * 115)
-    show = ["label", "supply_gap_early7", "crit_supply_gap_end", "crit_recycled_share_end",
+    show = ["label", "supply_gap_early5", "crit_supply_gap_end", "crit_recycled_share_end",
             "crit_domestic_share_end", "mining_jobs_end", "recycling_jobs_end",
             "manufacturing_jobs_end", "cum_disc_gva_gbp_m"]
     with pd.option_context("display.width", 240, "display.max_columns", None,
@@ -331,7 +331,7 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
                                     "shock_exposure", "support_needed", "model_levers"], "stage"))
 
     lines.append("\n## What the model says each support package does (under the shock)\n")
-    lines.append(_md_table(sc, ["label", "supply_gap_early7", "crit_supply_gap_end",
+    lines.append(_md_table(sc, ["label", "supply_gap_early5", "crit_supply_gap_end",
                                 "crit_recycled_share_end", "crit_domestic_share_end",
                                 "total_jobs_end", "cum_disc_gva_gbp_m", "d_total_jobs"], "scenario"))
     lines.append(f"\n- **Most resilience per single package:** `{best}` "
@@ -352,20 +352,21 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
     enab = sc.loc["shock_enabling_support"]
     mids = sc.loc["shock_midstream_support"]
     ups = sc.loc["shock_upstream_support"]
-    lines.append(f"- **Stockpile = a bridge, not a fix (finite, depleting reserve).** The enabling "
-                 f"package's Vision-2035 *strategic stockpile* slashes the **early-shock** gap "
-                 f"(first 7 yrs) from {shock['supply_gap_early7']:.0%} to {enab['supply_gap_early7']:.0%}, "
-                 f"but once the reserve depletes the **end-state** gap is back to "
+    lines.append(f"- **Stockpile = a thin, short bridge — not a fix.** Sized to real strategic-reserve "
+                 f"targets (Japan/JOGMEC 60–180 days, Korea/KOMIR 100 days), the enabling package's "
+                 f"reserve only *trims* the **early-shock** gap (first 5 yrs) from "
+                 f"{shock['supply_gap_early5']:.0%} to {enab['supply_gap_early5']:.0%} and then DEPLETES "
+                 f"(~1.5–2 yr cover), so the **end-state** gap returns to "
                  f"{enab['crit_supply_gap_end']:.0%} (= unsupported) and it builds no industry "
                  f"(GVA £{enab['cum_disc_gva_gbp_m']}m). By contrast, midstream support gives durable "
                  f"protection (end gap {mids['crit_supply_gap_end']:.0%}, recycled share "
                  f"{mids['crit_recycled_share_end']:.0%}, GVA £{mids['cum_disc_gva_gbp_m']}m) but little "
-                 f"*immediate* relief (early gap {mids['supply_gap_early7']:.0%}); upstream mining gives "
-                 f"**no early relief at all** (early gap {ups['supply_gap_early7']:.0%} — mines take "
+                 f"*immediate* relief (early gap {mids['supply_gap_early5']:.0%}); upstream mining gives "
+                 f"**no early relief at all** (early gap {ups['supply_gap_early5']:.0%} — mines take "
                  f"years to permit/build).")
     lines.append(f"- **So the sequencing is: stockpile to bridge the first years while midstream + "
                  f"upstream capacity is built.** Full support uses the stockpile early (gap "
-                 f"{full['supply_gap_early7']:.0%}) and the new capacity later (end gap "
+                 f"{full['supply_gap_early5']:.0%}) and the new capacity later (end gap "
                  f"{full['crit_supply_gap_end']:.0%}).")
     lines.append(f"- **Full cross-chain support** cuts the supply gap to "
                  f"{full['crit_supply_gap_end']:.0%} and lifts total jobs to {full['total_jobs_end']:.0f} "
@@ -400,12 +401,24 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
                  "community-benefit scheme to convert price signals into actual domestic supply.")
     lines.append("2. **Midstream processors/recyclers** (the binding capacity gap) need *capex + "
                  "operating-cost relief + demand certainty*: capital grants, BICS-style energy "
-                 "support, R&D co-funding, offtake guarantees, and collection/DRS infrastructure.")
+                 "support, R&D co-funding, and — critically — **long-term offtake with a price "
+                 "floor**. The model shows demand-side support only works once capacity exists; "
+                 "real practice agrees: the US DoD–MP Materials deal used a **10-year offtake at a "
+                 "$110/kg NdPr price floor** to de-risk a magnet-materials plant. Price volatility "
+                 "is exactly what keeps private lenders out, so **state-capital tools (offtake, "
+                 "price floors, equity)** are the proven unlock for midstream.")
     lines.append("3. **Downstream manufacturers** need *supply security and secondary-material "
                  "access*: recycled-content procurement, a secondary-materials marketplace, "
-                 "supplier-development support, and ecodesign standards.")
+                 "supplier-development support, and ecodesign standards — sequenced *after* "
+                 "midstream capacity so there is secondary material to buy.")
     lines.append("4. **Cross-cutting:** a green-skills academy and a minerals/circular cluster "
-                 "(anchored on CDE/Terex equipment makers and QUB) so every stage can deliver.\n")
+                 "(anchored on CDE/Terex equipment makers and QUB); and a **strategic stockpile "
+                 "sized to ~180 days** (Japan/Korea practice) as a *bridge* for the most "
+                 "concentrated minerals (REE/Co) while domestic capacity is built — not a substitute "
+                 "for it. International diversification (Vision 2035) covers the residual.")
+    lines.append("\n**Overarching:** support must be *structural and recurring*, not one-off — "
+                 "evidence is that one-off federal investments do not by themselves secure supply; "
+                 "it is the standing offtake/finance/skills institutions that do.\n")
 
     lines.append("## Sources\n")
     for s in (
@@ -418,6 +431,10 @@ def _write_memo(sc, stages, sweep, gap_pivot, pmg):
         "BGS/Idoine et al. (2025): 2023 single-country supply concentration (REE 74%, Co 70%, Li 44%)",
         "Minviro Final Report: local-procurement leakage and skills constraints",
         "Innovate UK CLIMATES (£15m) + Faraday/ReLiB (£34m); DEFRA DRS impact assessment",
+        "Strategic stockpiles: Japan/JOGMEC 60–180 days, Korea/KOMIR 100 days (IEA; CSEP 2025)",
+        "Offtake/price floor: US DoD–MP Materials 10-yr offtake at $110/kg NdPr (CSIS 2025)",
+        "State-capital tools (offtake, price floors, equity) de-risk price-volatile midstream; "
+        "one-off investments alone do not secure supply (Resources for the Future, 2025)",
     ):
         lines.append(f"- {s}")
     lines.append("\n*Behavioural thresholds and the shock magnitude are PROXY; calibrate with "
