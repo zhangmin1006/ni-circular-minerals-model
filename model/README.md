@@ -80,6 +80,10 @@ Note: Minviro's GVA figure is **direct mining GVA**, not economy-wide total — 
 model compares like-with-like. The SAM balances to 0.0; the CGE replicates its
 benchmark to ~1e-11.
 
+**Continuous integration:** `.github/workflows/verify.yml` runs `run_mvm.py`,
+`verify_model.py` (38 invariant checks) and all consultation experiments on every
+push / PR, so regressions fail the build automatically.
+
 ## How outputs map to the seven questions
 - **2.1 circularity** — recycling jobs, secondary-material value, critical recycled share over
   time; **`q2_1_circularity_interventions.py` ranks the policy mix** (recovery grants vs R&D

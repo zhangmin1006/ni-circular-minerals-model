@@ -1,0 +1,46 @@
+name: Verify model
+
+# Validate the NI Circular Minerals model on every push / PR:
+# regenerate outputs, run the 38-check verification harness (gates on failure),
+# and smoke-test every consultation experiment + the figure build.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg          # headless matplotlib for make_plots
+      PYTHONUTF8: "1"          # utf-8 stdout for the £/CO2 symbols
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run main scenario pipeline (regenerate outputs)
+        working-directory: model
+        run: python run_mvm.py
+
+      - name: Verify & validate (38 invariant checks; fails the build on any error)
+        working-directory: model
+        run: python verify_model.py
+
+      - name: Smoke-test consultation experiments
+        working-directory: model
+        run: |
+          python q2_1_circularity_interventions.py
+          python q2_2_opportunities_challenges.py
+          python q_demand_supply_strategy.py
+          python q2_3_business_support.py
+          python make_plots.py
