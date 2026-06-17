@@ -230,11 +230,31 @@ def test_economic_sanity():
     check("recycled share never exceeds 1", df["crit_recycled_share"].max() <= 1.0 + 1e-6)
 
 
+def test_geopolitical():
+    section("11. Geopolitical-shock features (diversification & time-varying shock)")
+    caps = {mm: 0.5 for mm in P.CRITICAL_MINERALS}
+    m0, d0 = _run(import_constraint=caps)
+    m1, d1 = _run(policy={"diversification": 0.8}, import_constraint=caps)
+    e0 = float(d0.iloc[-1]["crit_max_single_country"])
+    e1 = float(d1.iloc[-1]["crit_max_single_country"])
+    check("diversification lowers single-country exposure", e1 < e0,
+          f"{e0:.3f} -> {e1:.3f}")
+    # time-varying shock (onset at year 5): no gap before, gap after
+    def shock(t):
+        return {"REE_magnet": 0.2, "Cobalt": 0.2, "Lithium": 0.2} if t >= 5 else {}
+    m2, d2 = _run(import_constraint=shock)
+    pre = float(d2.iloc[:5]["crit_supply_gap"].mean())
+    post = float(d2.iloc[5:]["crit_supply_gap"].mean())
+    check("time-varying shock: no gap before onset", pre < 1e-9, f"pre {pre:.4f}")
+    check("time-varying shock: gap appears after onset", post > pre, f"post {post:.4f}")
+
+
 def main():
     print("MODEL VERIFICATION & VALIDATION")
     for t in (test_validation, test_mass_balance, test_share_closure,
               test_no_nan_negative, test_determinism, test_sam_cge, test_spatial,
-              test_stockpile, test_company_register, test_economic_sanity):
+              test_stockpile, test_company_register, test_economic_sanity,
+              test_geopolitical):
         try:
             t()
         except Exception as e:

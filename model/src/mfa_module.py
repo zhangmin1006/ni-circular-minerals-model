@@ -79,7 +79,7 @@ class MFA:
 
     def step(self, year, demand_multiplier=None,
              collection_boost=None, recovery_boost=None, new_domestic=None,
-             import_constraint=None):
+             import_constraint=None, diversification=0.0):
         """Advance one year. Optional dicts override per-mineral behaviour
         (these are the levers the ABM/policy layer pushes).
 
@@ -126,7 +126,10 @@ class MFA:
             domestic_share = domestic_primary / demand if demand else 0.0
             import_share = imports / demand if demand else 0.0
             supply_gap_share = unmet / demand if demand else 0.0
-            single_country_exposure = import_share * imp_conc
+            # international diversification (partnerships) lowers the share of
+            # imports coming from the single dominant country: up to a 50% cut.
+            eff_imp_conc = imp_conc * (1.0 - 0.5 * max(0.0, min(1.0, diversification)))
+            single_country_exposure = import_share * eff_imp_conc
 
             # update in-use stock and age the inflow history (only supplied material
             # enters use; unmet demand does not)

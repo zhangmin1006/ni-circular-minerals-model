@@ -136,6 +136,26 @@ def generate_q23():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_q24():
+    grid_path = OUT / "q2_4_role_shock_grid.csv"
+    mc_path = OUT / "q2_4_monte_carlo.csv"
+    if not (grid_path.exists() and mc_path.exists()):
+        return None, None, None
+    grid = pd.read_csv(grid_path)
+    mc = pd.read_csv(mc_path, index_col=0)
+    memo_path = OUT / "q2_4_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return grid, mc, memo
+
+
+def generate_q24():
+    return subprocess.run(
+        [sys.executable, "q2_4_secure_supply.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -253,10 +273,11 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_q22, tab_q23, tab_demand, tab_supply, tab_companies,
- tab_region, tab_data) = st.tabs(
+(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_demand, tab_supply,
+ tab_companies, tab_region, tab_data) = st.tabs(
     ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Q2.3 Business Support",
-     "Demand & Supply", "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
+     "Q2.4 Secure Supply", "Demand & Supply", "Supply Security", "Companies",
+     "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -515,6 +536,67 @@ with tab_q23:
         if memo23:
             with st.expander("Full Q2.3 findings memo (stage-by-stage support)"):
                 st.markdown(memo23)
+
+
+with tab_q24:
+    st.subheader("Q2.4 — What role should government have in ensuring secure supply?")
+    st.caption(
+        "Five government roles (light-touch, diversify-&-insure, domestic autonomy, "
+        "circular leader, strategic coordinator) evaluated against escalating "
+        "geopolitical shocks (dominant-supplier export ban; caps = 1 − 2023 "
+        "single-country concentration) and a Monte-Carlo of uncertain shocks."
+    )
+    g24 = load_q24()
+    grid24, mc24, memo24 = g24
+    if grid24 is None:
+        st.warning("Q2.4 results are not present in this deployment.")
+        if st.button("Run the Q2.4 experiment now"):
+            with st.spinner("Running roles × shocks + Monte-Carlo geopolitical risk..."):
+                res = generate_q24()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        ranked = mc24.drop(index="market_light_touch", errors="ignore").sort_values(
+            "p90_supply_gap")
+        if len(ranked):
+            b = ranked.index[0]
+            st.success(
+                f"**Most resilient role under uncertain shocks: {b}** — 90th-percentile "
+                f"supply gap {mc24.loc[b, 'p90_supply_gap']:.0%} vs "
+                f"{mc24.loc['market_light_touch', 'p90_supply_gap']:.0%} under light-touch. "
+                f"The government's role is an **active coordinator/insurer**: diversify + "
+                f"insure (stockpile) + build circular capacity + responsible primary."
+            )
+        c1, c2 = st.columns(2)
+        with c1:
+            st.caption("Monte-Carlo tail risk — 90th-percentile supply gap (lower = more resilient)")
+            st.bar_chart(mc24["p90_supply_gap"])
+        with c2:
+            st.caption("Single-country exposure by role × shock (target ≤ 0.60)")
+            piv = grid24.pivot(index="role", columns="shock", values="single_country_exposure")
+            order = ["0_stable", "trade_friction", "export_ban", "bloc_fragmentation"]
+            st.bar_chart(piv[[c for c in order if c in piv.columns]])
+        st.markdown("**Secure-supply metrics under a dominant-supplier export ban**")
+        eb = grid24[grid24["shock"] == "export_ban"].set_index("role")
+        eb_cols = {
+            "crit_domestic_share": "Domestic", "crit_recycled_share": "Recycled",
+            "crit_import_share": "Import", "single_country_exposure": "Single-country",
+            "supply_risk_index": "HHI risk", "mean_supply_gap": "Supply gap",
+            "cum_disc_gva_gbp_m": "GVA £m", "disc_public_cost_gbp_m": "Public cost £m",
+        }
+        st.dataframe(eb[list(eb_cols)].rename(columns=eb_cols), width="stretch")
+        st.dataframe(mc24.rename(columns={
+            "mean_supply_gap": "MC mean gap", "p90_supply_gap": "MC p90 gap",
+            "worst_supply_gap": "MC worst gap",
+            "mean_single_country_exposure": "MC mean exposure",
+            "disc_public_cost_gbp_m": "Public cost £m"}), width="stretch")
+        if memo24:
+            with st.expander("Full Q2.4 findings memo (role of government in secure supply)"):
+                st.markdown(memo24)
 
 
 with tab_demand:

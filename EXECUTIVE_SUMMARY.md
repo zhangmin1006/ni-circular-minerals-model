@@ -94,6 +94,32 @@ rising demand simply increases import dependence.
 > (fast permitting, finance facilitation, offtake matchmaking) *and* the UK
 > NWF/UKEF/BICS offer — a genuine dual UK + EU market advantage.
 
+### 2.4 — The government's role in ensuring secure supply
+
+Five government postures were tested against escalating geopolitical shocks
+(a dominant-supplier export ban) and a Monte-Carlo of uncertain shocks (random
+onset, minerals and severity):
+
+- **Light-touch fails the security test.** NI is structurally over-concentrated —
+  single-country exposure sits far above the 60% ceiling in normal times, and a
+  market posture has the highest tail risk under uncertain shocks. Security is a
+  public good the market under-provides.
+- **No single instrument is enough.** Diversification + a stockpile cut
+  single-country exposure and bridge the immediate gap but build no capability;
+  domestic autonomy is slow and socially constrained; circular leadership builds
+  durable secondary supply but is feedstock-limited.
+- **A balanced *strategic-coordinator* role is the most robust** — across the shock
+  range and the Monte-Carlo tail (it roughly halves the 90th-percentile supply gap
+  versus light-touch) — and the only posture that moves all three Vision-2035
+  indicators at once while adding GVA.
+
+> **The role government should play is an active *coordinator/insurer*, not a
+> producer or a bystander:** set the targets; de-risk midstream capacity (finance +
+> offtake); fix feedstock collection; diversify imports and insure the tail
+> (partnerships + a thin strategic reserve); and uphold high-ESG/community-benefit
+> terms — exactly the UK Vision-2035 dual aim of *optimising domestic production*
+> and *building resilient UK & global supply networks*.
+
 ### Demand outlook (Vision 2035, EU CRMA, UK Industrial Strategy)
 
 UK demand for these minerals rises steeply to 2035 (copper roughly doubles, lithium

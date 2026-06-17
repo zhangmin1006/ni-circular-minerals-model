@@ -313,6 +313,12 @@ is undisturbed).
 | `local_supplier_support` | 0–1 | I-O local procurement | supplier development (Invest NI) |
 | `skills_support` | 0–1 | capacity build + mining | **Skills England + DWP** |
 | `strategic_stockpile` | 0–1 | import buffer | **defence stockpile** (Japan/Korea practice) |
+| `diversification` | 0–1 | single-country concentration | **international partnerships** (Vision 2035) — cuts effective `imp_conc` up to 50% |
+
+The upstream **supply shock** itself (not a lever) is an `import_constraint` —
+either a static `{mineral: cap}` or a **callable `f(t)`** for time-varying shocks
+with an onset year (used by the Q2.4 Monte-Carlo). Caps are set to
+`1 − loss_factor·(single-country concentration)`.
 
 ---
 
@@ -326,6 +332,7 @@ a tab in the Streamlit app.
 | **2.1 Circularity innovation** | `q2_1_circularity_interventions.py` | 7 interventions (materials recovery, secondary markets, recycling/collection, circular design, skills) individually + as a package; ranks by recycled-share lift, recycling GVA/jobs, circular-design uptake and **GVA-ROI with a cost-uncertainty band** |
 | **2.2 Opportunities & challenges** | `q2_2_opportunities_challenges.py` | mineral-by-mineral opportunity ranking + **constraint-relaxation scenarios** (permitting, finance, community/social-licence, skills, energy) → the **binding constraint is social licence** |
 | **2.3 Business support** | `q2_3_business_support.py` | **dominant-supplier shock** (per-mineral caps = 1 − concentration) + price spike; stage-targeted support (upstream/midstream/downstream/enabling); **finite, depleting stockpile**; severity sweep; per-mineral exposure |
+| **2.4 Secure supply** | `q2_4_secure_supply.py` | **geopolitical shocks** (escalating dominant-supplier export ban; caps = 1 − concentration) × five government **roles**; **Monte-Carlo** over uncertain shocks (random onset/minerals/severity) → resilience distribution + HHI-style supply-risk index vs Vision-2035 targets → the **strategic-coordinator/insurer** role is most robust |
 | **Demand & supply** | `q_demand_supply_strategy.py` | demand scenarios from Vision 2035, EU CRMA and the UK Industrial Strategy (annex-derived CAGRs, plateau at 2035); circular-supply-chain **capacity-gap** analysis; **±50% demand sensitivity** |
 
 **The strategic stockpile** (Q2.3) is a finite reserve sized to real targets

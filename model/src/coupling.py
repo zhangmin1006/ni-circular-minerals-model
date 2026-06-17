@@ -42,9 +42,15 @@ class CoupledModel:
         # until the reserve (STOCKPILE_DEPTH x lever, in fraction-of-demand-years)
         # is exhausted -- then the gap reopens. So it is short-term insurance only.
         self._stockpile = (policy or {}).get("strategic_stockpile", 0.0)
-        self.import_constraint = dict(import_constraint or {})       # base caps
-        self._reserve = {m: self._stockpile * STOCKPILE_DEPTH
-                         for m in self.import_constraint}
+        # import_constraint may be: None | {mineral: cap} (static, all years) |
+        # callable f(t)->{mineral: cap} (time-varying, for onset/duration shocks).
+        self._import_constraint = import_constraint
+        self._constraint_is_fn = callable(import_constraint)
+        self.import_constraint = ({} if self._constraint_is_fn
+                                  else dict(import_constraint or {}))
+        reserve_keys = (P.CRITICAL_MINERALS if self._constraint_is_fn
+                        else self.import_constraint.keys())
+        self._reserve = {m: self._stockpile * STOCKPILE_DEPTH for m in reserve_keys}
         self.start_year = start_year
         self.horizon = horizon
         self.seed = seed
@@ -104,9 +110,12 @@ class CoupledModel:
             self.abm.step()
             sig = self.abm.signals
 
+            # this year's base import caps (static dict or time-varying f(t))
+            base_caps = (self._import_constraint(t) if self._constraint_is_fn
+                         else self.import_constraint)
             # draw down the finite strategic reserve to top up imports this year
             eff_constraint = {}
-            for m, base in self.import_constraint.items():
+            for m, base in (base_caps or {}).items():
                 release = 0.0
                 if base < 1.0 and self._reserve.get(m, 0.0) > 0.0:
                     release = min(STOCKPILE_RATE * self._stockpile, self._reserve[m])
@@ -120,6 +129,7 @@ class CoupledModel:
                 recovery_boost=sig["recovery_boost"],
                 new_domestic=sig["new_domestic"],
                 import_constraint=eff_constraint,
+                diversification=self.policy.get("diversification", 0.0),
             )
             sec = self.mfa.supply_security_summary(mfa_rows)
             sec_crit = self._critical_supply_summary(mfa_rows)

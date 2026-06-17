@@ -43,4 +43,5 @@ jobs:
           python q2_2_opportunities_challenges.py
           python q_demand_supply_strategy.py
           python q2_3_business_support.py
+          python q2_4_secure_supply.py
           python make_plots.py
