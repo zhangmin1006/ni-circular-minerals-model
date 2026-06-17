@@ -142,12 +142,18 @@ def _write_memo(df):
     lines = []
     lines.append("# Q2.6 — Economic benefits of the NI minerals sector\n")
     lines.append("**Method:** the coupled model's GVA / output / jobs (Type-II, discounted at STPR "
-                 "3.5% over 30 years) are extended with the proposal's full benefit suite — a **tax "
-                 "proxy** (~25% effective take on GVA), **exports**, the named-firm **investment "
-                 "pipeline**, **productivity** (GVA per worker), **manufacturing resilience** and "
-                 "**avoided import costs** (the discounted value of demand met by domestic + recycled "
-                 "supply, i.e. the import bill NI does not pay). Value-for-money is a GVA benefit-cost "
-                 "ratio (BCR) vs notional public cost. Figures are model behaviour, not forecasts.\n")
+                 "3.5% over 30 years; multiplier basis as Minviro — NI 2016 + Scotland 2016 I-O) are "
+                 "extended with the proposal's full benefit suite — a **tax proxy** (~25% effective "
+                 "take on GVA), **exports**, the named-firm **investment pipeline**, **productivity** "
+                 "(GVA per worker), **manufacturing resilience** and **avoided import costs** (the "
+                 "discounted value of demand met by domestic + recycled supply, i.e. the import bill "
+                 "NI does not pay). Value-for-money is a GVA benefit-cost ratio (BCR) vs notional "
+                 "public cost. Figures are model behaviour, not forecasts.\n")
+    lines.append("This maps onto Minviro's own taxonomy of *positive socio-economic impacts* — job "
+                 "creation, economic multiplier effects, **payment of taxes and royalties**, new "
+                 "infrastructure, **investment in training and skills**, **employment of nationals/"
+                 "locals**, and **procurement of goods and services in-country** — so the benefit set "
+                 "below is the document's, quantified.\n")
 
     lines.append("## Benefit suite by scenario\n")
     lines.append(_md_table(df, ["label", "cum_disc_gva_gbp_m", "avoided_import_cost_gbp_m",
@@ -180,11 +186,33 @@ def _write_memo(df):
                  "(Q2.4) and supports firms (Q2.3) also produces the GVA, exports and avoided imports "
                  "here — so the economic case should be read as a portfolio, not lever-by-lever.\n")
 
+    lines.append("## Retained benefit & caveats (Minviro)\n")
+    lines.append("- **Benefits only count if they stay in NI.** Minviro devotes a section to "
+                 "*retained employment*, warning that mining benefits can be *\"economically detached "
+                 "from the regions\"* — it cites the recently closed Irish mines **Galmoy and "
+                 "Lisheen**, where national and international specialist firms during construction "
+                 "*limited the extent of local employment*. So the headline GVA/jobs here are an "
+                 "upper bound; the *retained* share depends on local-content and skills measures "
+                 "(quantified in Q2.5, where retention rises from ~70% to ~97%).")
+    lines.append("- **A skilled-labour shortage is a binding limitation.** Minviro notes all "
+                 "scenarios *\"rely on access to a pool of skilled labour\"* (even the US flags too "
+                 "few qualified domestic workers) — so the skills pipeline (Q2.5) gates how much of "
+                 "this benefit materialises.")
+    lines.append("- **Fiscal benefit is conservative.** The ~25% tax proxy captures income tax/NICs "
+                 "+ corporation tax but **excludes royalties** (gold and silver are Crown-vested in "
+                 "NI) — Minviro lists *taxes and royalties* together, so the true fiscal return is "
+                 "somewhat higher.\n")
+
     lines.append("## Sources & assumptions\n")
-    for s in ("Minviro Final Report: GVA/output/jobs anchors (one-mine £1.6m / two-mine £9m GVA p.a.)",
-              "Tax proxy ~25% of GVA (income tax + NICs on wages + corporation tax on surplus; PROXY)",
-              "Export intensities and avoided-import valuation are PROXY (replace with HMRC Regional "
-              "Trade Statistics + firm offtake data)",
+    for s in ("Minviro Final Report §2: 30-yr dynamic I-O (NI 2016 + Scotland 2016 multipliers), "
+              "GVA/output/jobs scenario anchors (basic-exploration ~3 jobs/yr; one-mine 3a ~73 jobs/"
+              "£7.3m/£1.6m; two-mine 4b ~430 jobs/£43m/£9m p.a.), WACC 11.26%",
+              "Minviro positive socio-economic taxonomy: jobs, multiplier effects, taxes & royalties, "
+              "infrastructure, training/skills, employment of nationals/locals, in-country procurement",
+              "Minviro retained-employment analysis + Galmoy/Lisheen leakage comparison; skilled-"
+              "labour-shortage limitation",
+              "Tax proxy ~25% of GVA (PROXY, excludes royalties); export intensities & avoided-import "
+              "valuation PROXY (replace with HMRC Regional Trade Statistics + firm offtake data)",
               "Investment pipeline from company_register.csv (named-firm investment_gbp_m)"):
         lines.append(f"- {s}")
     lines.append("\n*BCR uses discounted GVA vs notional public cost; avoided imports, tax and "

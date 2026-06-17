@@ -753,7 +753,15 @@ with tab_q26:
             "On incremental GVA alone the capital-heavy scenarios return <1× — but with "
             "avoided imports/resilience they reach ~2×, and the wider tax/export/jobs benefits "
             "raise it further. Pure extraction support is the weakest (little opens without "
-            "social licence — cf. Q2.2)."
+            "social licence — cf. Q2.2). The benefit set follows Minviro's socio-economic "
+            "taxonomy (jobs, taxes & royalties, infrastructure, training, local procurement)."
+        )
+        st.info(
+            "**Retained-benefit caveat (Minviro):** these are an upper bound — mining benefits "
+            "can be \"economically detached from the regions\" (cf. the closed Irish mines Galmoy "
+            "& Lisheen, where specialist firms limited local employment), and a skilled-labour "
+            "shortage caps realised jobs. The *retained* share depends on local-content + skills "
+            "measures — see Q2.5 (retention rises ~70%→~97%)."
         )
         if memo26:
             with st.expander("Full Q2.6 findings memo (economic benefits)"):
