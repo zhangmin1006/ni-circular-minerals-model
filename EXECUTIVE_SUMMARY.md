@@ -128,9 +128,52 @@ to ~2,000+ circular-economy jobs and ~£1.3bn discounted GVA. **But** rising dem
 *erodes* supply-security ratios unless capacity scales with it — reinforcing that
 the opportunity is only captured if the midstream gap is closed.
 
+### 2.5 — Local employment, skills and regional growth
+
+- **Quality jobs, above the NI average.** The minerals sectors pay a ~9–17% wage
+  premium over the NI median (mining and advanced manufacturing are skill-intensive);
+  hundreds of higher-skill roles in the stronger scenarios.
+- **Regional growth is rural-weighted.** Jobs concentrate where the named firms sit —
+  Belfast plus the rural west and Mid Ulster (Newry, Fermanagh & Omagh, Armagh, Mid
+  Ulster) — spreading growth beyond Belfast.
+- **Local retention is a policy choice.** Retained local employment rises from ~70%
+  to ~97% under a local-content + skills focus — directly countering Minviro's warning
+  (and the Galmoy/Lisheen precedent) that benefits leak out when specialist labour and
+  equipment are imported.
+- **Skills are the binding enabler.** Against ~7,500 NI skill-shortage vacancies and
+  5,000+ new roles needed yearly, a green-skills/critical-minerals pipeline (Skills
+  England/DWP, FE colleges, QUB) and apprenticeships are prerequisites, not add-ons.
+
+### 2.6 — Economic benefits
+
+- **Substantial and broad.** The integrated scenario delivers ~£1.15bn discounted GVA,
+  ~£1.8bn of **avoided import costs** (the import bill met by domestic + recycled
+  supply), ~£0.3bn tax and ~£0.9bn exports over 30 years, on top of the £1.16bn
+  named-firm investment pipeline — Minviro's full benefit taxonomy (jobs, taxes &
+  royalties, infrastructure, training, local procurement), quantified.
+- **Honest value-for-money.** On *incremental GVA alone* the capital-heavy scenarios
+  return below £1 per £ of public cost — but once **avoided imports / resilience** are
+  counted the return rises to ~2×, with tax, exports and jobs on top. **Pure extraction
+  support is the weakest** (little opens without social licence). Headline benefits are
+  an upper bound: the *retained* share depends on the local-content + skills measures of
+  2.5.
+
+### 2.7 — Negative impacts, and how to minimise them
+
+- **Primary mining carries the heavy, site-specific burden** — land take, water,
+  biodiversity, tailings, dust/noise and closure liabilities, concentrated on the host
+  area (e.g. Curraghinalt in Fermanagh & Omagh) and its receptors.
+- **Recycling is far lower-impact per £ of value** — it avoids the land/water/
+  biodiversity/tailings burden almost entirely and its carbon footprint is ~30% of
+  primary; circularity is the impact-minimising route to the same supply security.
+- **High-ESG design materially mitigates** the local burden of any primary
+  development (~35% in the model). The order of preference is **avoid** (recycle/design)
+  → **mitigate** (high-ESG: water stewardship, rehabilitation, biodiversity net gain) →
+  **manage closure** (bonded) and local socio-economic risks (boom-bust, displacement).
+
 ---
 
-## Five recommendations
+## Six recommendations
 
 1. **Build the midstream.** Fund first-of-a-kind / scale-up processing and recovery
    capacity (cost-share + blended finance + offtake/price floor). This is the binding
@@ -140,10 +183,14 @@ the opportunity is only captured if the midstream gap is closed.
 3. **Lead with cheap demand-side rules.** Recycled-content procurement, ecodesign
    standards and product passports — high return, low cost — sequenced ahead of, then
    alongside, capacity.
-4. **Use community benefit to unlock contested deposits responsibly.** Pair any
-   primary development with high-ESG conditions and a genuine community-benefit
-   scheme; it is the binding constraint and the sustainable way through.
-5. **Create one front door and a thin safety net.** A single "strategic project"
+4. **Make any extraction responsible and contained.** Pair primary development with a
+   genuine community-benefit scheme (the binding constraint), high-ESG design (which
+   cuts the local burden ~35%) and bonded closure; impacts are site-specific, so
+   require project- and place-specific assessment.
+5. **Tie support to local content and skills.** Local-supplier development plus a
+   green-skills / apprenticeship pipeline convert headline jobs into *retained* NI jobs
+   (~70%→~97%) and are the gating enabler of the GVA and employment benefits.
+6. **Create one front door and a thin safety net.** A single "strategic project"
    designation (mirroring/accessing EU CRMA via Windsor) plus a modest ~180-day
    strategic reserve and international diversification for the residual risk.
 
