@@ -194,6 +194,24 @@ def generate_q26():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_q27():
+    path = OUT / "q2_7_impacts.csv"
+    if not path.exists():
+        return None, None
+    df = pd.read_csv(path, index_col=0)
+    memo_path = OUT / "q2_7_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return df, memo
+
+
+def generate_q27():
+    return subprocess.run(
+        [sys.executable, "q2_7_negative_impacts.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -311,11 +329,12 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_q25, tab_q26, tab_demand,
- tab_supply, tab_companies, tab_region, tab_data) = st.tabs(
+(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_q25, tab_q26, tab_q27,
+ tab_demand, tab_supply, tab_companies, tab_region, tab_data) = st.tabs(
     ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Q2.3 Business Support",
      "Q2.4 Secure Supply", "Q2.5 Jobs & Skills", "Q2.6 Economic Benefits",
-     "Demand & Supply", "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
+     "Q2.7 Negative Impacts", "Demand & Supply", "Supply Security", "Companies",
+     "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -766,6 +785,58 @@ with tab_q26:
         if memo26:
             with st.expander("Full Q2.6 findings memo (economic benefits)"):
                 st.markdown(memo26)
+
+
+with tab_q27:
+    st.subheader("Q2.7 — Negative impacts and how to minimise them")
+    st.caption(
+        "The Minviro Appendix A impact set — CO₂ and PM (validated I-O satellites) "
+        "plus relative pressure indices for water, land transformation, biodiversity "
+        "and mine waste/tailings — with eco-efficiency (impact per £m GVA), the "
+        "recycling-vs-primary contrast and a high-ESG mitigation scenario. Impacts "
+        "are site-specific (people + biodiversity are the receptors)."
+    )
+    g27 = load_q27()
+    df27, memo27 = g27
+    if df27 is None:
+        st.warning("Q2.7 results are not present in this deployment.")
+        if st.button("Run the Q2.7 experiment now"):
+            with st.spinner("Computing the negative-impact profile..."):
+                res = generate_q27()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        c1, c2 = st.columns(2)
+        with c1:
+            st.caption("Local pressure burden by scenario (relative index)")
+            st.bar_chart(df27[["land_pressure", "water_pressure", "biodiversity_pressure",
+                               "waste_pressure"]])
+        with c2:
+            st.caption("Eco-efficiency — land & CO₂ per £m GVA (lower = cleaner per £)")
+            st.bar_chart(df27[["land_per_gva", "co2_per_gva"]])
+        st.info(
+            "Primary mining carries the heavy local burden (land, water, biodiversity, "
+            "tailings); recycling is far lower-impact per £ of GVA (~30% of primary's carbon, "
+            "negligible land/water); and a **high-ESG / low-impact** stance cuts the primary "
+            "burden by up to ~35%. Minimisation hierarchy: **avoid** (recycle/design) → "
+            "**mitigate** (high-ESG design) → **manage closure** + local socio-economic risks. "
+            "Impacts are site-specific — any mine's burden falls on its host area (e.g. "
+            "Curraghinalt in Fermanagh & Omagh)."
+        )
+        cols = {
+            "label": "Scenario", "cum_disc_co2_kt": "CO₂ kt", "cum_disc_pm_t": "PM t",
+            "water_pressure": "Water", "land_pressure": "Land",
+            "biodiversity_pressure": "Biodiversity", "waste_pressure": "Waste/tailings",
+            "co2_per_gva": "CO₂/£m GVA", "land_per_gva": "Land/£m GVA",
+        }
+        st.dataframe(df27[list(cols)].rename(columns=cols), width="stretch")
+        if memo27:
+            with st.expander("Full Q2.7 findings memo (negative impacts, Minviro Appendix A)"):
+                st.markdown(memo27)
 
 
 with tab_demand:

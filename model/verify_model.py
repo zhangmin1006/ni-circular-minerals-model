@@ -308,6 +308,20 @@ def test_employment():
           f"retention {ret0} -> {ret1}")
 
 
+def test_impact():
+    section("14. Negative-impact layer (Q2.7)")
+    import impact_module as I
+    mining_heavier = all(I.PRESSURE["mining"][c] > I.PRESSURE["recycling"][c]
+                         for c in I.CATEGORIES)
+    check("primary mining pressure > recycling for every impact category", mining_heavier,
+          str({c: (I.PRESSURE["mining"][c], I.PRESSURE["recycling"][c]) for c in I.CATEGORIES}))
+    m0, m1 = I.esg_mitigation(0.0), I.esg_mitigation(0.18)
+    check("ESG mitigation: 1.0 at no-ESG, reduced (<1, >=0.6) under high ESG",
+          abs(m0 - 1.0) < 1e-9 and 0.6 <= m1 < 1.0, f"{m0:.2f} -> {m1:.2f}")
+    ap = I.annual_pressures(10.0, 5.0, esg_cost=0.18)
+    check("annual pressures non-negative", all(v >= 0 for v in ap.values()), str(ap))
+
+
 def test_fuzz():
     section(f"12. Property-based / fuzz checks ({FUZZ_N} random valid policy bundles)")
     from coupling import CoupledModel
@@ -356,7 +370,7 @@ def main():
     for t in (test_validation, test_mass_balance, test_share_closure,
               test_no_nan_negative, test_determinism, test_sam_cge, test_spatial,
               test_stockpile, test_company_register, test_economic_sanity,
-              test_geopolitical, test_employment, test_fuzz):
+              test_geopolitical, test_employment, test_impact, test_fuzz):
         try:
             t()
         except Exception as e:

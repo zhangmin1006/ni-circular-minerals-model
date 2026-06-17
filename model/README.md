@@ -74,8 +74,9 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `q2_5_employment_skills.py` | **Q2.5 experiment** — jobs by skill level & wage band (ONS structure on the real NISRA ASHE anchor), **retained local employment** (Minviro leakage fix, rising with local-content + skills support), skilled training/apprenticeship need, and jobs by council area, across four scenarios; uses `src/employment_module.py`; writes `outputs/q2_5_*.csv`, `q2_5_memo.md` |
 | `src/employment_module.py` | skill-level / wage-band / retained-local-employment layer for Q2.5 (real NI ASHE wage anchor; ONS-structure proxies) |
 | `q2_6_economic_benefits.py` | **Q2.6 experiment** — full benefit suite (discounted GVA, output, tax proxy, exports, firm investment pipeline, productivity, **avoided import costs**) + a benefit-cost ratio on incremental GVA and on GVA + avoided imports; writes `outputs/q2_6_benefits.csv`, `q2_6_memo.md` |
+| `q2_7_negative_impacts.py` + `src/impact_module.py` | **Q2.7 experiment** — Minviro Appendix A impact set (CO₂, PM + relative pressure indices for water, land, biodiversity, mine waste/tailings), eco-efficiency (impact per £m GVA), recycling-vs-primary contrast and high-ESG mitigation; writes `outputs/q2_7_impacts.csv`, `q2_7_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
-| `verify_model.py` | **verification & validation harness** — 50 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
+| `verify_model.py` | **verification & validation harness** — 53 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
 | `dashboard.py` | Streamlit interactive dashboard |
 
 ## Validation (I-O core vs Minviro)
@@ -89,7 +90,7 @@ model compares like-with-like. The SAM balances to 0.0; the CGE replicates its
 benchmark to ~1e-11.
 
 **Continuous integration:** `.github/workflows/verify.yml` runs `run_mvm.py`,
-`verify_model.py` (50 invariant + property-based checks) and all consultation experiments on every
+`verify_model.py` (53 invariant + property-based checks) and all consultation experiments on every
 push / PR, so regressions fail the build automatically.
 
 ## How outputs map to the seven questions
@@ -121,7 +122,11 @@ push / PR, so regressions fail the build automatically.
   exports, productivity (GVA/worker), avoided import costs**, firm investment pipeline, and a
   benefit-cost ratio (incremental GVA, and GVA + avoided imports) — capital-heavy scenarios return
   <1× on GVA alone but ~2× once resilience/avoided-imports are counted; pure extraction is weakest
-- **2.7 negative impacts** — CO₂, PM, cumulative discounted CO₂
+- **2.7 negative impacts** — `q2_7_negative_impacts.py`: the Minviro Appendix A impact set (CO₂, PM
+  + water/land/biodiversity/tailings pressure indices), **eco-efficiency** (impact per £m GVA), and
+  the **recycling-vs-primary** contrast — primary mining carries the heavy site-specific burden,
+  recycling is far lower-impact per £, and a **high-ESG** stance cuts the primary burden ~35%
+  (avoid → mitigate → manage-closure hierarchy)
 
 ## IMPORTANT — data status
 - **Real / sourced** (validation & control totals): Minviro scenario anchors, NI mining
