@@ -127,8 +127,11 @@ class MFA:
             import_share = imports / demand if demand else 0.0
             supply_gap_share = unmet / demand if demand else 0.0
             # international diversification (partnerships) lowers the share of
-            # imports coming from the single dominant country: up to a 50% cut.
-            eff_imp_conc = imp_conc * (1.0 - 0.5 * max(0.0, min(1.0, diversification)))
+            # imports from the single dominant country. Max cut 0.45 at full lever,
+            # calibrated to Japan's coordinated post-2010 effort: China REE
+            # dependence fell from ~90% to ~58% (~36%) and is now targeted below
+            # 50% (~44%) via overseas equity/offtake + recycling + substitution.
+            eff_imp_conc = imp_conc * (1.0 - 0.45 * max(0.0, min(1.0, diversification)))
             single_country_exposure = import_share * eff_imp_conc
 
             # update in-use stock and age the inflow history (only supplied material

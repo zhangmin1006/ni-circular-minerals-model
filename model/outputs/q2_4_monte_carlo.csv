@@ -1,6 +1,6 @@
 role,disc_public_cost_gbp_m,mean_supply_gap,p90_supply_gap,worst_supply_gap,mean_single_country_exposure
 market_light_touch,0.0,0.059,0.144,0.262,0.623
-diversify_and_insure,121.8,0.056,0.135,0.252,0.375
+diversify_and_insure,121.8,0.056,0.135,0.252,0.4
 domestic_autonomy,121.1,0.048,0.12,0.208,0.602
 circular_leader,354.1,0.04,0.098,0.185,0.606
-strategic_coordinator,515.9,0.034,0.079,0.159,0.409
+strategic_coordinator,515.9,0.034,0.079,0.159,0.427

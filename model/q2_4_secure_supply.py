@@ -313,6 +313,30 @@ def _write_memo(grid, mc, eb):
                  "domestic production* and *building resilient UK & global supply networks*. The model "
                  "finds that the posture the strategy actually adopts is also the most robust.\n")
 
+    lines.append("## Evidence on intervention effectiveness (real-world)\n")
+    lines.append("- **Japan is a validated natural experiment for exactly this policy mix.** After "
+                 "China's 2010 rare-earth export ban, Japan cut its dependence on Chinese REE from "
+                 "**~90% to ~58%** (now targeting <50%) through a *coordinated* programme: strategic "
+                 "stockpiling **+** overseas equity/offtake (JOGMEC brokered a **$250m Sojitz–Lynas** "
+                 "deal — equity & loans for guaranteed supply) **+** recycling **+** substitution. This "
+                 "is real-world confirmation that the **strategic-coordinator posture works**, and that "
+                 "diversification is achievable (~one-third+ cut over a decade — the basis for the "
+                 "model's diversification lever).")
+    lines.append("- **Stockpiles work as a bridge, not a fix (IEA).** Strategic stocks *\"provide an "
+                 "important buffer against sudden disruptions while countries develop new diversified "
+                 "sources\"* — the oil SPR is the decades-long precedent. This is exactly the model's "
+                 "finite, depleting reserve: it buys time while capacity and diversification are built.")
+    lines.append("- **The market moves the wrong way, so light-touch fails (IEA).** Diversification is "
+                 "*\"the cornerstone of energy security, yet critical minerals are moving in the "
+                 "opposite direction\"* — concentration is rising and near-term output growth stays with "
+                 "today's dominant producers. Security will not self-correct; active intervention is "
+                 "required.")
+    lines.append("- **Effective strategies coordinate across government (IEA/OECD).** The interventions "
+                 "that work align permitting, finance, industrial and environmental policy under a "
+                 "unified strategy — *\"a departure from market-led approaches\"* — and coordinate "
+                 "stockpile purchase/release internationally to avoid distorting the market. Again the "
+                 "**coordinator** role.\n")
+
     lines.append("## Sources\n")
     for s in (
         "UK Critical Minerals Strategy — Vision 2035 (DBT): shock taxonomy (natural disasters, "
@@ -324,6 +348,12 @@ def _write_memo(grid, mc, eb):
         "BGS/Idoine et al. (2025) via GSNI OR25042: 2023 single-country supply concentration "
         "(REE 74%, Co 70%, Li 44%); ~80% of UK metals exported for processing",
         "Strategic stockpiles: Japan/JOGMEC 60–180 days, Korea/KOMIR 100 days (IEA; CSEP 2025)",
+        "Japan post-2010 diversification: China REE dependence ~90%→~58%, targeting <50%; "
+        "JOGMEC-brokered $250m Sojitz–Lynas equity/offtake deal (CNBC; WEF; New Security Beat 2024)",
+        "IEA: stockpiles buffer disruptions 'while countries develop new diversified sources'; "
+        "'diversification is the cornerstone of energy security, yet critical minerals are moving in "
+        "the opposite direction'; effective strategies coordinate across government (IEA Critical "
+        "Minerals Policy Tracker / Security Programme 2025; OECD 2026)",
     ):
         lines.append(f"- {s}")
     lines.append("\n*Roles are illustrative lever bundles; costs are NI-scale UK-anchored proxies for "

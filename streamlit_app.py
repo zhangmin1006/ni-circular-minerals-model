@@ -573,6 +573,14 @@ with tab_q24:
                 f"The government's role is an **active coordinator/insurer**: diversify + "
                 f"insure (stockpile) + build circular capacity + responsible primary."
             )
+            st.caption(
+                "Real-world validation: after China's 2010 export ban, **Japan cut its Chinese "
+                "rare-earth dependence from ~90% to ~58%** with exactly this coordinated mix "
+                "(stockpiling + overseas equity/offtake — the $250m Sojitz–Lynas deal — + recycling "
+                "+ substitution). IEA: stockpiles buffer shocks *while* diversified supply is built; "
+                "diversification is energy security's cornerstone, yet minerals are concentrating — "
+                "so light-touch is not an option."
+            )
         c1, c2 = st.columns(2)
         with c1:
             st.caption("Monte-Carlo tail risk — 90th-percentile supply gap (lower = more resilient)")
