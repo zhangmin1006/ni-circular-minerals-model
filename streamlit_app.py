@@ -156,6 +156,26 @@ def generate_q24():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_q25():
+    sc_path = OUT / "q2_5_scenarios.csv"
+    dist_path = OUT / "q2_5_district_jobs.csv"
+    if not (sc_path.exists() and dist_path.exists()):
+        return None, None, None
+    sc = pd.read_csv(sc_path, index_col=0)
+    dist = pd.read_csv(dist_path)
+    memo_path = OUT / "q2_5_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return sc, dist, memo
+
+
+def generate_q25():
+    return subprocess.run(
+        [sys.executable, "q2_5_employment_skills.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -273,11 +293,11 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_demand, tab_supply,
+(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_q25, tab_demand, tab_supply,
  tab_companies, tab_region, tab_data) = st.tabs(
     ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Q2.3 Business Support",
-     "Q2.4 Secure Supply", "Demand & Supply", "Supply Security", "Companies",
-     "Regional Jobs", "Data Quality"]
+     "Q2.4 Secure Supply", "Q2.5 Jobs & Skills", "Demand & Supply", "Supply Security",
+     "Companies", "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -607,6 +627,62 @@ with tab_q24:
         if memo24:
             with st.expander("Full Q2.4 findings memo (role of government in secure supply)"):
                 st.markdown(memo24)
+
+
+with tab_q25:
+    st.subheader("Q2.5 — Local employment, skills development & regional growth")
+    st.caption(
+        "Jobs by skill level and wage band (ONS structure on the real NISRA ASHE "
+        "anchor — NI median FT wage £34,632/yr, 2024), retained local employment "
+        "(the Minviro leakage fix, rising with local-content + skills support), and "
+        "the skilled training/apprenticeship need — across four policy scenarios."
+    )
+    sc25, dist25, memo25 = load_q25()
+    if sc25 is None:
+        st.warning("Q2.5 results are not present in this deployment.")
+        if st.button("Run the Q2.5 experiment now"):
+            with st.spinner("Running employment / skills / regional-growth scenarios..."):
+                res = generate_q25()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        if "local_skills_focus" in sc25.index and "1_baseline" in sc25.index:
+            ls, base = sc25.loc["local_skills_focus"], sc25.loc["1_baseline"]
+            k1, k2, k3 = st.columns(3)
+            k1.metric("Wage premium vs NI median", f"{ls['wage_premium_vs_ni']:.0%}",
+                      "minerals sectors", delta_color="off")
+            k2.metric("Retained local employment", f"{ls['local_retention_rate']:.0%}",
+                      f"vs {base['local_retention_rate']:.0%} baseline")
+            k3.metric("Skilled roles to train", f"{ls['skilled_training_need']:.0f}",
+                      "vs ~7,500 NI shortage vacancies", delta_color="off")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.caption("Minerals-sector jobs by skill level (end-year)")
+            st.bar_chart(sc25[["high_skill_jobs", "mid_skill_jobs", "entry_skill_jobs"]])
+        with c2:
+            st.caption("Retained local employment by scenario")
+            st.bar_chart(sc25["retained_local_jobs"])
+        sc_cols = {
+            "label": "Scenario", "total_jobs_end": "Total jobs",
+            "minerals_sector_jobs": "Minerals jobs", "high_skill_jobs": "High-skill",
+            "wage_premium_vs_ni": "Wage premium", "retained_local_jobs": "Retained local",
+            "local_retention_rate": "Retention", "skilled_training_need": "Training need",
+        }
+        st.dataframe(sc25[list(sc_cols)].rename(columns=sc_cols), width="stretch")
+        st.markdown("**Regional growth — end-year jobs by council area**")
+        focus_scen = st.selectbox("Scenario", list(sc25.index),
+                                  index=list(sc25.index).index("local_skills_focus")
+                                  if "local_skills_focus" in sc25.index else 0,
+                                  key="q25_scen")
+        dd = dist25[dist25["scenario"] == focus_scen].sort_values("end_jobs", ascending=False)
+        st.bar_chart(dd.set_index("district")["end_jobs"])
+        if memo25:
+            with st.expander("Full Q2.5 findings memo (employment, skills, regional growth)"):
+                st.markdown(memo25)
 
 
 with tab_demand:

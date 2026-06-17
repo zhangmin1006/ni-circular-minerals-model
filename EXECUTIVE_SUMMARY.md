@@ -166,7 +166,7 @@ This is a policy simulator, not a forecast. The economic structure, behavioural
 parameters and many physical-flow figures are **proxy** values (flagged in the data
 register) pending NISRA input-output/SAM data, NI critical-mineral waste-flow data,
 and a firm-level survey. The model is **validated** against the Minviro anchors and
-passes a 47-check verification harness (invariant + property-based) on every change. Swapping the proxies for
+passes a 50-check verification harness (invariant + property-based) on every change. Swapping the proxies for
 collected data — same model — turns this into a calibrated decision tool.
 
 *Full method, equations, data sources and assumptions:

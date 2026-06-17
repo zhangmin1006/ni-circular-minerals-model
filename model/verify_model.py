@@ -290,6 +290,24 @@ def _random_config(rng):
                 use_ree_pilot=True, adaptive=True, use_cge=bool(rng.random() < 0.2))
 
 
+def test_employment():
+    section("13. Employment / skills / wage layer (Q2.5)")
+    import employment_module as E
+    jobs = {"Mining_Quarrying": 100.0, "Recycling_Secondary": 200.0, "Manufacturing": 150.0}
+    sk = E.skill_breakdown(jobs)
+    check("skill breakdown sums to total jobs",
+          abs(sum(sk.values()) - sum(jobs.values())) < 1e-6,
+          f"{sum(sk.values()):.1f} vs {sum(jobs.values()):.1f}")
+    wm = E.wage_metrics(jobs)
+    check("wage bill positive & premium > 0", wm["wage_bill_gbp_m"] > 0 and wm["wage_premium_vs_ni"] > 0,
+          f"bill £{wm['wage_bill_gbp_m']}m, premium {wm['wage_premium_vs_ni']}")
+    r0, ret0 = E.retained_local(1000, 0.0, 0.0)
+    r1, ret1 = E.retained_local(1000, 0.9, 0.9)
+    check("retained local <= total and rises with support",
+          r0 <= 1000 + 1e-6 and r1 <= 1000 + 1e-6 and ret1 > ret0 and 0.70 - 1e-9 <= ret0 <= 0.98 + 1e-9,
+          f"retention {ret0} -> {ret1}")
+
+
 def test_fuzz():
     section(f"12. Property-based / fuzz checks ({FUZZ_N} random valid policy bundles)")
     from coupling import CoupledModel
@@ -338,7 +356,7 @@ def main():
     for t in (test_validation, test_mass_balance, test_share_closure,
               test_no_nan_negative, test_determinism, test_sam_cge, test_spatial,
               test_stockpile, test_company_register, test_economic_sanity,
-              test_geopolitical, test_fuzz):
+              test_geopolitical, test_employment, test_fuzz):
         try:
             t()
         except Exception as e:

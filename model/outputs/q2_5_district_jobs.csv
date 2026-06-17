@@ -1,0 +1,45 @@
+scenario,district,end_jobs
+1_baseline,Antrim & Newtownabbey,140.6
+1_baseline,Ards & North Down,41.9
+1_baseline,"Armagh, Banbridge & Craigavon",121.5
+1_baseline,Belfast,174.1
+1_baseline,Causeway Coast & Glens,51.7
+1_baseline,Derry City & Strabane,57.9
+1_baseline,Fermanagh & Omagh,145.8
+1_baseline,Lisburn & Castlereagh,49.5
+1_baseline,Mid & East Antrim,85.6
+1_baseline,Mid Ulster,114.4
+1_baseline,"Newry, Mourne & Down",164.7
+2_circular_innovation,Antrim & Newtownabbey,197.7
+2_circular_innovation,Ards & North Down,56.3
+2_circular_innovation,"Armagh, Banbridge & Craigavon",166.0
+2_circular_innovation,Belfast,245.1
+2_circular_innovation,Causeway Coast & Glens,66.5
+2_circular_innovation,Derry City & Strabane,75.1
+2_circular_innovation,Fermanagh & Omagh,160.0
+2_circular_innovation,Lisburn & Castlereagh,67.5
+2_circular_innovation,Mid & East Antrim,108.6
+2_circular_innovation,Mid Ulster,141.6
+2_circular_innovation,"Newry, Mourne & Down",229.3
+4_integrated,Antrim & Newtownabbey,205.1
+4_integrated,Ards & North Down,69.8
+4_integrated,"Armagh, Banbridge & Craigavon",193.3
+4_integrated,Belfast,253.5
+4_integrated,Causeway Coast & Glens,96.3
+4_integrated,Derry City & Strabane,105.7
+4_integrated,Fermanagh & Omagh,363.2
+4_integrated,Lisburn & Castlereagh,79.5
+4_integrated,Mid & East Antrim,164.3
+4_integrated,Mid Ulster,231.4
+4_integrated,"Newry, Mourne & Down",248.1
+local_skills_focus,Antrim & Newtownabbey,178.9
+local_skills_focus,Ards & North Down,51.6
+local_skills_focus,"Armagh, Banbridge & Craigavon",151.3
+local_skills_focus,Belfast,221.7
+local_skills_focus,Causeway Coast & Glens,61.6
+local_skills_focus,Derry City & Strabane,69.4
+local_skills_focus,Fermanagh & Omagh,155.0
+local_skills_focus,Lisburn & Castlereagh,61.5
+local_skills_focus,Mid & East Antrim,100.9
+local_skills_focus,Mid Ulster,132.5
+local_skills_focus,"Newry, Mourne & Down",208.0

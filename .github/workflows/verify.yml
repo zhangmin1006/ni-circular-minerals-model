@@ -1,7 +1,7 @@
 name: Verify model
 
 # Validate the NI Circular Minerals model on every push / PR:
-# regenerate outputs, run the 47-check verification harness (gates on failure),
+# regenerate outputs, run the 50-check verification harness (gates on failure),
 # and smoke-test every consultation experiment + the figure build.
 
 on:
@@ -32,7 +32,7 @@ jobs:
         working-directory: model
         run: python run_mvm.py
 
-      - name: Verify & validate (47 invariant + property-based checks; fails the build on any error)
+      - name: Verify & validate (50 invariant + property-based checks; fails the build on any error)
         working-directory: model
         run: python verify_model.py
 
@@ -44,4 +44,5 @@ jobs:
           python q_demand_supply_strategy.py
           python q2_3_business_support.py
           python q2_4_secure_supply.py
+          python q2_5_employment_skills.py
           python make_plots.py
