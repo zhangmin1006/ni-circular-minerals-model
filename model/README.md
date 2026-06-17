@@ -76,6 +76,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `q2_6_economic_benefits.py` | **Q2.6 experiment** — full benefit suite (discounted GVA, output, tax proxy, exports, firm investment pipeline, productivity, **avoided import costs**) + a benefit-cost ratio on incremental GVA and on GVA + avoided imports; writes `outputs/q2_6_benefits.csv`, `q2_6_memo.md` |
 | `q2_7_negative_impacts.py` + `src/impact_module.py` | **Q2.7 experiment** — Minviro Appendix A impact set (CO₂, PM + relative pressure indices for water, land, biodiversity, mine waste/tailings), eco-efficiency (impact per £m GVA), recycling-vs-primary contrast and high-ESG mitigation; writes `outputs/q2_7_impacts.csv`, `q2_7_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
+| `export_word.py` | converts the Q2.1–2.7 memos + executive summary + technical doc to **Word (.docx)** in `../word/` (lightweight Markdown→docx via python-docx) |
 | `verify_model.py` | **verification & validation harness** — 53 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
 | `dashboard.py` | Streamlit interactive dashboard |
 
