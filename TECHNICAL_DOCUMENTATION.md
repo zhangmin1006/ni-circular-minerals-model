@@ -486,11 +486,15 @@ NISRA, GSNI Tellus, IEA, Met4Tech/Faraday, and the cited US/EU policy analyses.
 
 - **Validation** against Minviro anchors (`indicators.validate_against_minviro`):
   one-mine 7.3/73.1/£1.58m and two-mine 43.0/430.4/£9.29m — all within tolerance.
-- **Verification harness** (`verify_model.py`): **38 invariant checks** — MFA mass
+- **Verification harness** (`verify_model.py`): **47 checks** — *invariant*: MFA mass
   balance (baseline + shock), supply-share bounds/closure, no NaN/negatives,
   determinism, SAM balance (~1e-12) + mining-GVA anchor, CGE benchmark replication
   (wage = 1.000), spatial share closure, stockpile reserve non-negativity/depletion,
-  register integrity, and economic-sanity ranges. **All 38 pass.**
+  register integrity, economic-sanity ranges, geopolitical features (diversification,
+  time-varying shock); plus **property-based/fuzz** — 30 random valid policy bundles
+  (random lever subsets, demand growth, static/time-varying shocks, plateau, CGE
+  on/off) must all preserve mass balance, share closure, no NaN/negatives and a
+  non-negative reserve. **All 47 pass.**
 - **Continuous integration** (`.github/workflows/verify.yml`): every push/PR
   installs dependencies, runs `run_mvm.py`, runs `verify_model.py` (gates the
   build) and smoke-tests all experiments. The model is **deterministic** (identical
@@ -504,7 +508,7 @@ NISRA, GSNI Tellus, IEA, Met4Tech/Faraday, and the cited US/EU policy analyses.
 cd model
 pip install -r requirements.txt          # numpy, pandas, mesa, networkx, scipy, matplotlib, streamlit
 python run_mvm.py                         # 6 scenario families → outputs/
-python verify_model.py                    # 38 invariant checks
+python verify_model.py                    # 47 invariant + property-based checks
 python q2_1_circularity_interventions.py  # Q2.1
 python q2_2_opportunities_challenges.py   # Q2.2
 python q2_3_business_support.py           # Q2.3

@@ -15,6 +15,8 @@ Checks:
   8. Stockpile reserve never negative; depletes under shock
   9. Company register integrity (roles mapped; Plaswire reclassified)
  10. Economic sanity (GVA/output, jobs/£m, multipliers in plausible ranges)
+ 11. Geopolitical-shock features (diversification; time-varying shock)
+ 12. Property-based / fuzz checks (random valid policy bundles -> invariants hold)
 
 Run:  python verify_model.py
 """
@@ -249,12 +251,94 @@ def test_geopolitical():
     check("time-varying shock: gap appears after onset", post > pre, f"post {post:.4f}")
 
 
+FUZZ_N = 30
+LEVER_RANGES = {
+    "exploration_grant": (0.0, 0.2), "finance_support": (0.0, 1.0),
+    "community_benefit": (0.0, 1.0), "esg_cost": (0.0, 0.25),
+    "recycling_grant": (0.0, 1.0), "innovation_grant": (0.0, 1.0),
+    "energy_cost_index": (0.85, 1.15), "secondary_market_support": (0.0, 1.0),
+    "collection_infrastructure": (0.0, 1.0), "product_passport": (0.0, 1.0),
+    "recycled_content_procurement": (0.0, 1.0), "design_standards": (0.0, 1.0),
+    "local_supplier_support": (0.0, 1.0), "skills_support": (0.0, 1.0),
+    "strategic_stockpile": (0.0, 1.0), "diversification": (0.0, 1.0),
+}
+
+
+def _random_config(rng):
+    """A random but VALID model configuration (policy bundle, demand growth,
+    shock — static or time-varying, plateau, CGE on/off)."""
+    policy = {k: round(float(rng.uniform(lo, hi)), 3)
+              for k, (lo, hi) in LEVER_RANGES.items() if rng.random() < 0.5}
+    if rng.random() < 0.4:
+        policy["permit_years"] = int(rng.integers(1, 7))
+    dg = {m: round(float(rng.uniform(0.0, 0.3)), 3)
+          for m in P.MINERALS if rng.random() < 0.5}
+    mode = int(rng.integers(0, 3))            # 0 none, 1 static shock, 2 time-varying
+    ic, price = None, {}
+    if mode:
+        hit = [m for m in P.CRITICAL_MINERALS if rng.random() < 0.6] or [P.CRITICAL_MINERALS[0]]
+        caps = {m: round(float(rng.uniform(0.0, 0.9)), 3) for m in hit}
+        price = {m: round(float(rng.uniform(0.0, 0.15)), 3) for m in hit}
+        if mode == 1:
+            ic = caps
+        else:
+            onset = int(rng.integers(1, 16))
+            ic = lambda t, _c=caps, _o=onset: (_c if t >= _o else {})
+    plateau = None if rng.random() < 0.5 else int(rng.integers(5, 16))
+    return dict(name="fuzz", policy=policy, demand_growth=dg, price_path=price,
+                import_constraint=ic, demand_plateau_years=plateau, seed=42,
+                use_ree_pilot=True, adaptive=True, use_cge=bool(rng.random() < 0.2))
+
+
+def test_fuzz():
+    section(f"12. Property-based / fuzz checks ({FUZZ_N} random valid policy bundles)")
+    from coupling import CoupledModel
+    rng = np.random.default_rng(20260617)
+    key = ["output_total_gbp_m", "gva_total_gbp_m", "employment_total", "recycling_jobs",
+           "mining_jobs", "manufacturing_jobs", "co2_kt", "crit_recycled_share",
+           "crit_import_share", "crit_supply_gap"]
+    errs = mb = sh = nan = neg = res = 0
+    for _ in range(FUZZ_N):
+        cfg = _random_config(rng)
+        try:
+            m = CoupledModel(**cfg)
+            df = m.run()
+        except Exception:
+            errs += 1
+            continue
+        if not all(r["mass_balance_ok"] for r in m.mfa.history):
+            mb += 1
+        bad = False
+        for r in m.mfa.history:
+            if r["demand_t"] <= 0:
+                continue
+            s = [r["domestic_share"], r["recycled_share"], r["import_share"],
+                 r["supply_gap_share"]]
+            if any(x < -1e-9 or x > 1 + 1e-6 for x in s) or abs(sum(s) - 1) > 1e-6:
+                bad = True
+                break
+        sh += bad
+        sub = df[[c for c in key if c in df]].to_numpy(dtype=float)
+        if np.isnan(sub).any() or np.isinf(sub).any():
+            nan += 1
+        if (sub < -1e-9).any():
+            neg += 1
+        if any(v < -1e-9 for v in m._reserve.values()):
+            res += 1
+    check(f"fuzz: all {FUZZ_N} random configs ran without error", errs == 0, f"{errs} errored")
+    check("fuzz: MFA mass balance closes in every config", mb == 0, f"{mb} violated")
+    check("fuzz: supply shares bounded & sum to 1 in every config", sh == 0, f"{sh} violated")
+    check("fuzz: no NaN/inf in key outputs in every config", nan == 0, f"{nan} violated")
+    check("fuzz: no negative jobs/GVA/output/CO2 in every config", neg == 0, f"{neg} violated")
+    check("fuzz: stockpile reserve never negative in every config", res == 0, f"{res} violated")
+
+
 def main():
     print("MODEL VERIFICATION & VALIDATION")
     for t in (test_validation, test_mass_balance, test_share_closure,
               test_no_nan_negative, test_determinism, test_sam_cge, test_spatial,
               test_stockpile, test_company_register, test_economic_sanity,
-              test_geopolitical):
+              test_geopolitical, test_fuzz):
         try:
             t()
         except Exception as e:
