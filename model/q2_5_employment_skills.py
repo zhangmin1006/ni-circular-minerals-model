@@ -147,12 +147,22 @@ def _write_memo(sc, dist):
                  f"~{ls['local_retention_rate']:.0%} under a local-content + skills focus — i.e. "
                  f"{ls['retained_local_jobs']:.0f} of {ls['total_jobs_end']:.0f} jobs kept in NI — "
                  f"directly addressing Minviro's warning that benefits leak out when specialist "
-                 f"labour and equipment are imported.")
+                 f"labour and equipment are imported. Minviro's own estimate of *retained direct "
+                 f"jobs over 30 years* scales with activity (Scenario 2: 52; one-mine 3a: 1,225; "
+                 f"two-mine 4b: 7,177), underlining that retention — not just headline jobs — is what "
+                 f"the Department should target.")
     lines.append(f"- **Skills are the binding enabler.** The sector needs ~{ls['skilled_training_need']:.0f} "
                  f"skilled roles trained over the horizon, against an NI backdrop of ~7,500 skill-"
-                 f"shortage vacancies and 5,000+ new roles needed annually. A green-skills/critical-"
-                 f"minerals pipeline (Skills England/DWP, FE colleges, QUB, Camborne-style provision) "
-                 f"and apprenticeships are prerequisites, not add-ons.\n")
+                 f"shortage vacancies and 5,000+ new roles needed annually — and a UK backdrop of "
+                 f"apprenticeship participation down ~1/5 since 2016/17 and only 9% of upper-secondary "
+                 f"vocational learners graduating in engineering/manufacturing (UK Industrial "
+                 f"Strategy). A green-skills/critical-minerals pipeline (Skills England/DWP, FE "
+                 f"colleges, QUB, Camborne-style provision) and apprenticeships are prerequisites, "
+                 f"not add-ons.")
+    lines.append("- **Cluster-led regional policy.** The UK Industrial Strategy prioritises city "
+                 "regions and clusters for innovation funding and names **Belfast as a critical-"
+                 "minerals cluster** — a route to concentrate the recycling/advanced-manufacturing "
+                 "growth while the rural west hosts extraction and equipment supply.\n")
 
     lines.append("## Scenario comparison\n")
     lines.append(_md_table(sc, ["label", "total_jobs_end", "minerals_sector_jobs",
@@ -178,7 +188,11 @@ def _write_memo(sc, dist):
         "NI skills: ~7,500 skill-shortage vacancies (2024), 5,000+ new roles needed annually, "
         "STEM/engineering/apprenticeship gaps (NI Executive / DfE Skills Strategy)",
         "Vision 2035: skills via Skills England + DWP; Camborne School of Mines; BGS human capital",
-        "Minviro Final Report: benefits leak from the region if specialist labour/equipment imported",
+        "UK Industrial Strategy 2025: apprenticeships down ~1/5 (2016/17-2023/24); 9% of vocational "
+        "learners in engineering/manufacturing; Skills England aligns AM/Clean-Energy training; "
+        "Belfast a named critical-minerals cluster, clusters prioritised for innovation funding",
+        "Minviro Final Report: retained direct jobs over 30 yrs (Scen2 52 ... 4b 7,177); benefits "
+        "leak from the region if specialist labour/equipment imported (Galmoy/Lisheen)",
     ):
         lines.append(f"- {s}")
     lines.append("\n*Skill splits and sector wage indices are PROXY (ONS structure on a real NISRA "

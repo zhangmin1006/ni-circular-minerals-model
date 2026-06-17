@@ -296,6 +296,12 @@ def _write_memo(grid, mc, eb):
                  f"bridge, builds circular capacity for durable secondary supply, and brings responsible "
                  f"primary forward where social licence allows — the only posture that moves all three "
                  f"Vision-2035 indicators at once while adding GVA.")
+    lines.append("4b. **The coordinator role has institutional backing in the UK Industrial Strategy:** "
+                 "an enhanced **Critical Minerals Intelligence Centre** (horizon scanning = the "
+                 "*monitoring* function), **MoD/DSIT/DBT prioritisation of critical supply chains** "
+                 "(defence resilience + stockpiling), and an explicit aim to use **circular practices "
+                 "to boost resilient supply chains** — i.e. recycling capacity is itself a security "
+                 "instrument, linking Q2.4 to Q2.1/Q2.7.")
     lines.append("5. **The government's role is therefore an active *coordinator/insurer*, not a "
                  "producer or a bystander:** set the targets, de-risk midstream capacity (finance + "
                  "offtake), fix feedstock collection, diversify and insure against the tail with "
@@ -337,6 +343,9 @@ def _write_memo(grid, mc, eb):
         "industry–government action",
         "EU Critical Raw Materials Act (2024): 10% extraction / 40% processing / 25% recycling / "
         "≤65% single-country benchmarks; strategic stockpiling & monitoring",
+        "UK Industrial Strategy 2025: enhanced Critical Minerals Intelligence Centre (monitoring); "
+        "MoD/DSIT/DBT critical-supply-chain prioritisation; circular practices to boost resilient "
+        "supply chains",
         "BGS/Idoine et al. (2025) via GSNI OR25042: 2023 single-country supply concentration "
         "(REE 74%, Co 70%, Li 44%); ~80% of UK metals exported for processing",
         "Strategic stockpiles: Japan/JOGMEC 60–180 days, Korea/KOMIR 100 days (IEA; CSEP 2025)",

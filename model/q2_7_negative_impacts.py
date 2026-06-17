@@ -149,11 +149,15 @@ def _write_memo(df):
                  f"~{I.ESG_MAX_MITIGATION:.0%}: the high-ESG scenario's land pressure "
                  f"({esg['land_pressure']:.0f}) sits well below unmitigated primary extraction "
                  f"({prim['land_pressure']:.0f}) for comparable development.")
-    lines.append(f"4. **Carbon rises with activity but is efficient.** Cumulative discounted CO2 "
+    lines.append(f"4. **Carbon and air impacts are modest in national terms.** Minviro's CLCA found "
+                 f"the most active mining scenario adds only **~0.36% of NI annual CO2** and **~0.24% "
+                 f"of PM** per year when mines are active. In the model, cumulative discounted CO2 "
                  f"grows from {base['cum_disc_co2_kt']:.0f} kt (baseline) as recycling/processing "
-                 f"expands, but CO2-per-£GVA stays low — and recycling displaces higher-carbon "
-                 f"primary + import routes. Q2.7 should be read with Q2.6: the impacts buy real GVA, "
-                 f"jobs and avoided imports.")
+                 f"expands, but CO2-per-£GVA stays low and recycling displaces higher-carbon primary "
+                 f"+ import routes — so the binding negative impacts are the *local* land/water/"
+                 f"biodiversity burden, not national carbon. Mining carbon can be cut further with "
+                 f"hydrogen haul trucks and electrified crushers/mills on renewable power (Minviro). "
+                 f"Read with Q2.6: the impacts buy real GVA, jobs and avoided imports.")
     lines.append("5. **Impacts are site-specific and concentrated.** Any primary mine's land/"
                  "biodiversity/water burden falls on its host council area (e.g. Curraghinalt in "
                  "Fermanagh & Omagh) and named receptors — so impact assessment, community benefit "
@@ -173,6 +177,11 @@ def _write_memo(df):
     for s in ("Minviro Appendix A: impact groups (land transformation, water availability/quality, "
               "air quality & noise, GHG, biodiversity, mine closure, tailings/waste rock); site-"
               "specific receptors; avoid > mitigate > closure hierarchy",
+              "Minviro Final Report CLCA: most active mining scenario adds ~0.36% of NI annual CO2 / "
+              "~0.24% of PM when active; decarbonisation via hydrogen haul trucks + electrified "
+              "processing on renewables",
+              "UK Industrial Strategy 2025: circular practices (re-use/recycling) 'reduce the "
+              "environmental impact of resource extraction'",
               "Minviro CLCA + ree_pilot: recycling carbon footprint ~30% of primary",
               "CO2/PM are the model's I-O satellites (NAEI/DAERA-class, PROXY); water/land/"
               "biodiversity/waste are dimensionless relative pressure indices (PROXY) — replace with "

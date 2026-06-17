@@ -185,9 +185,15 @@ def _write_memo(df):
                  "*retained employment*, warning that mining benefits can be *\"economically detached "
                  "from the regions\"* — it cites the recently closed Irish mines **Galmoy and "
                  "Lisheen**, where national and international specialist firms during construction "
-                 "*limited the extent of local employment*. So the headline GVA/jobs here are an "
-                 "upper bound; the *retained* share depends on local-content and skills measures "
-                 "(quantified in Q2.5, where retention rises from ~70% to ~97%).")
+                 "*limited the extent of local employment*. Its own estimate of retained direct jobs "
+                 "over 30 years scales with activity (Scenario 2: 52; one-mine: ~1,225; two-mine: "
+                 "~7,177). So the headline GVA/jobs here are an upper bound; the *retained* share "
+                 "depends on local-content and skills measures (quantified in Q2.5, where retention "
+                 "rises from ~70% to ~97%).")
+    lines.append("- **The benefits come at modest carbon cost.** Minviro's CLCA puts the most active "
+                 "mining scenario at only ~0.36% of NI annual CO2 (and ~0.24% of PM) — so the "
+                 "economic case is not bought with large national emissions (the real impact trade-"
+                 "off is the *local* environmental burden, Q2.7).")
     lines.append("- **A skilled-labour shortage is a binding limitation.** Minviro notes all "
                  "scenarios *\"rely on access to a pool of skilled labour\"* (even the US flags too "
                  "few qualified domestic workers) — so the skills pipeline (Q2.5) gates how much of "
