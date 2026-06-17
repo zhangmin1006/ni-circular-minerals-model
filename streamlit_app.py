@@ -541,10 +541,12 @@ with tab_q23:
 with tab_q24:
     st.subheader("Q2.4 — What role should government have in ensuring secure supply?")
     st.caption(
-        "Five government roles (light-touch, diversify-&-insure, domestic autonomy, "
-        "circular leader, strategic coordinator) evaluated against escalating "
-        "geopolitical shocks (dominant-supplier export ban; caps = 1 − 2023 "
-        "single-country concentration) and a Monte-Carlo of uncertain shocks."
+        "Grounded in Vision 2035 (\"concentrated processing and mining … vulnerable to "
+        "natural disasters, war or geopolitical fallout\"). Five government roles — the "
+        "postures the strategy describes (domestic production; partnerships/diversification; "
+        "stockpiling; circular capability; coordinated action) — evaluated against an "
+        "escalating dominant-supplier export ban (caps = 1 − 2023 single-country "
+        "concentration) and a Monte-Carlo of uncertain shocks."
     )
     g24 = load_q24()
     grid24, mc24, memo24 = g24

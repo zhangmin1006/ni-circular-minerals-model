@@ -41,8 +41,11 @@ os.makedirs(OUT, exist_ok=True)
 GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_EV,
                 "Cobalt": 0.06, "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
 
-# 2023 single-country supply concentration (BGS/Idoine 2025) — the geopolitical
-# risk vector. Import caps under a shock = 1 - loss_factor * concentration.
+# SHOCK BASIS (Vision 2035): "increasingly concentrated processing and mining
+# supply chains ... vulnerable to shocks such as natural disasters, war or
+# geopolitical fallout" and "shortages or disruption". We model that concentration
+# risk with the 2023 single-country supply shares (BGS/Idoine 2025): import caps
+# under a shock = 1 - loss_factor * concentration (a dominant-supplier export ban).
 CONCENTRATION = {"REE_magnet": 0.74, "Cobalt": 0.70, "Antimony": 0.70,
                  "Aluminium": 0.35, "Lithium": 0.44, "Nickel": 0.40, "Copper": 0.30}
 PRICE_SPIKE = {"Lithium": 0.10, "REE_magnet": 0.10, "Cobalt": 0.09,
@@ -56,7 +59,20 @@ def shock_caps(loss_factor, minerals=None):
 
 
 # ---------------------------------------------------------------------------
-# Government roles (strategic postures) -> policy lever bundles
+# Government roles (strategic postures) -> policy lever bundles, each grounded in
+# the UK Vision 2035 strategy:
+#   market_light_touch    : counterfactual (no strategy).
+#   diversify_and_insure  : objective 2 "international partnerships ... diversify
+#                           our supply chains" + "stockpiling ... through
+#                           procurement mechanisms" (defence resilience).
+#   domestic_autonomy     : objective 1 "grow our domestic production" (NWF/UKEF,
+#                           EA priority permitting, community benefit).
+#   circular_leader       : "strengthening our own capabilities for mining,
+#                           refining and recycling ... a more circular economy"
+#                           (+ EU CRMA 25% recycling target; NI magnet recycling).
+#   strategic_coordinator : BOTH Vision-2035 objectives + "joint action between
+#                           industry and government ... in a more coordinated way",
+#                           with responsible/high-ESG terms.
 # ---------------------------------------------------------------------------
 ROLES = {
     "market_light_touch": {},
@@ -229,14 +245,19 @@ def _write_memo(grid, mc, eb):
     best = ranked.index[0]
     lines = []
     lines.append("# Q2.4 — What role should government have in ensuring secure mineral supply?\n")
-    lines.append("**Method:** five government *roles* (strategic postures) are evaluated against "
-                 "escalating **geopolitical shocks** — a dominant-supplier export ban with per-mineral "
-                 "import caps = 1 − (2023 single-country concentration: REE 74% China, Co 70% DRC, Li "
-                 "44% Australia; BGS/Idoine 2025) — and against a **Monte Carlo** of uncertain shocks "
-                 "(random onset, affected minerals, severity). Metrics are the Vision-2035 secure-supply "
-                 "targets (≥10% domestic, ≥20% recycled, ≤60% single-country) plus an HHI-style "
-                 "supply-risk index and the unmet-demand supply gap. Figures are model behaviour, "
-                 "not forecasts.\n")
+    lines.append("**Method (grounded in the strategy documents):** Vision 2035 warns that "
+                 "*\"increasingly concentrated processing and mining supply chains\"* leave supply "
+                 "*\"vulnerable to shocks such as natural disasters, war or geopolitical fallout\"*. "
+                 "We model that as a **dominant-supplier export ban** — per-mineral import caps = "
+                 "1 − (2023 single-country concentration: REE 74% China, Co 70% DRC, Li 44% Australia; "
+                 "BGS/Idoine 2025) — escalated from trade friction to bloc fragmentation, plus a "
+                 "**Monte Carlo** of uncertain shocks (random onset, affected minerals ∝ concentration, "
+                 "severity). The five **government roles** are the postures the strategy itself "
+                 "describes — *optimise domestic production* and *build resilient UK & global supply "
+                 "networks* (incl. partnerships, diversification, stockpiling and circular capability). "
+                 "Metrics are the Vision-2035 / EU-CRMA secure-supply targets (≥10% domestic, ≥20% "
+                 "recycled, ≤60% single-country) plus an HHI-style supply-risk index and the unmet-demand "
+                 "supply gap. Figures are model behaviour, not forecasts.\n")
 
     lines.append("## Roles tested\n")
     for r, lbl in ROLE_LABEL.items():
@@ -286,11 +307,26 @@ def _write_memo(grid, mc, eb):
     lines.append("5. **The government's role is therefore an active *coordinator/insurer*, not a "
                  "producer or a bystander:** set the targets, de-risk midstream capacity (finance + "
                  "offtake), fix feedstock collection, diversify and insure against the tail with "
-                 "partnerships + a strategic reserve, and uphold high-ESG/community-benefit terms — "
-                 "matching the UK Vision-2035 dual objective of *optimising domestic production* and "
-                 "*building resilient UK & global supply networks*.\n")
+                 "partnerships + a strategic reserve, and uphold high-ESG/community-benefit terms. "
+                 "This is exactly what Vision 2035 describes — *\"joint action between industry and "
+                 "government … in a more coordinated way\"* across its dual objective of *optimising "
+                 "domestic production* and *building resilient UK & global supply networks*. The model "
+                 "finds that the posture the strategy actually adopts is also the most robust.\n")
 
-    lines.append("*Roles are illustrative lever bundles; costs are NI-scale UK-anchored proxies for "
+    lines.append("## Sources\n")
+    for s in (
+        "UK Critical Minerals Strategy — Vision 2035 (DBT): shock taxonomy (natural disasters, "
+        "war, geopolitical fallout; concentrated processing & mining); two objectives; "
+        "partnerships, diversification, defence stockpiling, responsible/high-ESG, coordinated "
+        "industry–government action",
+        "EU Critical Raw Materials Act (2024): 10% extraction / 40% processing / 25% recycling / "
+        "≤65% single-country benchmarks; strategic stockpiling & monitoring",
+        "BGS/Idoine et al. (2025) via GSNI OR25042: 2023 single-country supply concentration "
+        "(REE 74%, Co 70%, Li 44%); ~80% of UK metals exported for processing",
+        "Strategic stockpiles: Japan/JOGMEC 60–180 days, Korea/KOMIR 100 days (IEA; CSEP 2025)",
+    ):
+        lines.append(f"- {s}")
+    lines.append("\n*Roles are illustrative lever bundles; costs are NI-scale UK-anchored proxies for "
                  "relative comparison. Behavioural thresholds and shock magnitudes are PROXY.*")
 
     with open(os.path.join(OUT, "q2_4_memo.md"), "w", encoding="utf-8") as f:
