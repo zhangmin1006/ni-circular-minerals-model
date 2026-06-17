@@ -16,7 +16,10 @@ Checks:
   9. Company register integrity (roles mapped; Plaswire reclassified)
  10. Economic sanity (GVA/output, jobs/£m, multipliers in plausible ranges)
  11. Geopolitical-shock features (diversification; time-varying shock)
- 12. Property-based / fuzz checks (random valid policy bundles -> invariants hold)
+ 12. Employment/skills/wage layer (Q2.5)
+ 13. Negative-impact layer (Q2.7)
+ 14. CGE partial-equilibrium fallback path
+ 15. Property-based / fuzz checks (random valid policy bundles -> invariants hold)
 
 Run:  python verify_model.py
 """
@@ -89,6 +92,22 @@ def test_mass_balance():
     shock_unmet = sum(r["unmet_demand_t"] for r in m2.mfa.history)
     check("no unmet demand without a shock", abs(base_unmet) < 1e-9, f"{base_unmet:.3f}")
     check("shock creates unmet demand (supply gap)", shock_unmet > 0, f"{shock_unmet:.0f} t")
+    # Edge case found in review: domestic primary plus recovered secondary can
+    # exceed demand unless recycled supply is capped after domestic supply.
+    from mfa_module import MFA
+    m3 = MFA()
+    rows = m3.step(
+        2026,
+        collection_boost={"Copper": 0.5},
+        recovery_boost={"Copper": 0.08},
+        new_domestic={"Copper": 1.0},
+    )
+    copper = next(r for r in rows if r["mineral"] == "Copper")
+    supplied = (copper["domestic_primary_t"] + copper["imports_t"]
+                + copper["recycled_t"] + copper["unmet_demand_t"])
+    check("oversupply edge case: supplied copper still equals demand",
+          copper["mass_balance_ok"] and supplied <= copper["demand_t"] + 1e-6,
+          f"supplied {supplied:.1f} vs demand {copper['demand_t']:.1f}")
 
 
 def test_share_closure():
@@ -249,6 +268,11 @@ def test_geopolitical():
     post = float(d2.iloc[5:]["crit_supply_gap"].mean())
     check("time-varying shock: no gap before onset", pre < 1e-9, f"pre {pre:.4f}")
     check("time-varying shock: gap appears after onset", post > pre, f"post {post:.4f}")
+    import run_mvm
+    main_shock = run_mvm.SCENARIOS.get("5_supply_shock", {})
+    check("main scenario 5_supply_shock includes an import constraint",
+          bool(main_shock.get("import_constraint")),
+          str(main_shock.get("import_constraint", {})))
 
 
 FUZZ_N = 30
@@ -322,6 +346,25 @@ def test_impact():
     check("annual pressures non-negative", all(v >= 0 for v in ap.values()), str(ap))
 
 
+def test_cge_fallback():
+    section("15. CGE partial-equilibrium fallback (when the full solve fails)")
+    from coupling import CoupledModel
+    m = CoupledModel(name="fb", policy={"recycling_grant": 0.3},
+                     demand_growth={"Copper": 0.04}, seed=42, use_ree_pilot=True,
+                     adaptive=True, use_cge=True)
+    m.cge.solve = lambda shock=None: {"success": False, "max_resid": 99.0}  # force failure
+    df = m.run()
+    statuses = set(df["cge_status"]) if "cge_status" in df else set()
+    check("forced CGE failure routes to the PE fallback", statuses == {"fallback_pe"},
+          str(statuses))
+    check("fallback run has no NaN in GVA/jobs",
+          not df[["gva_total_gbp_m", "employment_total"]].isna().any().any())
+    check("fallback keeps price feedback bounded [0.8,1.5] & mass balance",
+          0.8 <= m.cge_feedback_price <= 1.5
+          and all(r["mass_balance_ok"] for r in m.mfa.history),
+          f"feedback {m.cge_feedback_price:.3f}")
+
+
 def test_fuzz():
     section(f"12. Property-based / fuzz checks ({FUZZ_N} random valid policy bundles)")
     from coupling import CoupledModel
@@ -370,7 +413,8 @@ def main():
     for t in (test_validation, test_mass_balance, test_share_closure,
               test_no_nan_negative, test_determinism, test_sam_cge, test_spatial,
               test_stockpile, test_company_register, test_economic_sanity,
-              test_geopolitical, test_employment, test_impact, test_fuzz):
+              test_geopolitical, test_employment, test_impact, test_cge_fallback,
+              test_fuzz):
         try:
             t()
         except Exception as e:

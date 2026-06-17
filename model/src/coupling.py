@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import seed_parameters as P
 from io_module import DynamicIO
-from mfa_module import MFA, MINERAL_PRICE_GBP_PER_T
+from mfa_module import MFA
 from abm_module import MineralsABM
 from company_data import firm_recycling_output_floor_gbp_m
 from spatial_module import allocate_jobs, DISTRICTS
@@ -63,6 +63,7 @@ class CoupledModel:
         self.io = DynamicIO()
         self.mfa = MFA(use_ree_pilot=use_ree_pilot)
         self.abm = MineralsABM(policy=policy, seed=seed, adaptive=adaptive)
+        self.mineral_prices = dict(self.mfa.prices)
         self.cge = None
         if use_cge:
             from cge_module import CGE
@@ -71,7 +72,7 @@ class CoupledModel:
         # Firm-grounded floor on recycling output (Ionic 400 tpa REE plant etc.):
         # the recycling sector cannot be smaller than the named NI plants imply.
         self.firm_recycling_floor = firm_recycling_output_floor_gbp_m(
-            MINERAL_PRICE_GBP_PER_T, rows=self.abm.company_register)
+            self.mineral_prices, rows=self.abm.company_register)
         self.records = []
 
     def _price_index(self, t):
@@ -91,7 +92,7 @@ class CoupledModel:
         the horizon) so reported circular activity is grounded in real firms."""
         fd = np.zeros(P.N)
         for r in mfa_rows:
-            price = MINERAL_PRICE_GBP_PER_T[r["mineral"]] / 1e6  # £m per tonne
+            price = self.mineral_prices[r["mineral"]] / 1e6  # GBP m per tonne
             fd[P.S["Mining_Quarrying"]] += r["domestic_primary_t"] * price
             fd[P.S["Recycling_Secondary"]] += r["recycled_t"] * price
         rec = P.S["Recycling_Secondary"]
@@ -151,6 +152,7 @@ class CoupledModel:
 
             # --- Tier-3: CGE economy-wide adjustment + feedback to ABM ---
             cge_wage, cge_gva = np.nan, np.nan
+            cge_status, cge_max_resid = "not_run", np.nan
             if self.use_cge:
                 prod = np.ones(P.N)
                 # recycling productivity rises with recovery capacity build-out
@@ -160,6 +162,8 @@ class CoupledModel:
                 gd = (1 + np.mean(list(self.demand_growth.values()) or [0.0])) ** t
                 dem[P.S["Manufacturing"]] = min(2.0, gd)
                 sol = self.cge.solve({"productivity": prod, "demand_shift": dem})
+                cge_status = "solved" if sol["success"] else "fallback_pe"
+                cge_max_resid = sol.get("max_resid", np.nan)
                 if sol["success"]:
                     cge_wage = sol["wage"]
                     cge_gva = sol["GVA"]
@@ -168,6 +172,15 @@ class CoupledModel:
                     self.cge_feedback_price = float(np.clip(pd_mine, 0.8, 1.5))
                     # higher wage raises mining development hurdle (labour scarcity)
                     self.abm.dev_hurdle = 0.45 * (cge_wage if cge_wage > 0 else 1.0)
+                else:
+                    from cge_module import PEPriceLabour
+                    pe = PEPriceLabour(sam=self.cge.sam)
+                    labour_frac = imp["employment_total"] / P.ANCHORS["ni_total_jobs_2023"]
+                    output_frac = imp["output_total"] / max(self.cge.X0.sum(), 1.0)
+                    pe_sol = pe.response(labour_frac, output_frac)
+                    self.cge_feedback_price = float(np.clip(
+                        1.0 + pe_sol["price_change"], 0.8, 1.5))
+                    self.abm.dev_hurdle = 0.45 * (1.0 + pe_sol["wage_change"])
 
             # spatial allocation of jobs to council areas (Q2.5)
             jobs_by_district = allocate_jobs(imp["employment_by_sector"])
@@ -201,6 +214,8 @@ class CoupledModel:
                 **sig.get("company_context", {}),
                 "cge_wage_index": cge_wage,
                 "cge_gva_total_gbp_m": cge_gva,
+                "cge_status": cge_status,
+                "cge_max_resid": cge_max_resid,
                 **{f"jobs_{d}": j for d, j in jobs_by_district.items()},
             })
         self.cumulative_discounted = cum

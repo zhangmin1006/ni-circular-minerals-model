@@ -15,6 +15,7 @@ import pandas as pd
 import seed_parameters as P
 from coupling import CoupledModel
 from indicators import validate_against_minviro, map_to_questions
+from policy_params import CONCENTRATION
 
 OUT = os.path.join(os.path.dirname(__file__), "outputs")
 os.makedirs(OUT, exist_ok=True)
@@ -24,6 +25,14 @@ os.makedirs(OUT, exist_ok=True)
 # growth to the wind-deployment driver (data_register.csv).
 GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_EV,
                 "Cobalt": 0.06, "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
+
+
+def shock_caps(loss_factor=1.0):
+    """Dominant-supplier loss: cap imports at 1 - concentration share."""
+    return {
+        m: max(0.0, 1.0 - min(1.0, loss_factor * CONCENTRATION.get(m, 0.3)))
+        for m in P.CRITICAL_MINERALS
+    }
 
 # --- six scenario families (proposal section 7) ----------------------------
 SCENARIOS = {
@@ -46,6 +55,7 @@ SCENARIOS = {
     "5_supply_shock": dict(
         policy={"recycling_grant": 0.3, "collection_infrastructure": 0.8},
         demand_growth=GREEN_DEMAND,
+        import_constraint=shock_caps(1.0),
         price_path={"Lithium": 0.10, "REE_magnet": 0.09, "Cobalt": 0.08,
                     "Nickel": 0.06, "Copper": 0.05}),
     "6_high_esg_low_impact": dict(

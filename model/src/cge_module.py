@@ -3,7 +3,7 @@ Compact recursive-dynamic CGE for Northern Ireland, calibrated to the NI SAM.
 
 Single region, open economy:
   - Leontief intermediate demand (composite Armington goods)
-  - CES value added (capital, labour)
+  - Cobb-Douglas value added (capital, labour)
   - Armington CES (domestic vs imported) per commodity
   - Cobb-Douglas household demand; fixed real government & investment
   - Constant-elasticity export demand (falls in domestic price)
@@ -15,7 +15,9 @@ Shocks (productivity, demand, factor supply) are applied and the new equilibrium
 solved with scipy. A partial-equilibrium fallback (PEPriceLabour) is provided for
 when a full solve is not warranted.
 
-Elasticities are PROXY (sigma_va=0.8, sigma_arm=2.0, sigma_e=2.0).
+Elasticities are PROXY (sigma_arm=2.0, sigma_e=2.0). Value added is currently
+Cobb-Douglas; replace with a true CES block if calibrated VA substitution data
+are collected.
 """
 
 import numpy as np
@@ -23,7 +25,6 @@ from scipy.optimize import root
 import seed_parameters as P
 from sam_module import build_sam
 
-SIGMA_VA = 0.8      # capital-labour substitution
 SIGMA_ARM = 2.0     # Armington domestic-import substitution
 SIGMA_E = 2.0       # export demand elasticity
 

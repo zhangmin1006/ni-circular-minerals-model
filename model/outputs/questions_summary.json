@@ -201,17 +201,17 @@
   },
   "5_supply_shock": {
     "2.1_circularity_innovation": {
-      "recycling_jobs_end": 685.3,
+      "recycling_jobs_end": 616.7,
       "crit_recycled_share_start": 0.402,
-      "crit_recycled_share_end": 0.178,
-      "recycling_fd_gbp_m_end": 78.47
+      "crit_recycled_share_end": 0.169,
+      "recycling_fd_gbp_m_end": 70.61
     },
     "2.2_opportunities_challenges": {
       "mines_opened": 0,
       "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
     },
     "2.3_business_support": {
-      "recycling_capacity_proxy_fd": 78.47,
+      "recycling_capacity_proxy_fd": 70.61,
       "named_recycler_companies": 6,
       "named_downstream_companies": 7,
       "named_recycler_capacity_tpa": 400.0,
@@ -220,33 +220,33 @@
     },
     "2.4_secure_supply": {
       "crit_domestic_share_end": 0.011,
-      "crit_recycled_share_end": 0.178,
-      "crit_import_share_end": 0.811,
-      "crit_max_single_country_end": 0.84,
-      "vs_target_recycling_0.20": 0.178,
+      "crit_recycled_share_end": 0.169,
+      "crit_import_share_end": 0.65,
+      "crit_max_single_country_end": 0.246,
+      "vs_target_recycling_0.20": 0.169,
       "vs_target_domestic_0.10": 0.011,
-      "vs_target_max_single_0.60": 0.84
+      "vs_target_max_single_0.60": 0.246
     },
     "2.5_employment_regional_growth": {
-      "total_jobs_end": 1343.9,
-      "mining_jobs_end": 264.2,
-      "recycling_jobs_end": 685.3,
+      "total_jobs_end": 1242.7,
+      "mining_jobs_end": 262.6,
+      "recycling_jobs_end": 616.7,
       "named_company_employee_estimate": 13704.0,
       "proposed_mining_jobs_from_company_evidence": 1000.0
     },
     "2.6_economic_benefits": {
-      "gva_total_end_gbp_m": 62.04,
-      "output_total_end_gbp_m": 155.66,
-      "cumulative_discounted_gva_gbp_m": 911.8,
-      "cumulative_discounted_output_gbp_m": 2282.1,
+      "gva_total_end_gbp_m": 57.08,
+      "output_total_end_gbp_m": 143.35,
+      "cumulative_discounted_gva_gbp_m": 890.1,
+      "cumulative_discounted_output_gbp_m": 2228.3,
       "firm_capex_pipeline_gbp_m": 1164.0,
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
     "2.7_negative_impacts": {
-      "co2_kt_end": 120.56,
-      "pm_t_end": 12.71,
-      "cumulative_discounted_co2_kt": 1796.6
+      "co2_kt_end": 112.37,
+      "pm_t_end": 11.94,
+      "cumulative_discounted_co2_kt": 1760.7
     }
   },
   "6_high_esg_low_impact": {

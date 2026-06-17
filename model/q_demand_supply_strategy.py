@@ -34,7 +34,7 @@ import pandas as pd
 import seed_parameters as P
 from coupling import CoupledModel
 from abm_module import MiningFirm
-from mfa_module import MINERAL_PARAMS, MINERAL_PRICE_GBP_PER_T
+from mfa_module import MFA
 from company_data import (
     DOWNSTREAM_ROLES, MINING_ROLES, RECYCLING_ROLES,
     companies_by_role, firm_capital_pipeline, parse_firms,
@@ -150,6 +150,7 @@ def supply_capacity_gap():
     """Map the current NI circular supply chain and the per-mineral capacity gap."""
     firms = parse_firms()
     installed = recycler_installed_capacity_t()          # NI processing capacity (tpa)
+    mineral_params = MFA(use_ree_pilot=True).p
     # which minerals have any NI primary capability / collection capability today
     primary_minerals, collection_minerals = set(), set()
     for f in firms:
@@ -160,7 +161,7 @@ def supply_capacity_gap():
 
     rows = []
     for m in P.CRITICAL_MINERALS:
-        demand0, lifetime, coll, rec, dom0, imp_conc = MINERAL_PARAMS[m]
+        demand0, lifetime, coll, rec, dom0, imp_conc = mineral_params[m]
         proj = demand0 * (1.0 + VISION.get(m, 0.0)) ** PLATEAU      # 2035 demand (t/yr)
         cap = installed.get(m, 0.0)
         coverage = cap / proj if proj else 0.0

@@ -36,7 +36,7 @@ Programmatic audit of the data inputs behind the model and the Q2.1-2.7 experime
 The register curates headline/sourced data + key proxies. The bulk of structural & behavioural calibration lives in code as `PROXY`-commented constants, **not** itemised in the register. Module-level constants found:
 
 - **`abm_module.py`**: `PROXY_DEPOSITS`, `SOCIAL_LICENCE_FLOOR`
-- **`cge_module.py`**: `SIGMA_ARM`, `SIGMA_E`, `SIGMA_VA`
+- **`cge_module.py`**: `SIGMA_ARM`, `SIGMA_E`
 - **`company_data.py`**: `CONFIDENCE`, `LIFECYCLE_WEIGHT`
 - **`coupling.py`**: `STOCKPILE_DEPTH`, `STOCKPILE_RATE`
 - **`employment_module.py`**: `NI_MEDIAN_ANNUAL_WAGE`, `SECTOR_WAGE_INDEX`, `SKILL_SPLIT`

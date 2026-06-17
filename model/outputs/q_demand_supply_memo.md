@@ -51,7 +51,7 @@ NI capital pipeline across the chain: £1164.0m (operating £914.0m + proposed �
 
 | mineral | proj_2035_demand_t | ni_processing_capacity_tpa | capacity_coverage | has_primary_prospect | has_collection_route | key_gap |
 |---|---|---|---|---|---|---|
-| REE_magnet | 256.0 | 400.0 | 1.56 | False | True | Processing capacity exists (Ionic) but feedstock-limited |
+| REE_magnet | 203.0 | 400.0 | 1.971 | False | True | Processing capacity exists (Ionic) but feedstock-limited |
 | Lithium | 2488.0 | 0.0 | 0.0 | False | True | No NI processing capacity — collection exists, recovery absent |
 | Cobalt | 199.0 | 0.0 | 0.0 | False | True | No NI processing capacity — collection exists, recovery absent |
 | Nickel | 2013.0 | 0.0 | 0.0 | False | True | No NI processing capacity — collection exists, recovery absent |

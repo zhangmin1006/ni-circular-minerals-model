@@ -74,9 +74,9 @@ class MFA:
             import ree_pilot
             ree_pilot.apply_to_mineral_params(params)
             ree_pilot.apply_price(prices)
-            MINERAL_PRICE_GBP_PER_T.update(prices)
         self.minerals = list(params.keys())
         self.p = params
+        self.prices = prices
         # in-use stock seeded as lifetime x demand (steady-state approximation)
         self.stock = {m: self.p[m][0] * self.p[m][1] for m in self.minerals}
         # ring buffer of past inflows to age into end-of-life arisings
@@ -120,8 +120,11 @@ class MFA:
             dom_share = min(1.0, dom0 + new_domestic.get(m, 0.0))
             domestic_primary = demand * dom_share
 
-            # imports close the balance (can't recycle/extract more than demand)
-            supplied_secondary = min(recycled, demand)
+            # Domestic primary is allocated first; recycled material can only
+            # satisfy remaining demand. This prevents high-domestic/high-recovery
+            # cases from over-supplying and breaking the mass-balance identity.
+            demand_after_domestic = max(0.0, demand - domestic_primary)
+            supplied_secondary = min(recycled, demand_after_domestic)
             remaining = max(0.0, demand - supplied_secondary - domestic_primary)
             # upstream supply shock: cap available imports -> any shortfall is unmet
             cap = import_constraint.get(m)

@@ -261,7 +261,7 @@ class MineralsABM(mesa.Model):
 
     def __init__(self, policy=None, price_index=None, seed=None,
                  adaptive=False, expectation_weight=0.5, imitation_strength=1.0):
-        super().__init__(seed=seed)
+        super().__init__(rng=seed)
         self.policy = policy or {}
         self.price_index = price_index or {m: 1.0 for m in P.MINERALS}
         self.company_register = load_company_register()
