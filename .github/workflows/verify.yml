@@ -47,4 +47,5 @@ jobs:
           python q2_5_employment_skills.py
           python q2_6_economic_benefits.py
           python q2_7_negative_impacts.py
+          python audit_data.py
           python make_plots.py

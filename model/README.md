@@ -77,6 +77,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `q2_7_negative_impacts.py` + `src/impact_module.py` | **Q2.7 experiment** — Minviro Appendix A impact set (CO₂, PM + relative pressure indices for water, land, biodiversity, mine waste/tailings), eco-efficiency (impact per £m GVA), recycling-vs-primary contrast and high-ESG mitigation; writes `outputs/q2_7_impacts.csv`, `q2_7_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `export_word.py` | converts the Q2.1–2.7 memos + executive summary + technical doc to **Word (.docx)** in `../word/` (lightweight Markdown→docx via python-docx) |
+| `audit_data.py` | **data audit** — inventories every data input, classifies provenance/status, cross-checks register↔code consumption, firm-register completeness and consistency; writes `outputs/data_audit.md` |
 | `verify_model.py` | **verification & validation harness** — 53 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
 | `dashboard.py` | Streamlit interactive dashboard |
 

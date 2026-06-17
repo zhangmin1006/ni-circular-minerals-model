@@ -1,0 +1,54 @@
+status,check,detail
+PASS,one_mine: output matches anchor,model 7.30 vs 7.3
+PASS,one_mine: jobs within 1 of anchor,model 73.1 vs 73.0
+PASS,one_mine: direct mining GVA within 5% of anchor,model 1.58 vs 1.6
+PASS,two_mine_4b: output matches anchor,model 43.00 vs 43.0
+PASS,two_mine_4b: jobs within 1 of anchor,model 430.4 vs 430.0
+PASS,two_mine_4b: direct mining GVA within 5% of anchor,model 9.29 vs 9.0
+PASS,baseline: all mass balances close,300/300 rows
+PASS,shock: all mass balances close (domestic+imports+secondary+unmet=demand),300/300 rows
+PASS,no unmet demand without a shock,0.000
+PASS,shock creates unmet demand (supply gap),196236 t
+PASS,"all supply shares in [0,1]",0 violations
+PASS,shares close to 1 (domestic+recycled+import+gap),0 violations
+PASS,no NaN/inf in key economic columns,"{'output_total_gbp_m': 0, 'gva_total_gbp_m': 0, 'employment_total': 0, 'recycling_jobs': 0, 'mining_jobs': 0, 'co2_kt': 0, 'crit_recycled_share': 0, 'crit_import_share': 0}"
+PASS,no negative jobs/GVA/output/CO2,"{'output_total_gbp_m': 0, 'gva_total_gbp_m': 0, 'employment_total': 0, 'recycling_jobs': 0, 'mining_jobs': 0, 'co2_kt': 0, 'crit_recycled_share': 0, 'crit_import_share': 0}"
+PASS,"crit_recycled_share within [0,1]",min 0.147 max 0.463
+PASS,"crit_import_share within [0,1]",min 0.527 max 0.843
+PASS,"crit_domestic_share within [0,1]",min 0.010 max 0.011
+PASS,cumulative GVA identical across two runs,760.2411 vs 760.2411
+PASS,full timeseries identical,
+PASS,SAM row sums == column sums (balanced),max imbalance £7.28e-12m
+PASS,SAM reproduces mining GVA ~£108m anchor,£108.0m
+PASS,CGE solves the benchmark,
+PASS,CGE replicates benchmark (wage ~ 1.0 at no shock),wage 1.000000
+PASS,every sector's district shares sum to 1,min 1.0000 max 1.0000
+PASS,shares non-negative,
+PASS,11 districts,11
+PASS,reserve never negative,min 0.0000
+PASS,reserve depletes under sustained shock,"reserves [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"
+PASS,stockpile reduces the early-window supply gap,early gap 0.257 -> 0.197
+PASS,register loads (>=20 firms),21 firms
+PASS,all roles mapped to a stage,unmapped: []
+PASS,Plaswire reclassified to waste_recycler,waste_recycler
+PASS,Plaswire has no tracked critical-mineral target (composites),targets set()
+PASS,"all firm scores in [0,1]",out of range: []
+PASS,mining Type II output multiplier in 1.3-2.2,1.688
+PASS,mining GVA/output coeff in 0.2-0.5,0.350
+PASS,"peak total jobs < 1% of NI employment (816,562)",1514 jobs
+PASS,recycled share never exceeds 1,
+PASS,diversification lowers single-country exposure,0.435 -> 0.278
+PASS,time-varying shock: no gap before onset,pre 0.0000
+PASS,time-varying shock: gap appears after onset,post 0.0168
+PASS,skill breakdown sums to total jobs,450.0 vs 450.0
+PASS,wage bill positive & premium > 0,"bill £17.32m, premium 1.111"
+PASS,retained local <= total and rises with support,retention 0.7 -> 0.97
+PASS,primary mining pressure > recycling for every impact category,"{'water': (6.0, 1.2), 'land': (10.0, 0.6), 'biodiversity': (8.0, 0.4), 'waste': (50.0, 2.0)}"
+PASS,"ESG mitigation: 1.0 at no-ESG, reduced (<1, >=0.6) under high ESG",1.00 -> 0.65
+PASS,annual pressures non-negative,"{'water': 45.0, 'land': 68.0, 'biodiversity': 54.0, 'waste': 335.0}"
+PASS,fuzz: all 30 random configs ran without error,0 errored
+PASS,fuzz: MFA mass balance closes in every config,0 violated
+PASS,fuzz: supply shares bounded & sum to 1 in every config,0 violated
+PASS,fuzz: no NaN/inf in key outputs in every config,0 violated
+PASS,fuzz: no negative jobs/GVA/output/CO2 in every config,0 violated
+PASS,fuzz: stockpile reserve never negative in every config,0 violated

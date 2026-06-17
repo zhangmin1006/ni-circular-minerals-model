@@ -1,0 +1,273 @@
+{
+  "run_timestamp": "2026-06-17T22:05:06",
+  "checks_total": 53,
+  "checks_passed": 53,
+  "checks_failed": 0,
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "one_mine: output matches anchor",
+      "detail": "model 7.30 vs 7.3"
+    },
+    {
+      "status": "PASS",
+      "check": "one_mine: jobs within 1 of anchor",
+      "detail": "model 73.1 vs 73.0"
+    },
+    {
+      "status": "PASS",
+      "check": "one_mine: direct mining GVA within 5% of anchor",
+      "detail": "model 1.58 vs 1.6"
+    },
+    {
+      "status": "PASS",
+      "check": "two_mine_4b: output matches anchor",
+      "detail": "model 43.00 vs 43.0"
+    },
+    {
+      "status": "PASS",
+      "check": "two_mine_4b: jobs within 1 of anchor",
+      "detail": "model 430.4 vs 430.0"
+    },
+    {
+      "status": "PASS",
+      "check": "two_mine_4b: direct mining GVA within 5% of anchor",
+      "detail": "model 9.29 vs 9.0"
+    },
+    {
+      "status": "PASS",
+      "check": "baseline: all mass balances close",
+      "detail": "300/300 rows"
+    },
+    {
+      "status": "PASS",
+      "check": "shock: all mass balances close (domestic+imports+secondary+unmet=demand)",
+      "detail": "300/300 rows"
+    },
+    {
+      "status": "PASS",
+      "check": "no unmet demand without a shock",
+      "detail": "0.000"
+    },
+    {
+      "status": "PASS",
+      "check": "shock creates unmet demand (supply gap)",
+      "detail": "196236 t"
+    },
+    {
+      "status": "PASS",
+      "check": "all supply shares in [0,1]",
+      "detail": "0 violations"
+    },
+    {
+      "status": "PASS",
+      "check": "shares close to 1 (domestic+recycled+import+gap)",
+      "detail": "0 violations"
+    },
+    {
+      "status": "PASS",
+      "check": "no NaN/inf in key economic columns",
+      "detail": "{'output_total_gbp_m': 0, 'gva_total_gbp_m': 0, 'employment_total': 0, 'recycling_jobs': 0, 'mining_jobs': 0, 'co2_kt': 0, 'crit_recycled_share': 0, 'crit_import_share': 0}"
+    },
+    {
+      "status": "PASS",
+      "check": "no negative jobs/GVA/output/CO2",
+      "detail": "{'output_total_gbp_m': 0, 'gva_total_gbp_m': 0, 'employment_total': 0, 'recycling_jobs': 0, 'mining_jobs': 0, 'co2_kt': 0, 'crit_recycled_share': 0, 'crit_import_share': 0}"
+    },
+    {
+      "status": "PASS",
+      "check": "crit_recycled_share within [0,1]",
+      "detail": "min 0.147 max 0.463"
+    },
+    {
+      "status": "PASS",
+      "check": "crit_import_share within [0,1]",
+      "detail": "min 0.527 max 0.843"
+    },
+    {
+      "status": "PASS",
+      "check": "crit_domestic_share within [0,1]",
+      "detail": "min 0.010 max 0.011"
+    },
+    {
+      "status": "PASS",
+      "check": "cumulative GVA identical across two runs",
+      "detail": "760.2411 vs 760.2411"
+    },
+    {
+      "status": "PASS",
+      "check": "full timeseries identical",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "SAM row sums == column sums (balanced)",
+      "detail": "max imbalance \u00a37.28e-12m"
+    },
+    {
+      "status": "PASS",
+      "check": "SAM reproduces mining GVA ~\u00a3108m anchor",
+      "detail": "\u00a3108.0m"
+    },
+    {
+      "status": "PASS",
+      "check": "CGE solves the benchmark",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "CGE replicates benchmark (wage ~ 1.0 at no shock)",
+      "detail": "wage 1.000000"
+    },
+    {
+      "status": "PASS",
+      "check": "every sector's district shares sum to 1",
+      "detail": "min 1.0000 max 1.0000"
+    },
+    {
+      "status": "PASS",
+      "check": "shares non-negative",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "11 districts",
+      "detail": "11"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve never negative",
+      "detail": "min 0.0000"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve depletes under sustained shock",
+      "detail": "reserves [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"
+    },
+    {
+      "status": "PASS",
+      "check": "stockpile reduces the early-window supply gap",
+      "detail": "early gap 0.257 -> 0.197"
+    },
+    {
+      "status": "PASS",
+      "check": "register loads (>=20 firms)",
+      "detail": "21 firms"
+    },
+    {
+      "status": "PASS",
+      "check": "all roles mapped to a stage",
+      "detail": "unmapped: []"
+    },
+    {
+      "status": "PASS",
+      "check": "Plaswire reclassified to waste_recycler",
+      "detail": "waste_recycler"
+    },
+    {
+      "status": "PASS",
+      "check": "Plaswire has no tracked critical-mineral target (composites)",
+      "detail": "targets set()"
+    },
+    {
+      "status": "PASS",
+      "check": "all firm scores in [0,1]",
+      "detail": "out of range: []"
+    },
+    {
+      "status": "PASS",
+      "check": "mining Type II output multiplier in 1.3-2.2",
+      "detail": "1.688"
+    },
+    {
+      "status": "PASS",
+      "check": "mining GVA/output coeff in 0.2-0.5",
+      "detail": "0.350"
+    },
+    {
+      "status": "PASS",
+      "check": "peak total jobs < 1% of NI employment (816,562)",
+      "detail": "1514 jobs"
+    },
+    {
+      "status": "PASS",
+      "check": "recycled share never exceeds 1",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "diversification lowers single-country exposure",
+      "detail": "0.435 -> 0.278"
+    },
+    {
+      "status": "PASS",
+      "check": "time-varying shock: no gap before onset",
+      "detail": "pre 0.0000"
+    },
+    {
+      "status": "PASS",
+      "check": "time-varying shock: gap appears after onset",
+      "detail": "post 0.0168"
+    },
+    {
+      "status": "PASS",
+      "check": "skill breakdown sums to total jobs",
+      "detail": "450.0 vs 450.0"
+    },
+    {
+      "status": "PASS",
+      "check": "wage bill positive & premium > 0",
+      "detail": "bill \u00a317.32m, premium 1.111"
+    },
+    {
+      "status": "PASS",
+      "check": "retained local <= total and rises with support",
+      "detail": "retention 0.7 -> 0.97"
+    },
+    {
+      "status": "PASS",
+      "check": "primary mining pressure > recycling for every impact category",
+      "detail": "{'water': (6.0, 1.2), 'land': (10.0, 0.6), 'biodiversity': (8.0, 0.4), 'waste': (50.0, 2.0)}"
+    },
+    {
+      "status": "PASS",
+      "check": "ESG mitigation: 1.0 at no-ESG, reduced (<1, >=0.6) under high ESG",
+      "detail": "1.00 -> 0.65"
+    },
+    {
+      "status": "PASS",
+      "check": "annual pressures non-negative",
+      "detail": "{'water': 45.0, 'land': 68.0, 'biodiversity': 54.0, 'waste': 335.0}"
+    },
+    {
+      "status": "PASS",
+      "check": "fuzz: all 30 random configs ran without error",
+      "detail": "0 errored"
+    },
+    {
+      "status": "PASS",
+      "check": "fuzz: MFA mass balance closes in every config",
+      "detail": "0 violated"
+    },
+    {
+      "status": "PASS",
+      "check": "fuzz: supply shares bounded & sum to 1 in every config",
+      "detail": "0 violated"
+    },
+    {
+      "status": "PASS",
+      "check": "fuzz: no NaN/inf in key outputs in every config",
+      "detail": "0 violated"
+    },
+    {
+      "status": "PASS",
+      "check": "fuzz: no negative jobs/GVA/output/CO2 in every config",
+      "detail": "0 violated"
+    },
+    {
+      "status": "PASS",
+      "check": "fuzz: stockpile reserve never negative in every config",
+      "detail": "0 violated"
+    }
+  ]
+}
