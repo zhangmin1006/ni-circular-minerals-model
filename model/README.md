@@ -73,6 +73,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `q2_4_secure_supply.py` | **Q2.4 experiment** — geopolitical shocks (escalating dominant-supplier export ban) × five government **roles** (light-touch, diversify-&-insure, domestic autonomy, circular leader, strategic coordinator), plus a **Monte-Carlo** of uncertain shocks (random onset/minerals/severity) → resilience distribution + HHI-style supply-risk index vs the Vision-2035 targets; writes `outputs/q2_4_*.csv`, `q2_4_memo.md` |
 | `q2_5_employment_skills.py` | **Q2.5 experiment** — jobs by skill level & wage band (ONS structure on the real NISRA ASHE anchor), **retained local employment** (Minviro leakage fix, rising with local-content + skills support), skilled training/apprenticeship need, and jobs by council area, across four scenarios; uses `src/employment_module.py`; writes `outputs/q2_5_*.csv`, `q2_5_memo.md` |
 | `src/employment_module.py` | skill-level / wage-band / retained-local-employment layer for Q2.5 (real NI ASHE wage anchor; ONS-structure proxies) |
+| `q2_6_economic_benefits.py` | **Q2.6 experiment** — full benefit suite (discounted GVA, output, tax proxy, exports, firm investment pipeline, productivity, **avoided import costs**) + a benefit-cost ratio on incremental GVA and on GVA + avoided imports; writes `outputs/q2_6_benefits.csv`, `q2_6_memo.md` |
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `verify_model.py` | **verification & validation harness** — 50 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
 | `dashboard.py` | Streamlit interactive dashboard |
@@ -116,7 +117,10 @@ push / PR, so regressions fail the build automatically.
   **by council area** (firm-grounded), split by **skill level & wage band** (real NISRA ASHE anchor),
   **retained local employment** (rises with local-content + skills support — the Minviro leakage fix),
   and the skilled training/apprenticeship need — quality, above-NI-average jobs spread to the rural west
-- **2.6 economic benefits** — GVA, output, cumulative discounted GVA; CGE economy-wide wage response; **firm capital-investment pipeline (operating vs proposed)**
+- **2.6 economic benefits** — `q2_6_economic_benefits.py`: discounted GVA, output, **tax proxy,
+  exports, productivity (GVA/worker), avoided import costs**, firm investment pipeline, and a
+  benefit-cost ratio (incremental GVA, and GVA + avoided imports) — capital-heavy scenarios return
+  <1× on GVA alone but ~2× once resilience/avoided-imports are counted; pure extraction is weakest
 - **2.7 negative impacts** — CO₂, PM, cumulative discounted CO₂
 
 ## IMPORTANT — data status

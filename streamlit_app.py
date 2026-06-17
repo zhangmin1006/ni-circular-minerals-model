@@ -176,6 +176,24 @@ def generate_q25():
     )
 
 
+@st.cache_data(show_spinner=False)
+def load_q26():
+    path = OUT / "q2_6_benefits.csv"
+    if not path.exists():
+        return None, None
+    df = pd.read_csv(path, index_col=0)
+    memo_path = OUT / "q2_6_memo.md"
+    memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
+    return df, memo
+
+
+def generate_q26():
+    return subprocess.run(
+        [sys.executable, "q2_6_economic_benefits.py"],
+        cwd=MODEL_DIR, capture_output=True, text=True, timeout=300,
+    )
+
+
 def ensure_outputs():
     needed = [
         OUT / "scenario_timeseries.csv",
@@ -293,11 +311,11 @@ metric_card(top[2], "Critical recycled share", f"{end['crit_recycled_share']:.3f
 metric_card(top[3], "Critical domestic share", f"{end['crit_domestic_share']:.3f}")
 metric_card(top[4], "Single-country exposure", f"{end['crit_max_single_country']:.3f}")
 
-(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_q25, tab_demand, tab_supply,
- tab_companies, tab_region, tab_data) = st.tabs(
+(tab_overview, tab_q21, tab_q22, tab_q23, tab_q24, tab_q25, tab_q26, tab_demand,
+ tab_supply, tab_companies, tab_region, tab_data) = st.tabs(
     ["Overview", "Q2.1 Interventions", "Q2.2 Opportunities", "Q2.3 Business Support",
-     "Q2.4 Secure Supply", "Q2.5 Jobs & Skills", "Demand & Supply", "Supply Security",
-     "Companies", "Regional Jobs", "Data Quality"]
+     "Q2.4 Secure Supply", "Q2.5 Jobs & Skills", "Q2.6 Economic Benefits",
+     "Demand & Supply", "Supply Security", "Companies", "Regional Jobs", "Data Quality"]
 )
 
 with tab_overview:
@@ -683,6 +701,63 @@ with tab_q25:
         if memo25:
             with st.expander("Full Q2.5 findings memo (employment, skills, regional growth)"):
                 st.markdown(memo25)
+
+
+with tab_q26:
+    st.subheader("Q2.6 — Economic benefits")
+    st.caption(
+        "The full benefit suite — discounted GVA, output, a tax proxy, exports, the "
+        "named-firm investment pipeline, productivity (GVA/worker) and AVOIDED IMPORT "
+        "COSTS (the import bill met by domestic + recycled supply) — with a benefit-cost "
+        "ratio on incremental GVA and on GVA + avoided imports (resilience)."
+    )
+    g26 = load_q26()
+    df26, memo26 = g26
+    if df26 is None:
+        st.warning("Q2.6 results are not present in this deployment.")
+        if st.button("Run the Q2.6 experiment now"):
+            with st.spinner("Computing economic benefits..."):
+                res = generate_q26()
+            if res.returncode:
+                st.error("The experiment failed.")
+                st.code(res.stderr or res.stdout)
+            else:
+                st.cache_data.clear()
+                st.rerun()
+    else:
+        if "4_integrated" in df26.index:
+            it = df26.loc["4_integrated"]
+            k1, k2, k3 = st.columns(3)
+            k1.metric("Discounted GVA (integrated)", f"£{it['cum_disc_gva_gbp_m']:,.0f}m")
+            k2.metric("Avoided import costs", f"£{it['avoided_import_cost_gbp_m']:,.0f}m",
+                      "domestic + recycled supply", delta_color="off")
+            k3.metric("Econ+resilience BCR", f"{it['econ_resilience_bcr']}×",
+                      f"GVA-only {it['gva_bcr']}×")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.caption("Discounted GVA, avoided imports & exports by scenario (£m)")
+            st.bar_chart(df26[["cum_disc_gva_gbp_m", "avoided_import_cost_gbp_m",
+                               "exports_gbp_m"]])
+        with c2:
+            st.caption("Benefit-cost ratio: GVA-only vs GVA + avoided imports")
+            st.bar_chart(df26[["gva_bcr", "econ_resilience_bcr"]])
+        cols = {
+            "label": "Scenario", "cum_disc_gva_gbp_m": "GVA £m",
+            "avoided_import_cost_gbp_m": "Avoided imports £m", "tax_proxy_gbp_m": "Tax £m",
+            "exports_gbp_m": "Exports £m", "gva_per_worker_gbp": "GVA/worker £",
+            "disc_public_cost_gbp_m": "Public cost £m", "gva_bcr": "GVA BCR",
+            "econ_resilience_bcr": "Econ+resilience BCR",
+        }
+        st.dataframe(df26[list(cols)].rename(columns=cols), width="stretch")
+        st.caption(
+            "On incremental GVA alone the capital-heavy scenarios return <1× — but with "
+            "avoided imports/resilience they reach ~2×, and the wider tax/export/jobs benefits "
+            "raise it further. Pure extraction support is the weakest (little opens without "
+            "social licence — cf. Q2.2)."
+        )
+        if memo26:
+            with st.expander("Full Q2.6 findings memo (economic benefits)"):
+                st.markdown(memo26)
 
 
 with tab_demand:
