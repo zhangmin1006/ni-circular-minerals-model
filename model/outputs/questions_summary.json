@@ -51,17 +51,17 @@
   },
   "2_circular_innovation": {
     "2.1_circularity_innovation": {
-      "recycling_jobs_end": 802.0,
+      "recycling_jobs_end": 801.5,
       "crit_recycled_share_start": 0.463,
       "crit_recycled_share_end": 0.206,
-      "recycling_fd_gbp_m_end": 91.71
+      "recycling_fd_gbp_m_end": 91.65
     },
     "2.2_opportunities_challenges": {
       "mines_opened": 0,
       "note": "binding constraints surfaced via ABM (permitting, ESG, social licence)"
     },
     "2.3_business_support": {
-      "recycling_capacity_proxy_fd": 91.71,
+      "recycling_capacity_proxy_fd": 91.65,
       "named_recycler_companies": 6,
       "named_downstream_companies": 7,
       "named_recycler_capacity_tpa": 400.0,
@@ -78,25 +78,25 @@
       "vs_target_max_single_0.60": 0.832
     },
     "2.5_employment_regional_growth": {
-      "total_jobs_end": 1513.8,
+      "total_jobs_end": 1513.1,
       "mining_jobs_end": 265.2,
-      "recycling_jobs_end": 802.0,
+      "recycling_jobs_end": 801.5,
       "named_company_employee_estimate": 13704.0,
       "proposed_mining_jobs_from_company_evidence": 1000.0
     },
     "2.6_economic_benefits": {
-      "gva_total_end_gbp_m": 70.39,
-      "output_total_end_gbp_m": 176.38,
-      "cumulative_discounted_gva_gbp_m": 1019.4,
-      "cumulative_discounted_output_gbp_m": 2548.4,
+      "gva_total_end_gbp_m": 70.35,
+      "output_total_end_gbp_m": 176.29,
+      "cumulative_discounted_gva_gbp_m": 1019.1,
+      "cumulative_discounted_output_gbp_m": 2547.6,
       "firm_capex_pipeline_gbp_m": 1164.0,
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
     "2.7_negative_impacts": {
-      "co2_kt_end": 134.25,
+      "co2_kt_end": 134.19,
       "pm_t_end": 13.98,
-      "cumulative_discounted_co2_kt": 1974.5
+      "cumulative_discounted_co2_kt": 1974.0
     }
   },
   "3_primary_extraction": {

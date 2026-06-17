@@ -1,6 +1,6 @@
 scenario,cum_disc_GVA_£m,firm_capex_pipeline_£m,end_jobs,recycling_jobs,named_recycler_capacity_tpa,named_company_employee_estimate,named_recycler_companies,named_downstream_companies,crit_recycled_share,crit_domestic_share,crit_max_single_country,cum_disc_CO2_kt
 1_baseline,788.3,1164.0,1147.7,552.2,400.0,13704.0,6,7,0.147,0.011,0.85,1591.8
-2_circular_innovation,1019.4,1164.0,1513.8,802.0,400.0,13704.0,6,7,0.206,0.011,0.832,1974.5
+2_circular_innovation,1019.1,1164.0,1513.1,801.5,400.0,13704.0,6,7,0.206,0.011,0.832,1974.0
 3_primary_extraction,790.0,1164.0,1150.4,552.2,400.0,13704.0,6,7,0.147,0.011,0.85,1597.0
 4_integrated_circular_primary,944.3,1164.0,1394.9,719.4,400.0,13704.0,6,7,0.186,0.011,0.838,1852.3
 5_supply_shock,911.8,1164.0,1343.9,685.3,400.0,13704.0,6,7,0.178,0.011,0.84,1796.6

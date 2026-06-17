@@ -9,7 +9,7 @@ This maps onto Minviro's own taxonomy of *positive socio-economic impacts* — j
 | scenario | label | cum_disc_gva_gbp_m | avoided_import_cost_gbp_m | tax_proxy_gbp_m | exports_gbp_m | gva_per_worker_gbp | disc_public_cost_gbp_m | gva_bcr | econ_resilience_bcr |
 |---|---|---|---|---|---|---|---|---|---|
 | 1_baseline | Baseline | 788.3 | 1215.2 | 197.1 | 630.7 | 45678.0 | 0.0 | nan | nan |
-| 2_circular_innovation | Circular innovation | 1019.4 | 1567.6 | 254.8 | 842.2 | 46495.0 | 291.2 | 0.79 | 2.0 |
+| 2_circular_innovation | Circular innovation | 1019.1 | 1567.2 | 254.8 | 841.9 | 46494.0 | 291.2 | 0.79 | 2.0 |
 | 3_primary_extraction | Primary extraction | 790.0 | 1217.9 | 197.5 | 631.5 | 45659.0 | 113.1 | 0.02 | 0.04 |
 | 4_integrated | Integrated circular + primary | 1152.6 | 1789.1 | 288.1 | 873.5 | 43625.0 | 425.4 | 0.86 | 2.21 |
 

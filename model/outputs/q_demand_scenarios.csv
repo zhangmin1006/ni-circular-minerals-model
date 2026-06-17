@@ -1,7 +1,7 @@
 scenario,label,mines_opened,projects_unlocked,crit_domestic_share_end,crit_recycled_share_end,crit_import_share_end,single_country_exposure_end,recycling_value_gbp_m_end,end_jobs,cum_disc_gva_gbp_m,cum_disc_co2_kt,meets_domestic_10pct,meets_recycling_20pct,meets_single_country_60pct,d_domestic_pp,d_recycled_pp,d_import_pp
 0_current,Current demand + current policy (reference),0,—,0.01,0.319,0.67,0.823,57.8,1008.5,770.6,1547.0,False,True,False,-6.7,-13.4,20.0
-sustainable_baseline_demand,Current demand + sustainable enabling policy,1,Dalradian Gold,0.077,0.453,0.47,0.779,82.3,1605.2,1172.2,2436.9,False,True,False,0.0,0.0,0.0
-uk_vision_2035,"UK Vision 2035 demand (Cu x2, Li +1100%)",1,Dalradian Gold,0.055,0.439,0.505,0.779,103.0,1890.5,1229.1,2545.1,False,True,False,-2.2,-1.4,3.5
-eu_crma,EU CRMA pull + scarcity price premium,1,Dalradian Gold,0.054,0.434,0.512,0.779,108.5,1974.4,1249.0,2588.1,False,True,False,-2.3,-1.9,4.2
-uk_industrial_strategy,UK Industrial Strategy (clean energy/defence/AM),1,Dalradian Gold,0.057,0.435,0.507,0.779,104.5,1926.7,1239.8,2575.4,False,True,False,-2.0,-1.8,3.7
-combined_high_demand,Combined high demand (all three aligned),1,Dalradian Gold,0.054,0.433,0.513,0.779,109.0,1986.5,1252.6,2598.3,False,True,False,-2.3,-2.0,4.3
+sustainable_baseline_demand,Current demand + sustainable enabling policy,1,Dalradian Gold,0.077,0.453,0.47,0.779,82.3,1604.5,1171.6,2436.1,False,True,False,0.0,0.0,0.0
+uk_vision_2035,"UK Vision 2035 demand (Cu x2, Li +1100%)",1,Dalradian Gold,0.055,0.439,0.505,0.779,103.0,1889.5,1228.5,2544.0,False,True,False,-2.2,-1.4,3.5
+eu_crma,EU CRMA pull + scarcity price premium,1,Dalradian Gold,0.054,0.434,0.512,0.779,108.4,1973.3,1248.3,2587.0,False,True,False,-2.3,-1.9,4.2
+uk_industrial_strategy,UK Industrial Strategy (clean energy/defence/AM),1,Dalradian Gold,0.057,0.435,0.507,0.779,104.4,1925.7,1239.2,2574.4,False,True,False,-2.0,-1.8,3.7
+combined_high_demand,Combined high demand (all three aligned),1,Dalradian Gold,0.054,0.433,0.513,0.779,108.9,1985.4,1251.9,2597.2,False,True,False,-2.3,-2.0,4.3

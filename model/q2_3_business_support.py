@@ -46,10 +46,7 @@ GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_E
 # caps = 1 - (single-country share) using the cited 2023 concentration
 # (China 74% REE, DRC 70% Co, Australia 44% Li, ...; BGS/Idoine 2025 via GSNI
 # OR25042), plus a price spike. The most concentrated minerals are hit hardest.
-CONCENTRATION = {   # dominant single-country share of supply, 2023
-    "REE_magnet": 0.74, "Cobalt": 0.70, "Antimony": 0.70, "Aluminium": 0.35,
-    "Lithium": 0.44, "Nickel": 0.40, "Copper": 0.30,
-}
+from policy_params import CONCENTRATION   # single source of truth (2023 shares)
 
 
 def shock_caps(loss_factor=1.0):

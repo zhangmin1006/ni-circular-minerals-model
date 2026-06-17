@@ -10,17 +10,17 @@ scenario,district,end_jobs
 1_baseline,Mid & East Antrim,85.6
 1_baseline,Mid Ulster,114.4
 1_baseline,"Newry, Mourne & Down",164.7
-2_circular_innovation,Antrim & Newtownabbey,197.7
+2_circular_innovation,Antrim & Newtownabbey,197.6
 2_circular_innovation,Ards & North Down,56.3
-2_circular_innovation,"Armagh, Banbridge & Craigavon",166.0
-2_circular_innovation,Belfast,245.1
+2_circular_innovation,"Armagh, Banbridge & Craigavon",165.9
+2_circular_innovation,Belfast,244.9
 2_circular_innovation,Causeway Coast & Glens,66.5
 2_circular_innovation,Derry City & Strabane,75.1
 2_circular_innovation,Fermanagh & Omagh,160.0
-2_circular_innovation,Lisburn & Castlereagh,67.5
+2_circular_innovation,Lisburn & Castlereagh,67.4
 2_circular_innovation,Mid & East Antrim,108.6
 2_circular_innovation,Mid Ulster,141.6
-2_circular_innovation,"Newry, Mourne & Down",229.3
+2_circular_innovation,"Newry, Mourne & Down",229.1
 3_primary_extraction,Antrim & Newtownabbey,140.7
 3_primary_extraction,Ards & North Down,42.0
 3_primary_extraction,"Armagh, Banbridge & Craigavon",121.7

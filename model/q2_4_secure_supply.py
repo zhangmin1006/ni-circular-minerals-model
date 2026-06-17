@@ -46,8 +46,7 @@ GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_E
 # geopolitical fallout" and "shortages or disruption". We model that concentration
 # risk with the 2023 single-country supply shares (BGS/Idoine 2025): import caps
 # under a shock = 1 - loss_factor * concentration (a dominant-supplier export ban).
-CONCENTRATION = {"REE_magnet": 0.74, "Cobalt": 0.70, "Antimony": 0.70,
-                 "Aluminium": 0.35, "Lithium": 0.44, "Nickel": 0.40, "Copper": 0.30}
+from policy_params import CONCENTRATION, LEVER_COST   # single source of truth
 PRICE_SPIKE = {"Lithium": 0.10, "REE_magnet": 0.10, "Cobalt": 0.09,
                "Nickel": 0.06, "Copper": 0.05}
 
@@ -111,14 +110,7 @@ SHOCKS = {
     "bloc_fragmentation": 1.5,
 }
 
-# Notional public cost per lever (£m/yr at intensity 1.0), NI-scale, UK-anchored.
-COST = {
-    "finance_support": 6.0, "exploration_grant": 3.0, "community_benefit": 3.0,
-    "recycling_grant": 7.0, "innovation_grant": 5.0, "collection_infrastructure": 9.0,
-    "product_passport": 2.0, "secondary_market_support": 4.0,
-    "recycled_content_procurement": 1.0, "design_standards": 1.0, "skills_support": 4.0,
-    "local_supplier_support": 3.0, "diversification": 3.0, "strategic_stockpile": 4.0,
-}
+COST = LEVER_COST   # shared public-cost-per-lever map (policy_params)
 
 
 def disc_cost(policy, horizon=P.HORIZON, stpr=P.STPR):

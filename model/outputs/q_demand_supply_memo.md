@@ -15,27 +15,27 @@ Scenarios derive demand growth from the **UK Critical Minerals Strategy (Vision 
 | scenario | label | mines_opened | projects_unlocked | crit_domestic_share_end | crit_recycled_share_end | crit_import_share_end | end_jobs | cum_disc_gva_gbp_m |
 |---|---|---|---|---|---|---|---|---|
 | 0_current | Current demand + current policy (reference) | 0 | — | 0.01 | 0.319 | 0.67 | 1008.5 | 770.6 |
-| sustainable_baseline_demand | Current demand + sustainable enabling policy | 1 | Dalradian Gold | 0.077 | 0.453 | 0.47 | 1605.2 | 1172.2 |
-| uk_vision_2035 | UK Vision 2035 demand (Cu x2, Li +1100%) | 1 | Dalradian Gold | 0.055 | 0.439 | 0.505 | 1890.5 | 1229.1 |
-| eu_crma | EU CRMA pull + scarcity price premium | 1 | Dalradian Gold | 0.054 | 0.434 | 0.512 | 1974.4 | 1249.0 |
-| uk_industrial_strategy | UK Industrial Strategy (clean energy/defence/AM) | 1 | Dalradian Gold | 0.057 | 0.435 | 0.507 | 1926.7 | 1239.8 |
-| combined_high_demand | Combined high demand (all three aligned) | 1 | Dalradian Gold | 0.054 | 0.433 | 0.513 | 1986.5 | 1252.6 |
+| sustainable_baseline_demand | Current demand + sustainable enabling policy | 1 | Dalradian Gold | 0.077 | 0.453 | 0.47 | 1604.5 | 1171.6 |
+| uk_vision_2035 | UK Vision 2035 demand (Cu x2, Li +1100%) | 1 | Dalradian Gold | 0.055 | 0.439 | 0.505 | 1889.5 | 1228.5 |
+| eu_crma | EU CRMA pull + scarcity price premium | 1 | Dalradian Gold | 0.054 | 0.434 | 0.512 | 1973.3 | 1248.3 |
+| uk_industrial_strategy | UK Industrial Strategy (clean energy/defence/AM) | 1 | Dalradian Gold | 0.057 | 0.435 | 0.507 | 1925.7 | 1239.2 |
+| combined_high_demand | Combined high demand (all three aligned) | 1 | Dalradian Gold | 0.054 | 0.433 | 0.513 | 1985.4 | 1251.9 |
 
-**Opportunity finding:** rising strategy-driven demand makes the circular + primary opportunity materially larger — the strongest case `combined_high_demand` (Combined high demand (all three aligned)) reaches 1986 end-year jobs and £1252.6m discounted GVA (vs 1605 jobs / £1172.2m at today's demand). The EU CRMA scarcity premium improves recovery economics, and a community-benefit + high-ESG stance brings the contested primary deposit (Dalradian) forward.
+**Opportunity finding:** rising strategy-driven demand makes the circular + primary opportunity materially larger — the strongest case `combined_high_demand` (Combined high demand (all three aligned)) reaches 1985 end-year jobs and £1251.9m discounted GVA (vs 1604 jobs / £1171.6m at today's demand). The EU CRMA scarcity premium improves recovery economics, and a community-benefit + high-ESG stance brings the contested primary deposit (Dalradian) forward.
 
 **The catch (links to Part B):** higher demand *erodes the supply-security ratios* unless capacity scales with it — recycled share falls from 45% (today's demand) to 43%, and import share rises from 47% to 51%, because demand outruns NI's thin processing/recovery capacity. Demand-side opportunity is real but only captured if the supply-side capacity gap is closed.
 
 ## Demand sensitivity (how much does the demand assumption matter?)
 
-Varying the annex-derived demand ±50% moves end-year jobs across **1540–2400** (central 1890) and discounted GVA across **£1147–1350m** (central £1229m). Varying *only lithium* (the steepest, most uncertain CAGR) ±50% moves GVA only £1211–1268m — small, because lithium's NI tonnage base is tiny vs copper/aluminium. **The opportunity scales with overall demand, but the headline qualitative findings — Dalradian unlocked by community benefit, recycled share eroding as demand outruns capacity — are robust across the band.**
+Varying the annex-derived demand ±50% moves end-year jobs across **1539–2398** (central 1890) and discounted GVA across **£1146–1349m** (central £1228m). Varying *only lithium* (the steepest, most uncertain CAGR) ±50% moves GVA only £1211–1268m — small, because lithium's NI tonnage base is tiny vs copper/aluminium. **The opportunity scales with overall demand, but the headline qualitative findings — Dalradian unlocked by community benefit, recycled share eroding as demand outruns capacity — are robust across the band.**
 
 | demand case | crit_recycled_share_end | crit_import_share_end | end_jobs | cum_disc_gva_gbp_m |
 |---|---|---|---|---|
-| all_demand_-50% | 0.468 | 0.467 | 1539.9 | 1146.9 |
-| lithium_-50% | 0.45 | 0.492 | 1842.3 | 1211.4 |
-| central_annex | 0.439 | 0.505 | 1890.5 | 1229.1 |
-| lithium_+50% | 0.416 | 0.533 | 2002.5 | 1268.3 |
-| all_demand_+50% | 0.413 | 0.54 | 2400.1 | 1349.6 |
+| all_demand_-50% | 0.468 | 0.468 | 1539.3 | 1146.4 |
+| lithium_-50% | 0.45 | 0.492 | 1841.3 | 1210.8 |
+| central_annex | 0.439 | 0.505 | 1889.5 | 1228.5 |
+| lithium_+50% | 0.416 | 0.533 | 2001.2 | 1267.6 |
+| all_demand_+50% | 0.413 | 0.54 | 2398.4 | 1348.8 |
 
 ## Part B — Supply & capacity challenges (current circular supply chain)
 

@@ -134,7 +134,10 @@ RECOVERY_YIELDS = {                                   # spent-product recovery y
     "Lithium": DR.value("recovery_yield_lithium", 0.50),
     "Copper": DR.value("recovery_yield_copper", 0.90),
 }
-COLLECTION_RATE_WEEE = DR.value("collection_rate_weee", 0.30)
-LOCAL_PROCUREMENT_SHARE_MINING = DR.value("local_procurement_share_mining", 0.45)
+COLLECTION_RATE_WEEE = DR.value("collection_rate_weee", 0.30)  # WEEE-stream collection ceiling (MFA)
+# NB: local_procurement_share_mining (Minviro 0.45) is a documented REFERENCE
+# benchmark in data_register.csv, not a live input — local retention is modelled
+# via firm local-procurement scores (company_data) + the local_supplier_support
+# lever + the Q2.5 retained-employment layer. Not defined here to avoid dead config.
 DEMAND_GROWTH_EV = DR.value("ni_demand_growth_ev", 0.12)      # battery-metal driver
 DEMAND_GROWTH_WIND = DR.value("ni_demand_growth_wind", 0.08)  # magnet/REE driver

@@ -98,7 +98,7 @@ def main():
 
     # 2. Register -> code consumption ---------------------------------------
     add("## 2. Are registered parameters actually used?\n")
-    wired = {"RECOVERY_YIELDS", "COLLECTION_RATE_WEEE", "LOCAL_PROCUREMENT_SHARE_MINING",
+    wired = {"RECOVERY_YIELDS", "COLLECTION_RATE_WEEE",
              "DEMAND_GROWTH_EV", "DEMAND_GROWTH_WIND"}
     add("| seed_parameters attribute | consumed in | verdict |")
     add("|---|---|---|")
@@ -169,12 +169,13 @@ def main():
     add("3. **[Medium] NI critical-mineral waste/recycling flows are a gap** (`collection_rate_weee` "
         "and the MFA collection/recovery seeds are UK-scaled). *Action:* DAERA/NIEA + recycler "
         "survey to build the NI MFA.")
-    add("4. **[Low] Tidy defined-but-unused registered params** (`COLLECTION_RATE_WEEE`, "
-        "`LOCAL_PROCUREMENT_SHARE_MINING`): either wire them into the MFA/coupling or relabel "
-        "their register note from `WIRED` to `documented (not yet consumed)`.")
-    add("5. **[Low] Reconcile the REE concentration** (0.74 mine vs 0.87 refined) and add the "
-        "0.87 run value to the register; de-duplicate the `CONCENTRATION` and lever-`COST` maps "
-        "that are repeated across q2_3/q2_4/q2_6.")
+    add("4. **[Low — RESOLVED] Defined-but-unused params fixed.** `COLLECTION_RATE_WEEE` is now "
+        "*consumed* (caps WEEE-stream collection in the MFA); `LOCAL_PROCUREMENT_SHARE_MINING` is "
+        "demoted to a documented reference benchmark (removed from seed config).")
+    add("5. **[Low — RESOLVED] REE concentration reconciled & maps de-duplicated.** The 0.87 "
+        "refined/magnet figure (the run value) is now registered alongside 0.74 mine supply; the "
+        "shared `CONCENTRATION` and `LEVER_COST` maps live once in `src/policy_params.py` (imported "
+        "by q2_3/q2_4/q2_6).")
     add("\n*Overall: validation anchors and headline policy figures are sourced and CI-checked; "
         "the economic-structure and behavioural calibration remain proxy (flagged), so outputs are "
         "directional, not forecasts. The three gap datasets above convert it to a calibrated tool.*")

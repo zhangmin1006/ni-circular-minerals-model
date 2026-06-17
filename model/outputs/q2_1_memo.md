@@ -20,7 +20,7 @@
 2. **Biggest lift in critical-mineral recycled share: `C_smart_collection_drs`** (+6.3 pp vs baseline).
 3. **Meets the Vision-2035 20% recycling target:** `C_smart_collection_drs`, `G_integrated_package` (target = 20% critical-mineral recycled share).
 4. **Circular design in manufacturing** (recycled-content uptake) responds most to `D_secondary_market_offtake` (59%) and `E_circular_design_standards` (56%) — but note this raises *design uptake* without raising the *recycled share*, which stays feedstock-constrained until collection (`C`) is fixed.
-5. **The integrated package `G_integrated_package`** delivers the largest absolute gains (+246.7 £m discounted GVA, +6.3 pp recycled share) — confirming the proposal's view that the *mix* beats any single lever.
+5. **The integrated package `G_integrated_package`** delivers the largest absolute gains (+246.1 £m discounted GVA, +6.3 pp recycled share) — confirming the proposal's view that the *mix* beats any single lever.
 
 ## Recommended sequencing
 
@@ -36,11 +36,11 @@
 | 0_baseline | 0.147 | 63.22 | 552.2 | 0.011 | 0.0 | 0.0 | 0.0 | 0.0 | nan |
 | A_materials_recovery_capital | 0.147 | 63.33 | 553.2 | 0.066 | 0.0 | 0.5 | 0.8 | 60.0 | 0.01 |
 | B_circular_innovation_fund | 0.147 | 63.32 | 553.8 | 0.532 | 0.0 | 0.5 | 0.4 | 93.3 | 0.01 |
-| C_smart_collection_drs | 0.21 | 93.39 | 815.3 | 0.011 | 6.3 | 245.5 | 407.3 | 194.2 | 1.26 |
+| C_smart_collection_drs | 0.21 | 93.27 | 814.3 | 0.011 | 6.3 | 244.9 | 406.3 | 194.2 | 1.26 |
 | D_secondary_market_offtake | 0.147 | 63.34 | 554.3 | 0.592 | 0.0 | 0.6 | 0.3 | 62.8 | 0.01 |
 | E_circular_design_standards | 0.17 | 74.62 | 652.8 | 0.557 | 2.3 | 92.5 | 152.8 | 41.9 | 2.21 |
 | F_green_skills_cluster | 0.147 | 63.23 | 552.9 | 0.415 | 0.0 | 0.0 | -0.2 | 89.5 | 0.0 |
-| G_integrated_package | 0.21 | 93.65 | 819.3 | 0.666 | 6.3 | 246.7 | 408.1 | 436.9 | 0.56 |
+| G_integrated_package | 0.21 | 93.53 | 818.3 | 0.666 | 6.3 | 246.1 | 407.1 | 436.9 | 0.56 |
 
 ## ROI sensitivity to cost uncertainty
 
@@ -52,11 +52,11 @@ Each lever carries a low/central/high public-cost bound (capital and collection 
 |---|---|---|---|---|---|---|---|
 | A_materials_recovery_capital | 0.5 | 34.3 | 60.0 | 102.8 | 0.0 | 0.01 | 0.01 |
 | B_circular_innovation_fund | 0.5 | 55.2 | 93.3 | 165.6 | 0.0 | 0.01 | 0.01 |
-| C_smart_collection_drs | 245.5 | 106.6 | 194.2 | 426.4 | 0.58 | 1.26 | 2.3 |
+| C_smart_collection_drs | 244.9 | 106.6 | 194.2 | 426.4 | 0.57 | 1.26 | 2.3 |
 | D_secondary_market_offtake | 0.6 | 31.4 | 62.8 | 125.6 | 0.0 | 0.01 | 0.02 |
 | E_circular_design_standards | 92.5 | 20.9 | 41.9 | 83.8 | 1.1 | 2.21 | 4.43 |
 | F_green_skills_cluster | 0.0 | 44.7 | 89.5 | 163.7 | 0.0 | 0.0 | 0.0 |
-| G_integrated_package | 246.7 | 237.0 | 436.9 | 875.6 | 0.28 | 0.56 | 1.04 |
+| G_integrated_package | 246.1 | 237.0 | 436.9 | 875.6 | 0.28 | 0.56 | 1.04 |
 
 *Read: `gva_roi_pessimistic` uses the HIGH cost bound, `gva_roi_optimistic` the LOW. An intervention whose whole band stays >1 is robustly value-positive; one straddling 1 is cost-sensitive.*
 

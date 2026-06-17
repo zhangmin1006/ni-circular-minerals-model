@@ -34,14 +34,8 @@ TAX_RATE_ON_GVA = 0.25
 EXPORT_SHARE_RECYCLING = 0.6
 EXPORT_SHARE_MINING = 0.3
 
-# Public cost per lever (£m/yr at intensity 1.0), NI-scale UK-anchored (as Q2.4).
-COST = {
-    "finance_support": 6.0, "exploration_grant": 3.0, "community_benefit": 3.0,
-    "recycling_grant": 7.0, "innovation_grant": 5.0, "collection_infrastructure": 9.0,
-    "product_passport": 2.0, "secondary_market_support": 4.0,
-    "recycled_content_procurement": 1.0, "design_standards": 1.0, "skills_support": 4.0,
-    "local_supplier_support": 3.0, "diversification": 3.0, "strategic_stockpile": 4.0,
-}
+# Public cost per lever (£m/yr at intensity 1.0): shared map (policy_params).
+from policy_params import LEVER_COST as COST
 
 SCENARIOS = {
     "1_baseline": {"policy": {}, "label": "Baseline"},

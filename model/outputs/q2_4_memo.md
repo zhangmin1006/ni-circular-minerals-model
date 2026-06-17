@@ -17,7 +17,7 @@
 | market_light_touch | 0.059 | 0.144 | 0.262 | 0.623 | 0.0 |
 | diversify_and_insure | 0.056 | 0.135 | 0.252 | 0.4 | 121.8 |
 | domestic_autonomy | 0.048 | 0.12 | 0.208 | 0.602 | 121.1 |
-| circular_leader | 0.04 | 0.098 | 0.185 | 0.606 | 354.1 |
+| circular_leader | 0.04 | 0.098 | 0.185 | 0.607 | 354.1 |
 | strategic_coordinator | 0.034 | 0.079 | 0.159 | 0.427 | 515.9 |
 
 - **Most resilient posture (lowest tail risk): `strategic_coordinator`** (Strategic coordinator (balanced portfolio)) — 90th-percentile supply gap 8% vs 14% under light-touch.
@@ -29,8 +29,8 @@
 | market_light_touch | 0.011 | 0.135 | 0.65 | 0.246 | 0.223 | 0.129 | 771.5 | 0.0 |
 | diversify_and_insure | 0.011 | 0.135 | 0.65 | 0.158 | 0.143 | 0.127 | 772.3 | 121.8 |
 | domestic_autonomy | 0.076 | 0.135 | 0.634 | 0.246 | 0.218 | 0.105 | 989.6 | 121.1 |
-| circular_leader | 0.011 | 0.204 | 0.65 | 0.246 | 0.223 | 0.069 | 1008.8 | 354.1 |
-| strategic_coordinator | 0.076 | 0.199 | 0.61 | 0.18 | 0.154 | 0.063 | 1210.9 | 515.9 |
+| circular_leader | 0.011 | 0.204 | 0.65 | 0.246 | 0.223 | 0.069 | 1008.5 | 354.1 |
+| strategic_coordinator | 0.076 | 0.199 | 0.61 | 0.18 | 0.154 | 0.063 | 1210.7 | 515.9 |
 
 Vision-2035 targets: domestic ≥10%, recycled ≥20%, single-country ≤60%.
 

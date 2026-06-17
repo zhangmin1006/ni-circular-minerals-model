@@ -14,7 +14,7 @@
 | scenario | label | total_jobs_end | minerals_sector_jobs | high_skill_jobs | wage_premium_vs_ni | retained_local_jobs | local_retention_rate | skilled_training_need |
 |---|---|---|---|---|---|---|---|---|
 | 1_baseline | Baseline | 1147.7 | 861.7 | 205.7 | 1.112 | 803.4 | 0.7 | 193.0 |
-| 2_circular_innovation | Circular innovation | 1513.8 | 1131.7 | 262.5 | 1.088 | 1211.1 | 0.8 | 283.7 |
+| 2_circular_innovation | Circular innovation | 1513.1 | 1131.2 | 262.4 | 1.088 | 1210.5 | 0.8 | 283.4 |
 | 4_integrated | Integrated circular + primary | 2010.2 | 1525.5 | 389.6 | 1.171 | 1728.8 | 0.86 | 697.7 |
 | local_skills_focus | Local-content + skills focus | 1392.5 | 1042.2 | 243.6 | 1.094 | 1350.7 | 0.97 | 253.8 |
 

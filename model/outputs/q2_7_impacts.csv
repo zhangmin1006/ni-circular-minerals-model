@@ -1,6 +1,6 @@
 scenario,label,cum_disc_co2_kt,cum_disc_pm_t,water_pressure,land_pressure,biodiversity_pressure,waste_pressure,co2_per_gva,land_per_gva,cum_disc_gva_gbp_m,mines_opened
 1_baseline,Baseline,1591.8,170.9,3033.0,3813.0,2979.0,18178.0,2.019,4.837,788.3,0
-2_circular_innovation,Circular innovation,1974.5,206.6,3456.0,4024.0,3120.0,18883.0,1.937,3.948,1019.4,0
+2_circular_innovation,Circular innovation,1974.0,206.6,3455.0,4024.0,3120.0,18882.0,1.937,3.949,1019.1,0
 3_primary_extraction,Primary extraction,2233.6,253.8,4321.0,5959.0,4696.0,28908.0,2.237,5.967,998.6,3
 4_integrated,Integrated,2487.2,277.4,5346.0,7338.0,5781.0,35568.0,2.158,6.368,1152.4,2
 6_high_esg_low_impact,High-ESG / low-impact,2432.9,270.4,3836.0,4822.0,3768.0,22988.0,2.145,4.251,1134.2,1

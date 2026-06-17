@@ -18,6 +18,12 @@ All stock/flow seed values are PROXY (UK data scaled to NI). STATUS in register.
 import numpy as np
 import seed_parameters as P
 
+# Minerals whose end-of-life collection is dominated by WEEE/battery/ELV streams,
+# so their collection rate is capped at the real WEEE collection rate
+# (seed_parameters.COLLECTION_RATE_WEEE). Copper/aluminium/nickel have large
+# non-WEEE scrap streams and are not capped here.
+WEEE_STREAM_MINERALS = {"REE_magnet", "Lithium", "Cobalt"}
+
 
 # Per-mineral seed parameters (PROXY). tonnes/yr unless noted.
 # demand0: NI annual demand baseline; lifetime: yrs to end-of-life;
@@ -102,6 +108,10 @@ class MFA:
             eol = self._inflow_hist[m][0] if self._inflow_hist[m] else 0.0
 
             coll_rate = min(0.95, coll + collection_boost.get(m, 0.0))
+            # minerals recovered mainly from WEEE/battery/ELV streams cannot be
+            # collected beyond the real WEEE collection rate (UK ~25%, register).
+            if m in WEEE_STREAM_MINERALS:
+                coll_rate = min(coll_rate, P.COLLECTION_RATE_WEEE)
             rec_rate = min(0.98, rec + recovery_boost.get(m, 0.0))
             collected = eol * coll_rate
             recycled = collected * rec_rate
