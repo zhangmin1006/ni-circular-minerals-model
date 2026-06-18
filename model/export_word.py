@@ -24,6 +24,7 @@ OUT_DIR = os.path.join(ROOT, "word")
 # (source markdown, output .docx name)
 FILES = [
     (os.path.join(ROOT, "NI_MINERALS_MODEL_REPORT.md"), "NI_Minerals_Model_Report.docx"),
+    (os.path.join(ROOT, "NI_MINERALS_TECHNICAL_REPORT.md"), "NI_Minerals_Technical_Report.docx"),
     (os.path.join(HERE, "outputs", "q2_1_memo.md"), "Q2.1_circularity_innovation.docx"),
     (os.path.join(HERE, "outputs", "q2_2_memo.md"), "Q2.2_opportunities_challenges.docx"),
     (os.path.join(HERE, "outputs", "q2_3_memo.md"), "Q2.3_business_support.docx"),
@@ -196,16 +197,25 @@ def md_to_docx(md_path, docx_path):
 
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
-    done = 0
+    done, locked = 0, []
     for md_path, name in FILES:
         if not os.path.exists(md_path):
             print(f"  skip (missing): {md_path}")
             continue
         out = os.path.join(OUT_DIR, name)
-        md_to_docx(md_path, out)
+        try:
+            md_to_docx(md_path, out)
+        except PermissionError:
+            # the .docx is open (Word/OneDrive lock) — skip it, keep going so one
+            # open document cannot block the rest of the export.
+            locked.append(name)
+            print(f"  SKIP (file locked/open, close it and re-run): {name}")
+            continue
         print(f"  wrote {os.path.relpath(out, ROOT)}")
         done += 1
     print(f"\n{done} Word documents written to {os.path.relpath(OUT_DIR, ROOT)}/")
+    if locked:
+        print(f"{len(locked)} skipped because open elsewhere: {', '.join(locked)}")
 
 
 if __name__ == "__main__":
