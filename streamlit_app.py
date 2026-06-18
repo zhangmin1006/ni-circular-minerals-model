@@ -36,9 +36,12 @@ SCENARIO_LABELS = {
 }
 
 
+# cwd-robust favicon: resolve against this file, not the working directory, and
+# fall back to an emoji if the asset is missing (so deploy never fails on it).
+_icon_path = ROOT / "model" / "outputs" / "figures" / "fig3_supply_security.png"
 st.set_page_config(
     page_title="NI Circular Minerals Model",
-    page_icon="model/outputs/figures/fig3_supply_security.png",
+    page_icon=str(_icon_path) if _icon_path.exists() else "♻️",
     layout="wide",
 )
 
