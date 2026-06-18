@@ -158,18 +158,25 @@ the opportunity is only captured if the midstream gap is closed.
   an upper bound: the *retained* share depends on the local-content + skills measures of
   2.5.
 
-### 2.7 — Negative impacts, and how to minimise them
+### 2.7 — Potential **economic** negative impacts, and how to minimise them
 
-- **Primary mining carries the heavy, site-specific burden** — land take, water,
-  biodiversity, tailings, dust/noise and closure liabilities, concentrated on the host
-  area (e.g. Curraghinalt in Fermanagh & Omagh) and its receptors.
-- **Recycling is far lower-impact per £ of value** — it avoids the land/water/
-  biodiversity/tailings burden almost entirely and its carbon footprint is ~30% of
-  primary; circularity is the impact-minimising route to the same supply security.
-- **High-ESG design materially mitigates** the local burden of any primary
-  development (~35% in the model). The order of preference is **avoid** (recycle/design)
-  → **mitigate** (high-ESG: water stewardship, rehabilitation, biodiversity net gain) →
-  **manage closure** (bonded) and local socio-economic risks (boom-bust, displacement).
+*(This answers the question as posed — the economic downsides; environmental impacts
+are a separate matter, tracked in the model's CO₂/PM satellites.)*
+
+- **Primary extraction carries five economic negatives** — benefit **leakage** out of
+  NI (imported specialist labour/equipment), a **closure cliff** + remediation
+  **liability**, **agriculture/tourism displacement**, **boom-bust** price-volatility
+  exposure, and **stranded/sunk capital** on contested long-lead projects (Dalradian).
+  Lightly managed, these run to ~36% of the scenario's GVA and can pull **net** local
+  GVA *below* baseline — extraction done badly can leave NI worse off.
+- **Circular activity avoids almost all of it** — with no new mine there is no closure
+  cliff, displacement or stranded-capital risk, only modest leakage; it is the
+  low-economic-risk route to the same supply security.
+- **Responsible, managed development mitigates the rest** — local content + a skills
+  pipeline cut leakage (retention ~70%→~92%), **bonded closure** removes the public
+  remediation liability, progressive **rehabilitation** shortens displacement, and a
+  **circular hedge** lowers stranded-capital exposure — roughly halving the economic
+  negatives and giving the highest *net* local GVA of any scenario.
 
 ---
 

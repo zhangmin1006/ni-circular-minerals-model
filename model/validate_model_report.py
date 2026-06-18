@@ -56,7 +56,7 @@ TEST_GROUPS = [
     ("Economic sanity ranges", verify_model.test_economic_sanity),
     ("Geopolitical-shock behaviour", verify_model.test_geopolitical),
     ("Employment and skills layer", verify_model.test_employment),
-    ("Negative-impact layer", verify_model.test_impact),
+    ("Economic-negative-impact layer", verify_model.test_econ_impact),
     ("CGE partial-equilibrium fallback", verify_model.test_cge_fallback),
     ("Property-based stress tests", verify_model.test_fuzz),
 ]
@@ -104,6 +104,12 @@ VALIDATION_DESIGN = [
         "purpose": "Confirm the model degrades gracefully if the full CGE solve fails.",
         "evidence": "The CGE solve is forced to fail and the run is checked for the partial-equilibrium fallback path.",
         "pass_rule": "All steps route to the PE fallback with no NaN, bounded price feedback and intact mass balance.",
+    },
+    {
+        "layer": "Economic-negative impacts",
+        "purpose": "Check the Q2.7 economic-downside logic moves in the intended direction.",
+        "evidence": "Benefit leakage vs retention, closure liability vs management/bonding, agri/tourism displacement and contested stranded-capital exposure.",
+        "pass_rule": "Leakage/closure/displacement are non-negative and fall with retention/management; stranded capital is zero without a mine and positive with a contested one.",
     },
     {
         "layer": "Stress testing",

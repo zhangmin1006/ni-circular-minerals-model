@@ -4,7 +4,7 @@ Programmatic audit of the data inputs behind the model and the Q2.1-2.7 experime
 
 ## 1. Data register (`data_register.csv`)
 
-- **105 parameters.** Status: real 72, proxy 18, desk_verified 11, web_verified 2, reference 1, gap 1.
+- **112 parameters.** Status: real 72, proxy 21, desk_verified 13, web_verified 3, reference 2, gap 1.
 - **Placeholder-source (6)** — biggest provenance gaps: `io_technical_coefficients`, `io_employment_coefficients`, `io_co2_coefficients`, `in_use_stock_ree_tonnes`, `ni_demand_growth_ev`, `ni_demand_growth_wind`.
 - **Declared gaps (1):** `in_use_stock_ree_tonnes`.
 
@@ -39,8 +39,8 @@ The register curates headline/sourced data + key proxies. The bulk of structural
 - **`cge_module.py`**: `SIGMA_ARM`, `SIGMA_E`
 - **`company_data.py`**: `CONFIDENCE`, `LIFECYCLE_WEIGHT`
 - **`coupling.py`**: `STOCKPILE_DEPTH`, `STOCKPILE_RATE`
+- **`econ_impact_module.py`**: `AGRI_TOURISM_DISPLACEMENT_GBP_PER_MINE_PA`, `BASE_LOCAL_RETENTION`, `CLOSURE_REMEDIATION_GBP_PER_MINE`, `COMMODITY_PRICE_VOLATILITY`, `COMPONENTS`, `CONTESTED_PROJECT_CAPITAL_GBP_M`, `MINE_OPERATING_LIFE_YEARS`, `MINING_WAGE_PREMIUM`, `RISK_EXPOSURES`
 - **`employment_module.py`**: `NI_MEDIAN_ANNUAL_WAGE`, `NI_MEDIAN_ANNUAL_WAGE_2024`, `SECTOR_WAGE_INDEX`, `SKILL_SPLIT`
-- **`impact_module.py`**: `ESG_MAX_MITIGATION`, `ESG_REF`, `PRESSURE`, `RECYCLING_CO2_VS_PRIMARY`
 - **`make_supply_chain_fig.py`**: `FIGDIR`, `STAGES`
 - **`mfa_module.py`**: `MINERAL_PARAMS`, `MINERAL_PRICE_GBP_PER_T`, `WEEE_STREAM_MINERALS`
 - **`policy_params.py`**: `CONCENTRATION`, `EXPORT_CONTROL`, `LEVER_COST`, `REFINING_CONCENTRATION`, `TOP3_CONCENTRATION`

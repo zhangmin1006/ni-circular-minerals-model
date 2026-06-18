@@ -12,7 +12,7 @@ This report has three parts, matching the request:
 2. **Data & assumptions** — what data built the model and what was assumed about it.
 3. **Answers to the seven questions** — for each, the experiment logic, the data used, the results (tables/figures), and how the results produce the answer.
 
-> **This revision incorporates new external evidence** (data register + model code): the **Vision 2035 annex 2035 cumulative-demand tonnages** as the demand anchor; an **IEA-2025 top-three & refining/processing concentration risk metric** (and export-control flag) beside single-country exposure (Q2.4); the **"critical & growth minerals"** distinction (copper is a UK *growth* mineral); the **NISRA ASHE 2025** wage anchor (£37,100, 2024 retained as a sensitivity); the **NISRA NIETS 2024** trade frame for Q2.6 exports/avoided imports; and the **EU-CRMA stretch targets** (25% recycling, ≤65% single-country) as an EU-market sensitivity. The harness is now **61 checks**.
+> **This revision incorporates new external evidence** (data register + model code): the **Vision 2035 annex 2035 cumulative-demand tonnages** as the demand anchor; an **IEA-2025 top-three & refining/processing concentration risk metric** (and export-control flag) beside single-country exposure (Q2.4); the **"critical & growth minerals"** distinction (copper is a UK *growth* mineral); the **NISRA ASHE 2025** wage anchor (£37,100, 2024 retained as a sensitivity); the **NISRA NIETS 2024** trade frame for Q2.6 exports/avoided imports; and the **EU-CRMA stretch targets** (25% recycling, ≤65% single-country) as an EU-market sensitivity. **Q2.7 has been refocused** to the consultation question as posed — the *economic* negative impacts of mineral development (leakage, closure/legacy liability, agriculture/tourism displacement, boom-bust exposure, stranded capital; `econ_impact_module.py`), with environmental impacts moved out of scope (still tracked in the I-O CO₂/PM satellites). The harness is now **61 checks**.
 
 ---
 
@@ -374,25 +374,25 @@ The contrast is the key insight: **import diversification cuts single-country an
 
 **(iv) How this leads to the answer.** The benefits are **substantial and broad** — the integrated scenario delivers ~£1.15bn discounted GVA, ~£1.8bn avoided imports, ~£0.3bn tax and ~£0.9bn exports over 30 years, on top of the £1.16bn investment pipeline. The **value-for-money is honest**: on incremental GVA alone the capital-heavy scenarios return below £1, but once **avoided imports / resilience** are counted the return rises to ~2×. **Pure extraction support is the weakest** (little opens without social licence). Headline benefits are an upper bound — the *retained* share depends on the Q2.5 local-content + skills measures. **In the NISRA NIETS 2024 trade frame**, the integrated minerals system contributes only ~0.3% of NI's £19.6bn external exports and displaces ~1.3% of its £11.2bn external imports by year 30 — small by *volume* but high in *strategic value*, protecting a far larger downstream manufacturing base from import-price and supply shocks. (NIETS sector tables are the recommended next calibration step for the proxy export shares.)
 
-## Q2.7 — Negative impacts and how to minimise them
+## Q2.7 — Potential **economic** negative impacts of mineral development
 
-**(i) Experiment logic.** The validated CO₂/PM satellites are reported alongside relative pressure indices for Minviro Appendix-A impact groups (water, land, biodiversity, tailings/waste) and eco-efficiency (impact per £m GVA), across baseline / circular / primary / integrated / high-ESG scenarios.
+**(i) Experiment logic.** This answers the consultation question as literally posed — the **economic** downsides of (mainly primary) mineral development, **not** the environmental pressures (carbon/air/land/water/biodiversity stay in the I-O CO₂/PM satellites and are out of scope here). Five Minviro-grounded economic negatives are quantified across scenarios (baseline / circular / lightly-managed primary / integrated / responsible-managed primary): **benefit leakage** (enclave economy), **closure cliff + remediation liability**, **agriculture/tourism displacement**, **boom-bust price-volatility exposure**, and **stranded/sunk capital** on contested long-lead projects (`econ_impact_module.py`).
 
-**(ii) Data used.** Minviro Appendix A (impact groups, site-specific receptors, avoid→mitigate→closure hierarchy); Minviro CLCA (most active mining ≈ 0.36% of NI CO₂, 0.24% of PM; recycling carbon ~30% of primary); I-O CO₂/PM satellites.
+**(ii) Data used.** Minviro Final Report: retained employment §2.2.5 + Galmoy/Lisheen leakage; mine-closure §1.4.6.8 (Fig 1.33 closure-cost estimates); agriculture §3.4.2.4 & tourism §3.4.2.5 displacement; price-volatility/"volatile inflows". Dalradian Curraghinalt (~£250m proposed, ~21-yr inquiry) for the stranded-capital exposure. Parameters (life-of-mine 18 yr, closure £35m/mine, agri+tourism £3m/mine-yr, volatility 0.30, base retention 0.70) are PROXY in the data register.
 
-**(iii) Results.**
+**(iii) Results (£m, discounted over 30 years):**
 
-| Scenario | Cum. disc. CO₂ (kt) | Land pressure | Biodiversity | Waste/tailings | Land per £GVA |
-|---|---|---|---|---|---|
-| Baseline | 1,592 | 3,813 | 2,979 | 18,178 | 4.84 |
-| Circular innovation | 1,974 | 4,024 | 3,120 | 18,882 | **3.95** |
-| Primary extraction | 2,234 | **5,959** | **4,696** | **28,908** | 5.97 |
-| Integrated | 2,487 | 7,338 | 5,781 | 35,568 | 6.37 |
-| High-ESG / low-impact | 2,433 | 4,822 | 3,768 | 22,988 | 4.25 |
+| Scenario | Leakage | Closure liability | Agri/tourism displ. | **Econ-neg total** | per £GVA | Boom-bust /yr | Stranded capital | **Net local GVA** |
+|---|---|---|---|---|---|---|---|---|
+| Baseline | 136 | 0 | 0 | 136 | 17% | 2.2 | 0 | 653 |
+| Circular innovation | 162 | 0 | 0 | 162 | 17% | 2.2 | 0 | 780 |
+| **Primary (lightly managed)** | 171 | 72 | 116 | **359** | **36%** | 6.3 | **125** | **639** |
+| Integrated circular + primary | 119 | 37 | 70 | 225 | 20% | 6.3 | 73 | 928 |
+| **Responsible, managed primary** | 52 | 21 | 54 | **128** | **11%** | 6.3 | 70 | **1,016** |
 
-![Figure 5. Decision trade-off: jobs versus cumulative CO₂ across scenarios — the circular routes sit on a better jobs-per-emission frontier than primary extraction.](model/outputs/figures/fig5_tradeoff.png)
+![Figure 5. Q2.7 economic negative impacts of mineral development — leakage + closure liability + agriculture/tourism displacement by scenario. Primary extraction carries the heavy load; circular activity almost none; responsible managed development mitigates it.](model/outputs/figures/fig7_econ_negatives.png)
 
-**(iv) How this leads to the answer.** **Primary mining carries the heavy, site-specific local burden** (land, water, biodiversity, tailings, dust/noise, closure) concentrated on the host council area. **Recycling is far lower-impact per £ of value** (lowest land-per-£GVA; carbon ~30% of primary). **High-ESG design materially mitigates** the local burden (~35%). National carbon is modest (~0.36% of NI CO₂); the binding impacts are *local*. The order of preference is **avoid** (recycle/design) → **mitigate** (high-ESG) → **manage closure** (bonded), and any primary development needs project- and place-specific assessment.
+**(iv) How this leads to the answer.** The economic negatives are real and **largest for primary extraction**: lightly managed, it runs ~£359m of deterministic economic losses (**36% of its GVA**) — leakage + a closure cliff & remediation liability + agri/tourism displacement — **plus** ~£125m of contested capital at risk and a closure cliff (the mine's GVA/jobs vanish at end-of-life). Strikingly, its **net local GVA (£639m) falls *below* the baseline (£653m)** once the negatives are netted off — lightly-managed extraction can leave NI worse off. **Circular activity avoids almost all of it** (no mine → no closure/displacement/stranded risk; only residual leakage). **Responsible, managed development mitigates the rest** — local content + skills cut leakage (retention 70%→92%), **bonded closure** removes the public remediation liability, rehabilitation shortens displacement, and a circular hedge lowers stranded-capital exposure — lifting net local GVA to ~£1,016m. So the answer: the principal economic negatives are **benefit leakage, closure/legacy liabilities, agriculture/tourism displacement, boom-bust exposure and stranded capital**, and they are minimised by **doing development circularly where possible and, where primary proceeds, requiring local content, bonded closure, rehabilitation and a circular hedge**. (Environmental impacts are a separate question — tracked in the I-O CO₂/PM satellites.)
 
 ## Cross-cutting: demand outlook & the capacity gap
 

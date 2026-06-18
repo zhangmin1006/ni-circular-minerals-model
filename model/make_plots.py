@@ -113,6 +113,33 @@ def main():
             fig.savefig(os.path.join(FIG, "fig6_spatial_jobs.png"), dpi=130)
             plt.close(fig)
 
+    # Q2.7 economic negative impacts (stacked deterministic negatives + net local GVA)
+    q27_path = os.path.join(OUT, "q2_7_impacts.csv")
+    if os.path.exists(q27_path):
+        e = pd.read_csv(q27_path, index_col=0)
+        comp = ["benefit_leakage_gbp_m", "closure_liability_gbp_m",
+                "agri_tourism_displacement_gbp_m"]
+        if all(c in e.columns for c in comp):
+            labels = [str(l).replace(" (", "\n(") for l in e["label"]]
+            fig, ax = plt.subplots(figsize=(9, 5.2))
+            bottom = [0.0] * len(e)
+            colours = {"benefit_leakage_gbp_m": "#b9770e",
+                       "closure_liability_gbp_m": "#922b21",
+                       "agri_tourism_displacement_gbp_m": "#1e8449"}
+            names = {"benefit_leakage_gbp_m": "Benefit leakage",
+                     "closure_liability_gbp_m": "Closure liability",
+                     "agri_tourism_displacement_gbp_m": "Agri/tourism displacement"}
+            for c in comp:
+                ax.bar(labels, e[c], bottom=bottom, label=names[c], color=colours[c])
+                bottom = [b + v for b, v in zip(bottom, e[c])]
+            ax.set_ylabel("Economic negatives (£m, discounted)")
+            ax.set_title("Q2.7 economic negative impacts of mineral development")
+            ax.legend(fontsize=8)
+            ax.tick_params(axis="x", labelsize=7)
+            fig.tight_layout()
+            fig.savefig(os.path.join(FIG, "fig7_econ_negatives.png"), dpi=130)
+            plt.close(fig)
+
     print("Figures written to:", FIG)
     for f in sorted(os.listdir(FIG)):
         print("  -", f)

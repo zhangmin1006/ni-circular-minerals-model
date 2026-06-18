@@ -1,6 +1,6 @@
-scenario,label,cum_disc_co2_kt,cum_disc_pm_t,water_pressure,land_pressure,biodiversity_pressure,waste_pressure,co2_per_gva,land_per_gva,cum_disc_gva_gbp_m,mines_opened
-1_baseline,Baseline,1591.8,170.9,3033.0,3813.0,2979.0,18178.0,2.019,4.837,788.3,0
-2_circular_innovation,Circular innovation,1974.0,206.6,3455.0,4024.0,3120.0,18882.0,1.937,3.949,1019.1,0
-3_primary_extraction,Primary extraction,2233.6,253.8,4321.0,5959.0,4696.0,28908.0,2.237,5.967,998.6,3
-4_integrated,Integrated,2487.2,277.4,5346.0,7338.0,5781.0,35568.0,2.158,6.368,1152.4,2
-6_high_esg_low_impact,High-ESG / low-impact,2432.9,270.4,3836.0,4822.0,3768.0,22988.0,2.145,4.251,1134.2,1
+scenario,label,cum_disc_gva_gbp_m,minerals_direct_gva_gbp_m,benefit_leakage_gbp_m,closure_liability_gbp_m,agri_tourism_displacement_gbp_m,econ_negative_total_gbp_m,econ_negative_per_gva,net_local_gva_gbp_m,boom_bust_var_gbp_m_pa,stranded_capital_at_risk_gbp_m,closure_cliff_gva_gbp_m_pa,closure_cliff_jobs,local_retention,mgmt_intensity,mines_opened
+1_baseline,Baseline (current trajectory),788.3,451.9,135.6,0.0,0.0,135.6,0.172,652.7,2.19,0.0,7.31,261.2,0.7,0.0,0
+2_circular_innovation,Circular innovation (no new mine),942.7,541.4,162.4,0.0,0.0,162.4,0.172,780.3,2.19,0.0,7.31,263.2,0.7,0.0,0
+3_primary_unmanaged,"Primary extraction (lightly managed, no local content)",998.6,570.6,171.2,72.3,115.9,359.4,0.36,639.3,6.26,125.0,20.86,721.9,0.7,0.311,3
+4_integrated,Integrated circular + primary,1152.4,659.8,118.8,36.6,69.6,225.0,0.195,927.5,6.25,72.5,20.85,722.8,0.82,0.478,2
+5_responsible_managed,"Responsible, managed primary (bonded + local content + hedge)",1144.2,655.3,52.4,21.0,54.4,127.8,0.112,1016.4,6.25,69.5,20.85,723.0,0.92,0.7,2

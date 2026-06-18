@@ -479,9 +479,13 @@ NISRA, GSNI Tellus, IEA, Met4Tech/Faraday, and the cited US/EU policy analyses.
 10. District allocation blends proxy population-tilted shares with named-firm
     geography — *replace with NISRA BRES employment-by-district.*
 11. Environmental satellites (CO₂, PM) are proxy coefficients — *replace with
-    NAEI/DAERA + ecoinvent/EXIOBASE.* The model does **not** do site-specific
-    impact assessment (Q2.7 should be read with the Minviro Appendix A, which
-    stresses impacts are site-specific).
+    NAEI/DAERA + ecoinvent/EXIOBASE.* **Q2.7 has been scoped to the consultation
+    question as posed — the *economic* negative impacts** (benefit leakage, closure
+    cliff/remediation liability, agriculture/tourism displacement, boom-bust
+    exposure, stranded capital; `econ_impact_module.py`). The *environmental*
+    impacts (the former pressure-index layer) are out of Q2.7 scope; the CO₂/PM
+    satellites still run, and a site-specific environmental assessment (Minviro
+    Appendix A) remains a separate exercise the model does not perform.
 
 **Public cost / ROI**
 12. Lever public costs and the GVA-ROI are NI-scale figures **benchmarked to UK

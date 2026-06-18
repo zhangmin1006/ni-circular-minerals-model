@@ -48,9 +48,9 @@ PASS,"refining & export-control exposures bounded in [0,1]","refining 0.272, exp
 PASS,skill breakdown sums to total jobs,450.0 vs 450.0
 PASS,wage bill positive & premium > 0,"bill £18.55m, premium 1.111"
 PASS,retained local <= total and rises with support,retention 0.7 -> 0.97
-PASS,primary mining pressure > recycling for every impact category,"{'water': (6.0, 1.2), 'land': (10.0, 0.6), 'biodiversity': (8.0, 0.4), 'waste': (50.0, 2.0)}"
-PASS,"ESG mitigation: 1.0 at no-ESG, reduced (<1, >=0.6) under high ESG",1.00 -> 0.65
-PASS,annual pressures non-negative,"{'water': 45.0, 'land': 68.0, 'biodiversity': 54.0, 'waste': 335.0}"
+PASS,"leakage non-negative, <= GVA, and falls as retention rises",300.0 -> 80.0
+PASS,closure liability bonded down by management & bounded by cost/mine,35.0 -> 3.5
+PASS,"displacement>=0 & cut by management; stranded 0 w/o mine, >0 with contested mine",displ 30.0->15.0; stranded none=0.0 mine=125.0
 PASS,forced CGE failure routes to the PE fallback,{'fallback_pe'}
 PASS,fallback run has no NaN in GVA/jobs,
 PASS,"fallback keeps price feedback bounded [0.8,1.5] & mass balance",feedback 1.000

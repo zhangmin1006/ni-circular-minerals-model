@@ -800,20 +800,21 @@ with tab_q26:
 
 
 with tab_q27:
-    st.subheader("Q2.7 — Negative impacts and how to minimise them")
+    st.subheader("Q2.7 — Potential economic negative impacts of mineral development")
     st.caption(
-        "The Minviro Appendix A impact set — CO₂ and PM (validated I-O satellites) "
-        "plus relative pressure indices for water, land transformation, biodiversity "
-        "and mine waste/tailings — with eco-efficiency (impact per £m GVA), the "
-        "recycling-vs-primary contrast and a high-ESG mitigation scenario. Impacts "
-        "are site-specific (people + biodiversity are the receptors)."
+        "Answers the question as literally posed — the ECONOMIC downsides of (mainly "
+        "primary) mineral development, not environmental impacts (which stay in the "
+        "I-O CO₂/PM satellites). Five Minviro-grounded negatives: benefit leakage "
+        "(enclave economy), closure cliff + remediation liability, agriculture/tourism "
+        "displacement, boom-bust price-volatility exposure, and stranded/sunk capital "
+        "on contested long-lead projects."
     )
     g27 = load_q27()
     df27, memo27 = g27
     if df27 is None:
         st.warning("Q2.7 results are not present in this deployment.")
         if st.button("Run the Q2.7 experiment now"):
-            with st.spinner("Computing the negative-impact profile..."):
+            with st.spinner("Computing the economic-negative-impact profile..."):
                 res = generate_q27()
             if res.returncode:
                 st.error("The experiment failed.")
@@ -822,29 +823,46 @@ with tab_q27:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        if "3_primary_unmanaged" in df27.index and "5_responsible_managed" in df27.index:
+            pu, mg = df27.loc["3_primary_unmanaged"], df27.loc["5_responsible_managed"]
+            k1, k2, k3 = st.columns(3)
+            k1.metric("Econ-negatives, lightly-managed primary",
+                      f"£{pu['econ_negative_total_gbp_m']:,.0f}m",
+                      f"{pu['econ_negative_per_gva']:.0%} of GVA", delta_color="off")
+            k2.metric("Econ-negatives, responsible managed",
+                      f"£{mg['econ_negative_total_gbp_m']:,.0f}m",
+                      f"{mg['econ_negative_per_gva']:.0%} of GVA", delta_color="off")
+            k3.metric("Net local GVA: managed vs unmanaged",
+                      f"£{mg['net_local_gva_gbp_m']:,.0f}m",
+                      f"+£{mg['net_local_gva_gbp_m']-pu['net_local_gva_gbp_m']:,.0f}m vs unmanaged")
         c1, c2 = st.columns(2)
         with c1:
-            st.caption("Local pressure burden by scenario (relative index)")
-            st.bar_chart(df27[["land_pressure", "water_pressure", "biodiversity_pressure",
-                               "waste_pressure"]])
+            st.caption("Economic negatives by scenario (£m, discounted)")
+            st.bar_chart(df27[["benefit_leakage_gbp_m", "closure_liability_gbp_m",
+                               "agri_tourism_displacement_gbp_m"]])
         with c2:
-            st.caption("Eco-efficiency — land & CO₂ per £m GVA (lower = cleaner per £)")
-            st.bar_chart(df27[["land_per_gva", "co2_per_gva"]])
+            st.caption("Net local GVA after economic negatives, and stranded-capital risk (£m)")
+            st.bar_chart(df27[["net_local_gva_gbp_m", "stranded_capital_at_risk_gbp_m"]])
         st.info(
-            "Primary mining carries the heavy local burden (land, water, biodiversity, "
-            "tailings); recycling is far lower-impact per £ of GVA (~30% of primary's carbon, "
-            "negligible land/water); and a **high-ESG / low-impact** stance cuts the primary "
-            "burden by up to ~35%. Minimisation hierarchy: **avoid** (recycle/design) → "
-            "**mitigate** (high-ESG design) → **manage closure** + local socio-economic risks. "
-            "Impacts are site-specific — any mine's burden falls on its host area (e.g. "
-            "Curraghinalt in Fermanagh & Omagh)."
+            "**Primary extraction carries the heavy economic-negative load** (leakage + a closure "
+            "cliff & remediation liability + agri/tourism displacement + stranded-capital and "
+            "boom-bust risk) — lightly managed it can leave NI's *net* local GVA below baseline. "
+            "**Circular activity avoids almost all of it** (no mine → no closure/displacement/"
+            "stranded risk; only residual leakage). **Responsible, managed development mitigates** "
+            "the rest: local content + skills cut leakage, bonded closure removes the public "
+            "liability, rehabilitation shortens displacement, and a circular hedge lowers "
+            "stranded-capital exposure."
         )
         cols = {
-            "label": "Scenario", "cum_disc_co2_kt": "CO₂ kt", "cum_disc_pm_t": "PM t",
-            "water_pressure": "Water", "land_pressure": "Land",
-            "biodiversity_pressure": "Biodiversity", "waste_pressure": "Waste/tailings",
-            "co2_per_gva": "CO₂/£m GVA", "land_per_gva": "Land/£m GVA",
+            "label": "Scenario", "benefit_leakage_gbp_m": "Leakage £m",
+            "closure_liability_gbp_m": "Closure liab. £m",
+            "agri_tourism_displacement_gbp_m": "Agri/tourism £m",
+            "econ_negative_total_gbp_m": "Econ-neg total £m", "econ_negative_per_gva": "per £GVA",
+            "boom_bust_var_gbp_m_pa": "Boom-bust /yr £m",
+            "stranded_capital_at_risk_gbp_m": "Stranded cap. £m",
+            "net_local_gva_gbp_m": "Net local GVA £m",
         }
+        cols = {k: v for k, v in cols.items() if k in df27.columns}
         st.dataframe(df27[list(cols)].rename(columns=cols), width="stretch")
         if memo27:
             with st.expander("Full Q2.7 findings memo (negative impacts, Minviro Appendix A)"):

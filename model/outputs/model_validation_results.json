@@ -1,5 +1,5 @@
 {
-  "run_timestamp": "2026-06-18T17:10:58",
+  "run_timestamp": "2026-06-18T17:59:02",
   "checks_total": 61,
   "checks_passed": 61,
   "checks_failed": 0,
@@ -251,18 +251,18 @@
     },
     {
       "status": "PASS",
-      "check": "primary mining pressure > recycling for every impact category",
-      "detail": "{'water': (6.0, 1.2), 'land': (10.0, 0.6), 'biodiversity': (8.0, 0.4), 'waste': (50.0, 2.0)}"
+      "check": "leakage non-negative, <= GVA, and falls as retention rises",
+      "detail": "300.0 -> 80.0"
     },
     {
       "status": "PASS",
-      "check": "ESG mitigation: 1.0 at no-ESG, reduced (<1, >=0.6) under high ESG",
-      "detail": "1.00 -> 0.65"
+      "check": "closure liability bonded down by management & bounded by cost/mine",
+      "detail": "35.0 -> 3.5"
     },
     {
       "status": "PASS",
-      "check": "annual pressures non-negative",
-      "detail": "{'water': 45.0, 'land': 68.0, 'biodiversity': 54.0, 'waste': 335.0}"
+      "check": "displacement>=0 & cut by management; stranded 0 w/o mine, >0 with contested mine",
+      "detail": "displ 30.0->15.0; stranded none=0.0 mine=125.0"
     },
     {
       "status": "PASS",
