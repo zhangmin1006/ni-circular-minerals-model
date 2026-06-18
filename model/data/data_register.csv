@@ -28,7 +28,7 @@ recovery_yield_copper,0.90,fraction,desk_verified,EXIOBASE / industry data,"Matu
 in_use_stock_ree_tonnes,NA,tonnes,gap,PLACEHOLDER,UK MFA scaled to NI population/industry,Needs stock-flow construction
 ni_demand_growth_ev,0.12,fraction_pa,proxy,PLACEHOLDER,NI energy scenarios / EV uptake stats,"Demand driver scenario. WIRED: run_mvm GREEN_DEMAND Lithium growth"
 ni_demand_growth_wind,0.08,fraction_pa,proxy,PLACEHOLDER,NI wind deployment / grid investment,"Demand driver scenario. WIRED: run_mvm GREEN_DEMAND REE_magnet growth"
-company_register_count,20,companies,web_verified,Desk research June 2026,model/data/company_register.csv,"Named NI operators in recycling, exploration/mining, quarry/minerals, materials-processing equipment, and downstream demand sectors"
+company_register_count,21,companies,web_verified,Desk research June 2026,model/data/company_register.csv,"21 named NI operators (13 web-verified, 8 desk-verified) across recycling, exploration/mining, quarry/minerals, materials-processing equipment, and downstream demand sectors"
 company_employee_estimate,NA,persons,proxy,Desk research June 2026,model/data/company_register.csv,"Uses public reporting where available and desk estimates otherwise; replace with BRES/company accounts/survey data"
 company_capacity_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Heuristic capacity and feedstock scores; replace with turnover, employment, tonnage, plant capacity and survey data"
 company_local_procurement_scores,NA,index_0_1,proxy,Desk research June 2026,model/data/company_register.csv,"Heuristic local-procurement scores; replace with firm-level supplier survey"
