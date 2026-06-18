@@ -323,12 +323,14 @@ def _write_memo(grid, mc, eb):
 
     piv = grid.pivot(index="role", columns="shock", values="single_country_exposure")
     lines.append("\n## Findings — the role government should play\n")
-    lines.append(f"1. **NI is structurally over-concentrated, and only diversification fixes it.** In "
+    lines.append(f"1. **NI is structurally over-concentrated, and diversification is the lever that "
+                 f"most directly cuts single-country exposure.** In "
                  f"normal times single-country exposure is ~{piv.loc['market_light_touch','0_stable']:.0%} "
-                 f"under light-touch — far above the ≤60% target — and the *only* roles that meet the "
-                 f"target are those that diversify imports (diversify-&-insure "
-                 f"{piv.loc['diversify_and_insure','0_stable']:.0%}, coordinator "
-                 f"{piv.loc['strategic_coordinator','0_stable']:.0%}). (Note: exposure *falls* under an "
+                 f"under light-touch — far above the ≤60% target. Diversify-&-insure meets the "
+                 f"single-country target in stable conditions "
+                 f"({piv.loc['diversify_and_insure','0_stable']:.0%}); the coordinator comes close "
+                 f"({piv.loc['strategic_coordinator','0_stable']:.0%}) while also improving domestic, "
+                 f"recycling and refining-resilience metrics. (Note: exposure *falls* under an "
                  f"actual export ban only because access to the dominant supplier is lost — that shows "
                  f"up instead as a **supply gap**, so the two must be read together.)")
     lines.append("2. **Light-touch is not an option for security.** Under a dominant-supplier export "
@@ -342,8 +344,14 @@ def _write_memo(grid, mc, eb):
     lines.append(f"4. **A balanced *strategic-coordinator* role is the most robust** across the shock "
                  f"range and the Monte-Carlo tail: it diversifies imports, holds a thin reserve to "
                  f"bridge, builds circular capacity for durable secondary supply, and brings responsible "
-                 f"primary forward where social licence allows — the only posture that moves all three "
-                 f"Vision-2035 indicators at once while adding GVA.")
+                 f"primary forward where social licence allows. It improves all three Vision-2035 "
+                 f"indicators while adding GVA, but should be read as closest/most robust rather "
+                 f"than fully target-compliant in every state.")
+    lines.append("4a. **Target-compliance caveat:** the coordinator is the best-balanced / most robust "
+                 "posture, but it is not fully target-compliant in every state. Stable single-country "
+                 "exposure sits just above the UK <=60% threshold after rounding, domestic share remains "
+                 "below 10%, and some recycled-share results sit just under 20%. Treat it as the closest "
+                 "portfolio, not a claim that every Vision-2035 threshold is met.")
     lines.append("4b. **The coordinator role has institutional backing in the UK Industrial Strategy:** "
                  "an enhanced **Critical Minerals Intelligence Centre** (horizon scanning = the "
                  "*monitoring* function), **MoD/DSIT/DBT prioritisation of critical supply chains** "

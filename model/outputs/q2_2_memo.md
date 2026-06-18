@@ -14,18 +14,18 @@
 - **Cobalt** (critical, score 0.485): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 - **Aluminium** (critical, score 0.447): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 
-| mineral | critical | opportunity_score | pathway | key_challenge | domestic_geology | import_dependence | named_miners |
-|---|---|---|---|---|---|---|---|
-| REE_magnet | True | 0.621 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.958 | — |
-| Copper | True | 0.598 | Primary + recycling | Social licence / permitting (contested deposit) | 0.883 | 0.575 | Dalradian Gold |
-| Lithium | True | 0.545 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.96 | — |
-| Cobalt | True | 0.485 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.945 | — |
-| Aluminium | True | 0.447 | Recycling | Feedstock collection (low end-of-life capture) | 0.41 | 0.685 | — |
-| Nickel | True | 0.401 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.77 | — |
-| Antimony | True | 0.4 | Primary | Social licence / permitting (contested deposit) | 0.699 | 0.992 | Dalradian Gold; Conroy Gold and Natural Resources |
-| Baryte | False | 0.24 | Primary | Finance & scale-up of primary project | 0.593 | 0.7 | — |
-| Zinc | False | 0.197 | Import-dependent | No domestic source — import-dependent | 0.0 | 0.735 | — |
-| Salt | False | 0.163 | Primary | Finance & scale-up of primary project | 0.624 | 0.05 | Irish Salt Mining and Exploration |
+| mineral | mineral_class | critical | growth_mineral | opportunity_score | pathway | key_challenge | domestic_geology | import_dependence | named_miners |
+|---|---|---|---|---|---|---|---|---|---|
+| REE_magnet | critical | True | False | 0.621 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.958 | — |
+| Copper | growth | False | True | 0.598 | Primary + recycling | Social licence / permitting (contested deposit) | 0.883 | 0.575 | Dalradian Gold |
+| Lithium | critical | True | False | 0.545 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.96 | — |
+| Cobalt | critical | True | False | 0.485 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.945 | — |
+| Aluminium | critical | True | False | 0.447 | Recycling | Feedstock collection (low end-of-life capture) | 0.41 | 0.685 | — |
+| Nickel | critical | True | False | 0.401 | Recycling | Feedstock collection (low end-of-life capture) | 0.0 | 0.77 | — |
+| Antimony | critical | True | False | 0.4 | Primary | Social licence / permitting (contested deposit) | 0.699 | 0.992 | Dalradian Gold; Conroy Gold and Natural Resources |
+| Baryte | bulk | False | False | 0.24 | Primary | Finance & scale-up of primary project | 0.593 | 0.7 | — |
+| Zinc | bulk | False | False | 0.197 | Import-dependent | No domestic source — import-dependent | 0.0 | 0.735 | — |
+| Salt | bulk | False | False | 0.163 | Primary | Finance & scale-up of primary project | 0.624 | 0.05 | Irish Salt Mining and Exploration |
 
 ## Challenges — what is the binding constraint?
 

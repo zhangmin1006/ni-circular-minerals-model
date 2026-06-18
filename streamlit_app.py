@@ -454,11 +454,17 @@ with tab_q22:
         st.markdown("**Opportunity ranking (higher = stronger opportunity)**")
         st.bar_chart(opp["opportunity_score"])
         opp_cols = {
-            "critical": "Critical", "opportunity_score": "Score", "pathway": "Pathway",
+            "mineral_class": "Class", "opportunity_score": "Score", "pathway": "Pathway",
             "key_challenge": "Key challenge", "domestic_geology": "Geology",
             "import_dependence": "Import dep.", "named_miners": "Named miners",
         }
+        opp_cols = {k: v for k, v in opp_cols.items() if k in opp.columns}
         st.dataframe(opp[list(opp_cols)].rename(columns=opp_cols), width="stretch")
+        st.caption(
+            "**Class** follows the UK taxonomy (Vision 2035 annex): copper is a *growth* "
+            "mineral (not on the critical list) — kept in the basket for its strategic NI "
+            "relevance but reported separately so the *critical*-mineral shares are not overstated."
+        )
 
         st.markdown("**Constraint relaxation — what unlocks development?** "
                     "(extra discounted GVA vs today's constraints)")

@@ -106,9 +106,20 @@ def opportunity_ranking():
         else:
             challenge = "No domestic source — import-dependent"
 
+        if m in P.GROWTH_MINERALS:
+            mineral_class = "growth"
+        elif m in P.CRITICAL_ONLY_MINERALS:
+            mineral_class = "critical"
+        elif m in P.CRITICAL_MINERALS:
+            mineral_class = "critical_and_growth"
+        else:
+            mineral_class = "bulk"
+
         rows.append({
             "mineral": m,
-            "critical": m in P.CRITICAL_MINERALS,
+            "mineral_class": mineral_class,
+            "critical": m in P.CRITICAL_ONLY_MINERALS,
+            "growth_mineral": m in P.GROWTH_MINERALS,
             "opportunity_score": round(score, 3),
             "pathway": pathway,
             "key_challenge": challenge,
@@ -191,8 +202,8 @@ def main():
     print("=" * 100)
     print("Q2.2 — OPPORTUNITY RANKING (mineral-by-mineral)")
     print("=" * 100)
-    cols = ["opportunity_score", "pathway", "key_challenge", "domestic_geology",
-            "import_dependence", "named_miners"]
+    cols = ["mineral_class", "opportunity_score", "pathway", "key_challenge",
+            "domestic_geology", "import_dependence", "named_miners"]
     with pd.option_context("display.width", 200, "display.max_columns", None,
                            "display.max_colwidth", 40):
         print(opp[cols].to_string())
@@ -240,12 +251,12 @@ def _write_memo(opp, sc, binding):
                  "**'critical & growth minerals'**, and copper's strong ranking reflects industrial "
                  "resilience rather than critical-supply scarcity.\n")
     for m, r in top_opp.iterrows():
-        tag = ("growth" if m in P.GROWTH_MINERALS
-               else "critical" if r["critical"] else "bulk")
+        tag = r["mineral_class"]
         lines.append(f"- **{m}** ({tag}, score {r['opportunity_score']}): {r['pathway']} — "
                      f"key challenge: *{r['key_challenge']}*.")
     lines.append("")
-    lines.append(_md_table(opp, ["critical", "opportunity_score", "pathway", "key_challenge",
+    lines.append(_md_table(opp, ["mineral_class", "critical", "growth_mineral",
+                                 "opportunity_score", "pathway", "key_challenge",
                                  "domestic_geology", "import_dependence", "named_miners"],
                            index_name="mineral"))
 
