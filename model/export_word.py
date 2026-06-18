@@ -14,7 +14,7 @@ import re
 import sys
 
 from docx import Document
-from docx.shared import Pt, RGBColor
+from docx.shared import Pt, RGBColor, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 HERE = os.path.dirname(__file__)
@@ -23,6 +23,7 @@ OUT_DIR = os.path.join(ROOT, "word")
 
 # (source markdown, output .docx name)
 FILES = [
+    (os.path.join(ROOT, "NI_MINERALS_MODEL_REPORT.md"), "NI_Minerals_Model_Report.docx"),
     (os.path.join(HERE, "outputs", "q2_1_memo.md"), "Q2.1_circularity_innovation.docx"),
     (os.path.join(HERE, "outputs", "q2_2_memo.md"), "Q2.2_opportunities_challenges.docx"),
     (os.path.join(HERE, "outputs", "q2_3_memo.md"), "Q2.3_business_support.docx"),
@@ -37,6 +38,7 @@ FILES = [
 
 _INLINE = re.compile(r"(\*\*.+?\*\*|`[^`]+`)")
 _LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+_IMAGE = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)\s*$")
 
 
 def _add_runs(paragraph, text):
@@ -128,6 +130,25 @@ def md_to_docx(md_path, docx_path):
                             run.font.size = Pt(8)
                             if ridx == 0:
                                 run.bold = True
+            continue
+
+        # images:  ![caption](relative/path.png)
+        mi = _IMAGE.match(stripped)
+        if mi:
+            caption, rel = mi.group(1), mi.group(2)
+            img = rel if os.path.isabs(rel) else os.path.join(os.path.dirname(md_path), rel)
+            if os.path.exists(img):
+                doc.add_picture(img, width=Inches(6.2))
+                doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+                if caption:
+                    cap = doc.add_paragraph()
+                    cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    r = cap.add_run(caption)
+                    r.italic = True
+                    r.font.size = Pt(8.5)
+            else:
+                doc.add_paragraph(f"[missing figure: {rel}]")
+            i += 1
             continue
 
         # headings
