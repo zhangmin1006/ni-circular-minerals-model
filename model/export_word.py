@@ -25,6 +25,7 @@ OUT_DIR = os.path.join(ROOT, "word")
 FILES = [
     (os.path.join(ROOT, "NI_MINERALS_MODEL_REPORT.md"), "NI_Minerals_Model_Report.docx"),
     (os.path.join(ROOT, "NI_MINERALS_TECHNICAL_REPORT.md"), "NI_Minerals_Technical_Report.docx"),
+    (os.path.join(ROOT, "NI_DfE_Call_for_Evidence_Response.md"), "NI_DfE_Call_for_Evidence_Response.docx"),
     (os.path.join(HERE, "outputs", "q2_1_memo.md"), "Q2.1_circularity_innovation.docx"),
     (os.path.join(HERE, "outputs", "q2_2_memo.md"), "Q2.2_opportunities_challenges.docx"),
     (os.path.join(HERE, "outputs", "q2_3_memo.md"), "Q2.3_business_support.docx"),
