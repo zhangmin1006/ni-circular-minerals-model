@@ -233,8 +233,15 @@ def _write_memo(opp, sc, binding):
                  "are model behaviour, not forecasts.\n")
 
     lines.append("## Opportunities — top-ranked minerals/pathways\n")
+    lines.append("> **Critical vs growth minerals.** Per the Vision 2035 Technical Annex, **copper is "
+                 "a UK *growth* mineral** (fundamental to advanced manufacturing & clean energy), not a "
+                 "current UK *critical* mineral — it is tagged *growth* below. The other tracked metals "
+                 "(REE, Li, Co, Ni, Al, Sb) are critical. So the opportunity set is best read as "
+                 "**'critical & growth minerals'**, and copper's strong ranking reflects industrial "
+                 "resilience rather than critical-supply scarcity.\n")
     for m, r in top_opp.iterrows():
-        tag = "critical" if r["critical"] else "bulk"
+        tag = ("growth" if m in P.GROWTH_MINERALS
+               else "critical" if r["critical"] else "bulk")
         lines.append(f"- **{m}** ({tag}, score {r['opportunity_score']}): {r['pathway']} — "
                      f"key challenge: *{r['key_challenge']}*.")
     lines.append("")

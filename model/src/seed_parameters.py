@@ -95,6 +95,15 @@ MINERALS = ["REE_magnet", "Lithium", "Cobalt", "Nickel", "Copper",
 CRITICAL_MINERALS = ["REE_magnet", "Lithium", "Cobalt", "Nickel",
                      "Copper", "Aluminium", "Antimony"]
 
+# Vision 2035 Technical Annex (Annex 2) classifies copper as a UK *growth* mineral
+# — fundamental to advanced manufacturing & clean energy — rather than a current
+# UK *critical* mineral. We keep it inside the supply-security aggregates (it is
+# strategically central to NI) but flag it so reporting reads "critical AND growth
+# minerals" and copper can be shown separately, to avoid overstating the
+# *critical*-mineral domestic/recycled share. (data_register: copper_growth_not_critical)
+GROWTH_MINERALS = ["Copper"]
+CRITICAL_ONLY_MINERALS = [m for m in CRITICAL_MINERALS if m not in GROWTH_MINERALS]
+
 PRODUCTS = ["EV_battery", "Permanent_magnet", "Electronics_WEEE",
             "Wind_turbine", "Vehicle_ELV", "Industrial_equipment"]
 
@@ -122,6 +131,15 @@ TARGETS_2035 = {  # Vision 2035 (GOV.UK)
     "domestic_share": DR.value("uk_target_domestic_share_2035", 0.10),
     "recycling_share": DR.value("uk_target_recycling_share_2035", 0.20),
     "max_single_country": DR.value("uk_target_max_single_country_2035", 0.60),
+}
+# EU Critical Raw Materials Act 2030 benchmarks — stricter on recycling (25% vs
+# UK 20%) and single-country (<=65%). Used as an EU-stretch sensitivity for NI,
+# which under the Windsor Framework could face/serve the EU market (Q2.1/Q2.4).
+TARGETS_EU_CRMA_2030 = {
+    "extraction_share": DR.value("eu_crma_extraction_target_2030", 0.10),
+    "processing_share": DR.value("eu_crma_processing_target_2030", 0.40),
+    "recycling_share": DR.value("eu_crma_recycling_target_2030", 0.25),
+    "max_single_country": DR.value("eu_crma_max_single_country_2030", 0.65),
 }
 STPR = DR.value("stpr_discount_rate", 0.035)          # Social Time Preference Rate
 MINING_COST_OF_EQUITY = DR.value("mining_cost_of_equity_nominal", 0.1126)

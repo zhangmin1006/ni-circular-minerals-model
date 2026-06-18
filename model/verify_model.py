@@ -273,6 +273,19 @@ def test_geopolitical():
     check("main scenario 5_supply_shock includes an import constraint",
           bool(main_shock.get("import_constraint")),
           str(main_shock.get("import_constraint", {})))
+    # IEA-2025 second/third risk indices (top-3 mine + refining concentration)
+    le = d0.iloc[-1]
+    have = all(c in d0.columns for c in
+               ("crit_max_top3", "crit_refining_exposure", "crit_export_control_exposure"))
+    check("top-3 / refining / export-control risk metrics recorded", have)
+    check("top-3 exposure >= single-country exposure (top-3 includes the leader)",
+          float(le["crit_max_top3"]) >= float(le["crit_max_single_country"]) - 1e-9,
+          f"top3 {le['crit_max_top3']:.3f} vs single {le['crit_max_single_country']:.3f}")
+    check("refining & export-control exposures bounded in [0,1]",
+          0.0 - 1e-9 <= float(le["crit_refining_exposure"]) <= 1.0 + 1e-6
+          and 0.0 - 1e-9 <= float(le["crit_export_control_exposure"]) <= 1.0 + 1e-6,
+          f"refining {le['crit_refining_exposure']:.3f}, "
+          f"export-ctrl {le['crit_export_control_exposure']:.3f}")
 
 
 FUZZ_N = 30

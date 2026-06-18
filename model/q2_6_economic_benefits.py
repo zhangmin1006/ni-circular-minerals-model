@@ -26,6 +26,8 @@ os.makedirs(OUT, exist_ok=True)
 GREEN_DEMAND = {"REE_magnet": P.DEMAND_GROWTH_WIND, "Lithium": P.DEMAND_GROWTH_EV,
                 "Cobalt": 0.06, "Nickel": 0.05, "Copper": 0.04, "Aluminium": 0.03}
 
+import data_register as DR
+
 # Tax proxy: effective public take on GVA. Composite of labour taxes (income tax +
 # NICs) on the wage share and corporation/other tax on the surplus. PROXY ~25%.
 TAX_RATE_ON_GVA = 0.25
@@ -33,6 +35,14 @@ TAX_RATE_ON_GVA = 0.25
 # export most separated output; domestic primary partly exported.
 EXPORT_SHARE_RECYCLING = 0.6
 EXPORT_SHARE_MINING = 0.3
+
+# NISRA NI Economic Trade Statistics (NIETS) 2024 — the real NI external-trade
+# frame used to sanity-check / contextualise the minerals-system export and
+# avoided-import magnitudes (annual flows, GBP m). data_register: ni_*_2024.
+NI_EXTERNAL_EXPORTS_GBP_M = DR.value("ni_exports_outside_uk_2024", 19600.0)
+NI_EXTERNAL_IMPORTS_GBP_M = DR.value("ni_imports_outside_uk_2024", 11200.0)
+NI_TRADE_SURPLUS_GBP_M = DR.value("ni_external_trade_surplus_2024", 8400.0)
+NI_BUSINESS_SALES_GBP_M = DR.value("ni_total_business_sales_2024", 109300.0)
 
 # Public cost per lever (£m/yr at intensity 1.0): shared map (policy_params).
 from policy_params import LEVER_COST as COST
@@ -77,6 +87,10 @@ def run_scenario(name, cfg):
     tax = TAX_RATE_ON_GVA * cum["gva"]
     productivity = (last["gva_total_gbp_m"] * 1e6 / last["employment_total"]
                     if last["employment_total"] else 0.0)
+    # End-year ANNUAL flows, to compare against the NIETS annual trade frame.
+    annual_exports_end = float(EXPORT_SHARE_RECYCLING * last["recycling_fd_gbp_m"]
+                               + EXPORT_SHARE_MINING * last["mining_fd_gbp_m"])
+    annual_avoided_imports_end = float(last["mining_fd_gbp_m"] + last["recycling_fd_gbp_m"])
     cost = disc_cost(cfg["policy"])
     return {
         "scenario": name, "label": cfg["label"],
@@ -88,6 +102,8 @@ def run_scenario(name, cfg):
         "firm_investment_pipeline_gbp_m": firm_capital_pipeline()["total_gbp_m"],
         "mines_opened": int(last["mines_opened"]),
         "gva_per_worker_gbp": round(productivity, 0),
+        "annual_exports_end_gbp_m": round(annual_exports_end, 1),
+        "annual_avoided_imports_end_gbp_m": round(annual_avoided_imports_end, 1),
         "manufacturing_jobs_end": round(float(last["manufacturing_jobs"]), 1),
         "end_jobs": round(float(last["employment_total"]), 1),
         "disc_public_cost_gbp_m": cost,
@@ -180,6 +196,23 @@ def _write_memo(df):
                  "(Q2.4) and supports firms (Q2.3) also produces the GVA, exports and avoided imports "
                  "here — so the economic case should be read as a portfolio, not lever-by-lever.\n")
 
+    exp_end = integ["annual_exports_end_gbp_m"]
+    avo_end = integ["annual_avoided_imports_end_gbp_m"]
+    lines.append("## In the NI trade frame (NISRA NIETS 2024)\n")
+    lines.append(f"NISRA's NI Economic Trade Statistics put NI on **£{NI_BUSINESS_SALES_GBP_M/1000:.1f}bn** "
+                 f"total business sales, **£{NI_EXTERNAL_EXPORTS_GBP_M/1000:.1f}bn** exports outside the "
+                 f"UK, **£{NI_EXTERNAL_IMPORTS_GBP_M/1000:.1f}bn** imports from outside the UK and a "
+                 f"**£{NI_TRADE_SURPLUS_GBP_M/1000:.1f}bn** external goods-trade surplus (2024). Against "
+                 f"that frame the integrated minerals system contributes, by year 30, roughly "
+                 f"**£{exp_end:,.0f}m/yr of exports** (~{exp_end/NI_EXTERNAL_EXPORTS_GBP_M:.1%} of NI "
+                 f"external exports) and displaces about **£{avo_end:,.0f}m/yr of imports** "
+                 f"(~{avo_end/NI_EXTERNAL_IMPORTS_GBP_M:.1%} of NI external imports). The point is **not "
+                 f"volume** — minerals are a small slice of NI trade — but **strategic value and "
+                 f"resilience**: these are high-value, supply-insecure inputs whose domestic/recycled "
+                 f"supply protects a far larger downstream manufacturing base (Wrightbus, Seagate, "
+                 f"Spirit, Encirc) from import-price and availability shocks. NIETS sector tables are "
+                 f"the right next step to replace the proxy export shares.\n")
+
     lines.append("## Retained benefit & caveats (Minviro)\n")
     lines.append("- **Benefits only count if they stay in NI.** Minviro devotes a section to "
                  "*retained employment*, warning that mining benefits can be *\"economically detached "
@@ -213,6 +246,9 @@ def _write_memo(df):
               "labour-shortage limitation",
               "Tax proxy ~25% of GVA (PROXY, excludes royalties); export intensities & avoided-import "
               "valuation PROXY (replace with HMRC Regional Trade Statistics + firm offtake data)",
+              "NISRA NI Economic Trade Statistics (NIETS) 2024: NI business sales £109.3bn; external "
+              "exports £19.6bn; external imports £11.2bn; trade surplus £8.4bn — the trade frame for "
+              "the export/avoided-import context (sector tables are the next calibration step)",
               "Investment pipeline from company_register.csv (named-firm investment_gbp_m)"):
         lines.append(f"- {s}")
     lines.append("\n*BCR uses discounted GVA vs notional public cost; avoided imports, tax and "

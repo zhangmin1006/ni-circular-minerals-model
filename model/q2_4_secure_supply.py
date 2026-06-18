@@ -138,8 +138,15 @@ def run_grid_cell(role, policy, loss_factor):
     return {
         "crit_domestic_share": round(float(last["crit_domestic_share"]), 3),
         "crit_recycled_share": round(float(last["crit_recycled_share"]), 3),
+        # critical-ONLY (excl. copper, a growth mineral) — avoids overstating shares
+        "crit_only_recycled_share": round(float(last["crit_only_recycled_share"]), 3),
+        "crit_only_domestic_share": round(float(last["crit_only_domestic_share"]), 3),
         "crit_import_share": round(float(last["crit_import_share"]), 3),
         "single_country_exposure": round(float(last["crit_max_single_country"]), 3),
+        # IEA-2025 second/third risk indices (beside single-country exposure)
+        "top3_exposure": round(float(last["crit_max_top3"]), 3),
+        "refining_exposure": round(float(last["crit_refining_exposure"]), 3),
+        "export_control_exposure": round(float(last["crit_export_control_exposure"]), 3),
         "supply_risk_index": supply_risk_index(m.mfa),
         "mean_supply_gap": round(float(df["crit_supply_gap"].mean()), 3),
         "cum_disc_gva_gbp_m": round(m.cumulative_discounted["gva"], 1),
@@ -213,6 +220,9 @@ def main():
     print(eb[["crit_domestic_share", "crit_recycled_share", "crit_import_share",
               "single_country_exposure", "supply_risk_index", "mean_supply_gap",
               "cum_disc_gva_gbp_m", "disc_public_cost_gbp_m"]].to_string())
+    print("\nIEA-2025 midstream concentration risk (export-ban shock):")
+    print(eb[["single_country_exposure", "top3_exposure", "refining_exposure",
+              "export_control_exposure"]].to_string())
     print("\n" + "=" * 112)
     print("MONTE CARLO geopolitical risk — supply-gap distribution by role (120 draws)")
     print("=" * 112)
@@ -249,7 +259,13 @@ def _write_memo(grid, mc, eb):
                  "networks* (incl. partnerships, diversification, stockpiling and circular capability). "
                  "Metrics are the Vision-2035 / EU-CRMA secure-supply targets (≥10% domestic, ≥20% "
                  "recycled, ≤60% single-country) plus an HHI-style supply-risk index and the unmet-demand "
-                 "supply gap. Figures are model behaviour, not forecasts.\n")
+                 "supply gap. Following **IEA 2025** — which finds top-three-producer concentration for "
+                 "key minerals rose to **~86% in 2024** and that China refines **19 of 20** strategic "
+                 "minerals (~70% average), with export controls now touching **~55%** of energy-related "
+                 "strategic minerals — we also report a **top-three (mine) exposure** and a "
+                 "**refining/processing exposure** beside single-country exposure, because the security "
+                 "problem is increasingly *midstream*, not just mine supply. Figures are model "
+                 "behaviour, not forecasts.\n")
 
     lines.append("## Roles tested\n")
     for r, lbl in ROLE_LABEL.items():
@@ -271,7 +287,39 @@ def _write_memo(grid, mc, eb):
                             "cum_disc_gva_gbp_m", "disc_public_cost_gbp_m"], "role"))
     lines.append(f"\nVision-2035 targets: domestic ≥{target['domestic_share']:.0%}, "
                  f"recycled ≥{target['recycling_share']:.0%}, single-country "
-                 f"≤{target['max_single_country']:.0%}.")
+                 f"≤{target['max_single_country']:.0%}. **EU-CRMA stretch (2030, for NI's potential "
+                 f"EU-market exposure under the Windsor Framework):** recycling ≥"
+                 f"{P.TARGETS_EU_CRMA_2030['recycling_share']:.0%}, single third country ≤"
+                 f"{P.TARGETS_EU_CRMA_2030['max_single_country']:.0%}.")
+
+    eu = P.TARGETS_EU_CRMA_2030
+    lines.append("\n## Midstream concentration risk (IEA 2025) — beyond single-country exposure\n")
+    lines.append("Single-country exposure understates the problem: the IEA shows the binding risk is "
+                 "now **top-three** mine concentration and **refining** concentration. The model's "
+                 "second/third indices under the export-ban shock (demand-weighted critical-mineral "
+                 "exposure; lower is safer):")
+    lines.append("")
+    lines.append(_md_table(eb.reindex(list(ROLES)),
+                           ["single_country_exposure", "top3_exposure", "refining_exposure",
+                            "export_control_exposure"], "role"))
+    lines.append("\n- **Top-three and refining exposure dwarf single-country exposure.** Under the "
+                 "export ban the worst-exposed critical mineral carries a top-three exposure ~2× its "
+                 "single-country figure, and demand-weighted refining exposure is also markedly higher "
+                 "— confirming the IEA finding that the binding risk is structural top-three *cluster* "
+                 "and *midstream* concentration, not just one country.")
+    lines.append("- **Refining exposure is the *stickiest*.** Diversifying *mine* imports (the "
+                 "diversification lever) lowers single-country and partly top-three exposure, but does "
+                 "**not** cut refining dependence — that only falls as NI builds domestic processing/"
+                 "recovery capacity (lowering the import share itself). This is the model's clearest "
+                 "statement of *why the midstream is the security priority* (links to Q2.1/Q2.3): the "
+                 "coordinator and circular-leader roles, which build recovery capacity, are the only "
+                 "ones that move the refining-exposure needle.")
+    lines.append("- **Export controls hit the high-criticality tail.** ~55% of energy-related "
+                 "strategic minerals now face controls; the model flags **REE, antimony and cobalt**. "
+                 "These are tiny by *tonnage* (so the demand-weighted export-control exposure reads "
+                 "low) yet high-criticality — exactly why a tonnage view *understates* the strategic "
+                 "risk, and why recovery capacity + diversification targeted at these specific minerals "
+                 "matters more than their volume suggests.")
 
     piv = grid.pivot(index="role", columns="shock", values="single_country_exposure")
     lines.append("\n## Findings — the role government should play\n")
@@ -357,6 +405,18 @@ def _write_memo(grid, mc, eb):
         "Minerals Policy Tracker / Security Programme 2025; OECD 2026)",
     ):
         lines.append(f"- {s}")
+    lines.append("\n> **Reporting note — critical & growth minerals.** The Vision 2035 Technical "
+                 "Annex treats **copper as a UK *growth* mineral**, not a current UK *critical* "
+                 "mineral (it is fundamental to advanced manufacturing and clean energy). Copper is "
+                 "kept inside the supply-security basket here (it is strategically central to NI) but "
+                 "is the lowest-concentration, best-diversified member, so the aggregates are best read "
+                 "as **'critical & growth minerals'**. The model also reports the **critical-only** "
+                 "basket (copper excluded): under the export-ban shock the coordinator role's recycled "
+                 f"share is {eb.loc['strategic_coordinator','crit_recycled_share']:.1%} on the "
+                 f"critical-&-growth basket vs "
+                 f"{eb.loc['strategic_coordinator','crit_only_recycled_share']:.1%} critical-only — "
+                 "including copper modestly flatters the headline share, which is exactly why copper is "
+                 "flagged separately.")
     lines.append("\n*Roles are illustrative lever bundles; costs are NI-scale UK-anchored proxies for "
                  "relative comparison. Behavioural thresholds and shock magnitudes are PROXY.*")
 

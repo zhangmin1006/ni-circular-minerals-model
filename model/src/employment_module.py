@@ -9,8 +9,12 @@ All splits are PROXY (ONS SOC / ASHE-by-industry structure), flagged in
 data_register.csv; the wage anchor is the real NISRA ASHE NI median.
 """
 
-# Real wage anchor: NISRA ASHE 2024 median FT gross weekly £666 -> annual.
-NI_MEDIAN_ANNUAL_WAGE = 34632.0          # £ (NISRA ASHE Apr 2024; UK was £37,430)
+import data_register as DR
+
+# Real wage anchor: NISRA ASHE 2025 median FT gross weekly £713 -> £37,100/yr
+# (up from £34,632 / £666-wk in 2024, retained for the 2024-vs-2025 sensitivity).
+NI_MEDIAN_ANNUAL_WAGE = DR.value("ni_median_ft_annual_wage_2025", 37100.0)
+NI_MEDIAN_ANNUAL_WAGE_2024 = DR.value("ni_median_ft_annual_wage_2024", 34632.0)
 
 # Sector wage index relative to the NI median FT wage. PROXY, ordered by the
 # well-established ONS ASHE-by-industry ranking: mining & quarrying is among the

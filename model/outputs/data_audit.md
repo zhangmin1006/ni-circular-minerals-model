@@ -4,7 +4,7 @@ Programmatic audit of the data inputs behind the model and the Q2.1-2.7 experime
 
 ## 1. Data register (`data_register.csv`)
 
-- **87 parameters.** Status: real 54, proxy 18, desk_verified 11, web_verified 2, reference 1, gap 1.
+- **105 parameters.** Status: real 72, proxy 18, desk_verified 11, web_verified 2, reference 1, gap 1.
 - **Placeholder-source (6)** — biggest provenance gaps: `io_technical_coefficients`, `io_employment_coefficients`, `io_co2_coefficients`, `in_use_stock_ree_tonnes`, `ni_demand_growth_ev`, `ni_demand_growth_wind`.
 - **Declared gaps (1):** `in_use_stock_ree_tonnes`.
 
@@ -39,21 +39,22 @@ The register curates headline/sourced data + key proxies. The bulk of structural
 - **`cge_module.py`**: `SIGMA_ARM`, `SIGMA_E`
 - **`company_data.py`**: `CONFIDENCE`, `LIFECYCLE_WEIGHT`
 - **`coupling.py`**: `STOCKPILE_DEPTH`, `STOCKPILE_RATE`
-- **`employment_module.py`**: `NI_MEDIAN_ANNUAL_WAGE`, `SECTOR_WAGE_INDEX`, `SKILL_SPLIT`
+- **`employment_module.py`**: `NI_MEDIAN_ANNUAL_WAGE`, `NI_MEDIAN_ANNUAL_WAGE_2024`, `SECTOR_WAGE_INDEX`, `SKILL_SPLIT`
 - **`impact_module.py`**: `ESG_MAX_MITIGATION`, `ESG_REF`, `PRESSURE`, `RECYCLING_CO2_VS_PRIMARY`
+- **`make_supply_chain_fig.py`**: `FIGDIR`, `STAGES`
 - **`mfa_module.py`**: `MINERAL_PARAMS`, `MINERAL_PRICE_GBP_PER_T`, `WEEE_STREAM_MINERALS`
-- **`policy_params.py`**: `CONCENTRATION`, `LEVER_COST`
+- **`policy_params.py`**: `CONCENTRATION`, `EXPORT_CONTROL`, `LEVER_COST`, `REFINING_CONCENTRATION`, `TOP3_CONCENTRATION`
 - **`q2_1_circularity_interventions.py`**: `GREEN_DEMAND`, `INTERVENTIONS`, `LEVER_COST`, `LEVER_COST_BOUNDS`, `LEVER_COST_SOURCE`
 - **`q2_2_opportunities_challenges.py`**: `GREEN_DEMAND`, `SCENARIOS`
 - **`q2_3_business_support.py`**: `GREEN_DEMAND`, `SCENARIOS`, `SEVERITIES`, `SHOCK_IMPORT_CAP`, `SHOCK_PRICE`, `SUPPORT`, `SWEEP_PACKAGES`
 - **`q2_4_secure_supply.py`**: `COST`, `GREEN_DEMAND`, `PRICE_SPIKE`, `ROLES`, `SHOCKS`
 - **`q2_5_employment_skills.py`**: `GREEN_DEMAND`, `SCENARIOS`
-- **`q2_6_economic_benefits.py`**: `EXPORT_SHARE_MINING`, `EXPORT_SHARE_RECYCLING`, `GREEN_DEMAND`, `SCENARIOS`, `TAX_RATE_ON_GVA`
+- **`q2_6_economic_benefits.py`**: `EXPORT_SHARE_MINING`, `EXPORT_SHARE_RECYCLING`, `GREEN_DEMAND`, `NI_BUSINESS_SALES_GBP_M`, `NI_EXTERNAL_EXPORTS_GBP_M`, `NI_EXTERNAL_IMPORTS_GBP_M`, `NI_TRADE_SURPLUS_GBP_M`, `SCENARIOS`, `TAX_RATE_ON_GVA`
 - **`q2_7_negative_impacts.py`**: `GREEN_DEMAND`, `SCENARIOS`
 - **`q_demand_supply_strategy.py`**: `ANNEX_CAGR`, `ANNEX_DEMAND_T`, `BASE_DEMAND`, `COMBINED`, `COMBINED_PRICE`, `CRMA`, `CRMA_PRICE`, `INDUSTRIAL`, `PLATEAU`, `SCENARIOS`, `SUSTAINABLE`, `TARGETS`, `VISION`
 - **`run_mvm.py`**: `GREEN_DEMAND`, `SCENARIOS`
 - **`sam_module.py`**: `EXPORT_INTENSITY`, `GOV_DEMAND_SHARE`, `GVA_SHARE`, `HH_SAVINGS_RATE`, `LABOUR_SHARE_OF_VA`, `NI_TOTAL_GVA_GBP_M`
-- **`seed_parameters.py`**: `ANCHORS`, `CO2_COEFF`, `COLLECTION_RATE_WEEE`, `DEMAND_GROWTH_EV`, `DEMAND_GROWTH_WIND`, `DOMESTIC_INTENSITY`, `EMP_COEFF`, `GVA_COEFF`, `HH_CONSUMPTION`, `HORIZON`, `IMPORT_SHARE`, `LOCAL_CONSUMPTION_PROPENSITY`, `MINING_COST_OF_EQUITY`, `PM_COEFF`, `RECOVERY_YIELDS`, `STPR`, `TARGETS_2035`, `WAGE_SHARE_OF_GVA`
+- **`seed_parameters.py`**: `ANCHORS`, `CO2_COEFF`, `COLLECTION_RATE_WEEE`, `CRITICAL_ONLY_MINERALS`, `DEMAND_GROWTH_EV`, `DEMAND_GROWTH_WIND`, `DOMESTIC_INTENSITY`, `EMP_COEFF`, `GROWTH_MINERALS`, `GVA_COEFF`, `HH_CONSUMPTION`, `HORIZON`, `IMPORT_SHARE`, `LOCAL_CONSUMPTION_PROPENSITY`, `MINING_COST_OF_EQUITY`, `PM_COEFF`, `RECOVERY_YIELDS`, `STPR`, `TARGETS_2035`, `TARGETS_EU_CRMA_2030`, `WAGE_SHARE_OF_GVA`
 - **`spatial_module.py`**: `DISTRICTS`, `FIRM_BLEND_WEIGHT`, `SHARES`
 
 *Plus non-constant proxies: the 8x8 I-O `A` matrix and the GVA/EMP/CO2/PM satellite vectors (seed_parameters), the ABM decision thresholds (dev hurdle 0.45, social-licence floor 0.4, risk/price coefficients), and per-scenario policy bundles. These are the model's biggest aggregate proxy dependency.*

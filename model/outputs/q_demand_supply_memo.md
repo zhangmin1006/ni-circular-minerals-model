@@ -10,6 +10,19 @@ Scenarios derive demand growth from the **UK Critical Minerals Strategy (Vision 
 
 **Demand growth is derived from the Technical Annex (Annex 2), not hand-set.** The annex's cumulative UK demand at 2024/2027/2030/2035 is differenced to implied annual demand, and an annual-demand CAGR is taken over the ~7-yr gap between the first and last windows: Lithium 26%, Nickel 11%, Aluminium 9%, Cobalt 9%, REE_magnet 9%, Copper 4%. These cross-check against IEA net-zero (copper ~2x, lithium ~9x by 2040). The Industrial-Strategy run weights Cu/REE up 15% (clean-energy/defence emphasis); the CRMA run adds a 10% EU pull + scarcity price premium; demand plateaus after 2035.
 
+**Annex 2035 cumulative-demand anchors (UK, tonnes)** — now in `data_register.csv` with provenance; these are the calibration target, not simple growth proxies:
+
+| mineral | 2024 | 2027 | 2030 | 2035 (cumulative t) | derived annual CAGR |
+|---|---|---|---|---|---|
+| Copper | 178,400 | 922,200 | 1,953,000 | **3,619,000** | 4.3% |
+| Lithium | 2,525 | 28,680 | 113,400 | **339,200** | 26.5% |
+| Nickel | 50,430 | 182,700 | 416,100 | **867,200** | 10.8% |
+| Cobalt | 6,089 | 34,010 | 76,610 | **163,000** | 9.2% |
+| Aluminium | 578,300 | 1,875,000 | 3,966,000 | **8,003,000** | 9.3% |
+| REE_magnet | 1,161 | 7,788 | 18,020 | **37,940** | 8.8% |
+
+*Copper is a UK **growth** mineral (the largest-tonnage entry), not a current UK critical mineral — so the demand basket spans **critical & growth minerals**.*
+
 ## Part A — Demand-side opportunities for sustainable development
 
 | scenario | label | mines_opened | projects_unlocked | crit_domestic_share_end | crit_recycled_share_end | crit_import_share_end | end_jobs | cum_disc_gva_gbp_m |

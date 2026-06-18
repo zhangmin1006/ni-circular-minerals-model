@@ -1,6 +1,6 @@
 # Q2.4 — What role should government have in ensuring secure mineral supply?
 
-**Method (grounded in the strategy documents):** Vision 2035 warns that *"increasingly concentrated processing and mining supply chains"* leave supply *"vulnerable to shocks such as natural disasters, war or geopolitical fallout"*. We model that as a **dominant-supplier export ban** — per-mineral import caps = 1 − (2023 single-country concentration: REE 74% China, Co 70% DRC, Li 44% Australia; BGS/Idoine 2025) — escalated from trade friction to bloc fragmentation, plus a **Monte Carlo** of uncertain shocks (random onset, affected minerals ∝ concentration, severity). The five **government roles** are the postures the strategy itself describes — *optimise domestic production* and *build resilient UK & global supply networks* (incl. partnerships, diversification, stockpiling and circular capability). Metrics are the Vision-2035 / EU-CRMA secure-supply targets (≥10% domestic, ≥20% recycled, ≤60% single-country) plus an HHI-style supply-risk index and the unmet-demand supply gap. Figures are model behaviour, not forecasts.
+**Method (grounded in the strategy documents):** Vision 2035 warns that *"increasingly concentrated processing and mining supply chains"* leave supply *"vulnerable to shocks such as natural disasters, war or geopolitical fallout"*. We model that as a **dominant-supplier export ban** — per-mineral import caps = 1 − (2023 single-country concentration: REE 74% China, Co 70% DRC, Li 44% Australia; BGS/Idoine 2025) — escalated from trade friction to bloc fragmentation, plus a **Monte Carlo** of uncertain shocks (random onset, affected minerals ∝ concentration, severity). The five **government roles** are the postures the strategy itself describes — *optimise domestic production* and *build resilient UK & global supply networks* (incl. partnerships, diversification, stockpiling and circular capability). Metrics are the Vision-2035 / EU-CRMA secure-supply targets (≥10% domestic, ≥20% recycled, ≤60% single-country) plus an HHI-style supply-risk index and the unmet-demand supply gap. Following **IEA 2025** — which finds top-three-producer concentration for key minerals rose to **~86% in 2024** and that China refines **19 of 20** strategic minerals (~70% average), with export controls now touching **~55%** of energy-related strategic minerals — we also report a **top-three (mine) exposure** and a **refining/processing exposure** beside single-country exposure, because the security problem is increasingly *midstream*, not just mine supply. Figures are model behaviour, not forecasts.
 
 ## Roles tested
 
@@ -32,7 +32,23 @@
 | circular_leader | 0.011 | 0.204 | 0.65 | 0.246 | 0.223 | 0.069 | 1008.5 | 354.1 |
 | strategic_coordinator | 0.076 | 0.199 | 0.61 | 0.18 | 0.154 | 0.063 | 1210.7 | 515.9 |
 
-Vision-2035 targets: domestic ≥10%, recycled ≥20%, single-country ≤60%.
+Vision-2035 targets: domestic ≥10%, recycled ≥20%, single-country ≤60%. **EU-CRMA stretch (2030, for NI's potential EU-market exposure under the Windsor Framework):** recycling ≥25%, single third country ≤65%.
+
+## Midstream concentration risk (IEA 2025) — beyond single-country exposure
+
+Single-country exposure understates the problem: the IEA shows the binding risk is now **top-three** mine concentration and **refining** concentration. The model's second/third indices under the export-ban shock (demand-weighted critical-mineral exposure; lower is safer):
+
+| role | single_country_exposure | top3_exposure | refining_exposure | export_control_exposure |
+|---|---|---|---|---|
+| market_light_touch | 0.246 | 0.504 | 0.355 | 0.006 |
+| diversify_and_insure | 0.158 | 0.423 | 0.355 | 0.006 |
+| domestic_autonomy | 0.246 | 0.504 | 0.348 | 0.006 |
+| circular_leader | 0.246 | 0.504 | 0.355 | 0.006 |
+| strategic_coordinator | 0.18 | 0.444 | 0.337 | 0.006 |
+
+- **Top-three and refining exposure dwarf single-country exposure.** Under the export ban the worst-exposed critical mineral carries a top-three exposure ~2× its single-country figure, and demand-weighted refining exposure is also markedly higher — confirming the IEA finding that the binding risk is structural top-three *cluster* and *midstream* concentration, not just one country.
+- **Refining exposure is the *stickiest*.** Diversifying *mine* imports (the diversification lever) lowers single-country and partly top-three exposure, but does **not** cut refining dependence — that only falls as NI builds domestic processing/recovery capacity (lowering the import share itself). This is the model's clearest statement of *why the midstream is the security priority* (links to Q2.1/Q2.3): the coordinator and circular-leader roles, which build recovery capacity, are the only ones that move the refining-exposure needle.
+- **Export controls hit the high-criticality tail.** ~55% of energy-related strategic minerals now face controls; the model flags **REE, antimony and cobalt**. These are tiny by *tonnage* (so the demand-weighted export-control exposure reads low) yet high-criticality — exactly why a tonnage view *understates* the strategic risk, and why recovery capacity + diversification targeted at these specific minerals matters more than their volume suggests.
 
 ## Findings — the role government should play
 
@@ -59,5 +75,7 @@ Vision-2035 targets: domestic ≥10%, recycled ≥20%, single-country ≤60%.
 - Strategic stockpiles: Japan/JOGMEC 60–180 days, Korea/KOMIR 100 days (IEA; CSEP 2025)
 - Japan post-2010 diversification: China REE dependence ~90%→~58%, targeting <50%; JOGMEC-brokered $250m Sojitz–Lynas equity/offtake deal (CNBC; WEF; New Security Beat 2024)
 - IEA: stockpiles buffer disruptions 'while countries develop new diversified sources'; 'diversification is the cornerstone of energy security, yet critical minerals are moving in the opposite direction'; effective strategies coordinate across government (IEA Critical Minerals Policy Tracker / Security Programme 2025; OECD 2026)
+
+> **Reporting note — critical & growth minerals.** The Vision 2035 Technical Annex treats **copper as a UK *growth* mineral**, not a current UK *critical* mineral (it is fundamental to advanced manufacturing and clean energy). Copper is kept inside the supply-security basket here (it is strategically central to NI) but is the lowest-concentration, best-diversified member, so the aggregates are best read as **'critical & growth minerals'**. The model also reports the **critical-only** basket (copper excluded): under the export-ban shock the coordinator role's recycled share is 19.9% on the critical-&-growth basket vs 18.8% critical-only — including copper modestly flatters the headline share, which is exactly why copper is flagged separately.
 
 *Roles are illustrative lever bundles; costs are NI-scale UK-anchored proxies for relative comparison. Behavioural thresholds and shock magnitudes are PROXY.*

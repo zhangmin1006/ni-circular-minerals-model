@@ -17,6 +17,7 @@ All stock/flow seed values are PROXY (UK data scaled to NI). STATUS in register.
 
 import numpy as np
 import seed_parameters as P
+import policy_params as PP
 
 # Minerals whose end-of-life collection is dominated by WEEE/battery/ELV streams,
 # so their collection rate is capped at the real WEEE collection rate
@@ -146,6 +147,18 @@ class MFA:
             # 50% (~44%) via overseas equity/offtake + recycling + substitution.
             eff_imp_conc = imp_conc * (1.0 - 0.45 * max(0.0, min(1.0, diversification)))
             single_country_exposure = import_share * eff_imp_conc
+            # IEA 2025 second/third risk indices (beside single-country exposure):
+            #  - top-3 mine-supply concentration (rose to ~86% avg in 2024).
+            #    Diversification helps less here (you can shift away from one of the
+            #    three, but the structural top-3 cluster remains) -> max cut 0.20.
+            #  - refining/processing concentration (China ~70% avg, 19/20 minerals).
+            #    Diversifying mine supply does NOT fix this; only reducing imports
+            #    (domestic + recovery capacity) lowers the exposure.
+            div = max(0.0, min(1.0, diversification))
+            eff_top3 = PP.TOP3_CONCENTRATION.get(m, imp_conc) * (1.0 - 0.20 * div)
+            top3_exposure = import_share * eff_top3
+            refining_exposure = import_share * PP.REFINING_CONCENTRATION.get(m, imp_conc)
+            export_controlled = bool(PP.EXPORT_CONTROL.get(m, False))
 
             # update in-use stock and age the inflow history (only supplied material
             # enters use; unmet demand does not)
@@ -169,6 +182,9 @@ class MFA:
                 "import_share": import_share,
                 "supply_gap_share": supply_gap_share,
                 "single_country_exposure": single_country_exposure,
+                "top3_exposure": top3_exposure,
+                "refining_exposure": refining_exposure,
+                "export_controlled": export_controlled,
                 "mass_balance_ok": abs((domestic_primary + imports + supplied_secondary
                                         + unmet) - demand) < 1e-6,
             })
@@ -184,6 +200,13 @@ class MFA:
             "import_share": sum(r["imports_t"] for r in rows) / tot,
             "supply_gap_share": sum(r.get("unmet_demand_t", 0.0) for r in rows) / tot,
             "max_single_country_exposure": max(r["single_country_exposure"] for r in rows),
+            # IEA-2025 midstream/upstream concentration risk (demand-weighted, and
+            # the worst-exposed mineral for the top-3 tail):
+            "max_top3_exposure": max(r["top3_exposure"] for r in rows),
+            "refining_exposure": sum(r["refining_exposure"] * r["demand_t"] for r in rows) / tot,
+            # share of (imported) demand on export-controlled minerals
+            "export_control_exposure": sum(
+                r["import_share"] * r["demand_t"] for r in rows if r["export_controlled"]) / tot,
         }
 
 

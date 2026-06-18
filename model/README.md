@@ -78,7 +78,7 @@ Requirements: Python 3.11+, `numpy`, `pandas`, `mesa>=3.0`, `scipy`, `matplotlib
 | `make_plots.py` | static matplotlib figures over the outputs |
 | `export_word.py` | converts the Q2.1–2.7 memos + executive summary + technical doc to **Word (.docx)** in `../word/` (lightweight Markdown→docx via python-docx) |
 | `audit_data.py` | **data audit** — inventories every data input, classifies provenance/status, cross-checks register↔code consumption, firm-register completeness and consistency; writes `outputs/data_audit.md` |
-| `verify_model.py` | **verification & validation harness** — 58 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
+| `verify_model.py` | **verification & validation harness** — 61 checks: invariant (Minviro anchors, MFA mass balance, supply-share closure, determinism, SAM balance, CGE benchmark, spatial shares, stockpile reserve, register integrity, economic-sanity, geopolitical features) **+ property-based/fuzz** (30 random valid policy bundles → invariants hold); exits non-zero on any failure |
 | `dashboard.py` | Streamlit interactive dashboard |
 
 ## Validation (I-O core vs Minviro)
@@ -92,7 +92,7 @@ model compares like-with-like. The SAM balances to 0.0; the CGE replicates its
 benchmark to ~1e-11.
 
 **Continuous integration:** `.github/workflows/verify.yml` runs `run_mvm.py`,
-`verify_model.py` (58 invariant + property-based checks) and all consultation experiments on every
+`verify_model.py` (61 invariant + property-based checks) and all consultation experiments on every
 push / PR, so regressions fail the build automatically.
 
 ## How outputs map to the seven questions

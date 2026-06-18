@@ -18,7 +18,7 @@
 
 1. **Best value-for-money (GVA ROI): `E_circular_design_standards`** (~2.21x central; 1.10–4.43x across the cost band) discounted GVA per £ public cost. Ecodesign / design-for-disassembly standards + passports for Wrightbus, Encirc, Seagate, Spirit.
 2. **Biggest lift in critical-mineral recycled share: `C_smart_collection_drs`** (+6.3 pp vs baseline).
-3. **Meets the Vision-2035 20% recycling target:** `C_smart_collection_drs`, `G_integrated_package` (target = 20% critical-mineral recycled share).
+3. **Meets the Vision-2035 20% recycling target:** `C_smart_collection_drs`, `G_integrated_package` (target = 20% critical-mineral recycled share). Against the stricter **EU-CRMA 25% (2030) stretch** — relevant to NI's potential EU-market exposure under the Windsor Framework — the qualifying set is: none individually.
 4. **Circular design in manufacturing** (recycled-content uptake) responds most to `D_secondary_market_offtake` (59%) and `E_circular_design_standards` (56%) — but note this raises *design uptake* without raising the *recycled share*, which stays feedstock-constrained until collection (`C`) is fixed.
 5. **The integrated package `G_integrated_package`** delivers the largest absolute gains (+246.1 £m discounted GVA, +6.3 pp recycled share) — confirming the proposal's view that the *mix* beats any single lever.
 

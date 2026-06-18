@@ -310,6 +310,16 @@ def _write_memo(dem, gap, stages, capex, sens):
                  f"(copper ~2x, lithium ~9x by 2040). The Industrial-Strategy run weights Cu/REE up "
                  f"15% (clean-energy/defence emphasis); the CRMA run adds a 10% EU pull + scarcity "
                  f"price premium; demand plateaus after 2035.\n")
+    lines.append("**Annex 2035 cumulative-demand anchors (UK, tonnes)** — now in "
+                 "`data_register.csv` with provenance; these are the calibration target, not simple "
+                 "growth proxies:\n")
+    lines.append("| mineral | 2024 | 2027 | 2030 | 2035 (cumulative t) | derived annual CAGR |")
+    lines.append("|---|---|---|---|---|---|")
+    for mm in ("Copper", "Lithium", "Nickel", "Cobalt", "Aluminium", "REE_magnet"):
+        y24, y27, y30, y35 = ANNEX_DEMAND_T[mm]
+        lines.append(f"| {mm} | {y24:,} | {y27:,} | {y30:,} | **{y35:,}** | {ANNEX_CAGR[mm]:.1%} |")
+    lines.append("\n*Copper is a UK **growth** mineral (the largest-tonnage entry), not a current UK "
+                 "critical mineral — so the demand basket spans **critical & growth minerals**.*\n")
 
     lines.append("## Part A — Demand-side opportunities for sustainable development\n")
     lines.append(_md_table(dem, ["label", "mines_opened", "projects_unlocked",

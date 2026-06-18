@@ -1,6 +1,8 @@
 # Q2.5 — Local employment, skills development & regional growth
 
-**Method:** the firm-grounded jobs-by-council-area output is split by **skill level** and **wage band** (ONS SOC / ASHE-by-industry structure on a real NISRA ASHE anchor — NI median FT wage £34,632/yr, 2024), with **retained local employment** (the Minviro leakage fix — rises with local-supplier and skills support) and a **skilled training/apprenticeship need**. Run across four policy scenarios. Figures are model behaviour, not forecasts.
+**Method:** the firm-grounded jobs-by-council-area output is split by **skill level** and **wage band** (ONS SOC / ASHE-by-industry structure on a real NISRA ASHE anchor — NI median FT wage £37,100/yr, **2025**), with **retained local employment** (the Minviro leakage fix — rises with local-supplier and skills support) and a **skilled training/apprenticeship need**. Run across four policy scenarios. Figures are model behaviour, not forecasts.
+
+> **Wage anchor updated (NISRA ASHE 2025).** The NI full-time median is now £37,100/yr (£713/wk), up from £34,632/yr (£666/wk) in 2024 — a +7% uplift. The wage *premium* below is a ratio to the NI median, so it is unchanged by the re-anchor; the *wage bill* scales up by the same ~7% (2024 remains available as a sensitivity).
 
 ## How the sector contributes
 
@@ -27,7 +29,7 @@
 
 ## Sources
 
-- NISRA ASHE 2024: NI median FT gross weekly £666 (~£34,632/yr); UK £728/£37,430
+- NISRA ASHE 2025: NI median FT gross weekly £713 (~£37,100/yr), up from £666 (~£34,632/yr) in 2024 — the model's wage anchor; 2024 retained as a sensitivity
 - ONS ASHE by industry: mining & quarrying among the highest-paid industries; manufacturing a modest premium
 - NI skills: ~7,500 skill-shortage vacancies (2024), 5,000+ new roles needed annually, STEM/engineering/apprenticeship gaps (NI Executive / DfE Skills Strategy)
 - Vision 2035: skills via Skills England + DWP; Camborne School of Mines; BGS human capital

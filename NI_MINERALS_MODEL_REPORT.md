@@ -2,7 +2,7 @@
 
 **Prepared for:** Department for the Economy (DfE) minerals & circular-economy consultation
 **Subject:** an integrated Agent-Based × dynamic Input–Output × Computable General Equilibrium (CGE) model of the Northern Ireland minerals system, and its answers to consultation questions 2.1–2.7.
-**Status:** Tier-3 (fully coupled), validated against the Minviro evidence and the NI baseline, CI-checked (58-check harness).
+**Status:** Tier-3 (fully coupled), validated against the Minviro evidence and the NI baseline, CI-checked (61-check harness).
 
 > **How to read this report.** This is a *policy-scenario simulator*, not a forecasting tool. Real, sourced anchors are used for validation and control totals; most economic-structure coefficients and behavioural parameters are **proxy** values, flagged in `model/data/data_register.csv`. Every figure below is model behaviour under stated assumptions — **not a prediction**. Swapping the proxies for collected NI data (same model interfaces) turns this into a calibrated decision tool.
 
@@ -11,6 +11,8 @@ This report has three parts, matching the request:
 1. **How the model is built** — methodology, technical detail, the supply-chain structure & key players, and validation results.
 2. **Data & assumptions** — what data built the model and what was assumed about it.
 3. **Answers to the seven questions** — for each, the experiment logic, the data used, the results (tables/figures), and how the results produce the answer.
+
+> **This revision incorporates new external evidence** (data register + model code): the **Vision 2035 annex 2035 cumulative-demand tonnages** as the demand anchor; an **IEA-2025 top-three & refining/processing concentration risk metric** (and export-control flag) beside single-country exposure (Q2.4); the **"critical & growth minerals"** distinction (copper is a UK *growth* mineral); the **NISRA ASHE 2025** wage anchor (£37,100, 2024 retained as a sensitivity); the **NISRA NIETS 2024** trade frame for Q2.6 exports/avoided imports; and the **EU-CRMA stretch targets** (25% recycling, ≤65% single-country) as an EU-market sensitivity. The harness is now **61 checks**.
 
 ---
 
@@ -135,12 +137,12 @@ The **supply shock** itself is not a lever but an `import_constraint`, with caps
 | Two mines (4b) | Jobs | 430.4 | 430 | ✅ within 0.1% |
 | Two mines (4b) | Direct mining GVA (£m) | 9.29 | 9.0 | ✅ within 3.2% |
 
-**(b) Verification & continuous integration.** A harness (`verify_model.py`) runs **58 checks** on every change and **gates the CI build** (`.github/workflows/verify.yml`):
+**(b) Verification & continuous integration.** A harness (`verify_model.py`) runs **61 checks** on every change and **gates the CI build** (`.github/workflows/verify.yml`):
 
-- *Invariant checks* — MFA mass balance (baseline + shock), supply-share bounds & closure, no NaN/negatives, **determinism** (identical config → byte-identical output), SAM balance (~1e-12) + the mining-GVA anchor, CGE benchmark replication (wage = 1.000), CGE partial-equilibrium fallback, spatial share closure, stockpile reserve non-negativity & depletion, register integrity, economic-sanity ranges, and the geopolitical features (diversification, time-varying shock).
+- *Invariant checks* — MFA mass balance (baseline + shock), supply-share bounds & closure, no NaN/negatives, **determinism** (identical config → byte-identical output), SAM balance (~1e-12) + the mining-GVA anchor, CGE benchmark replication (wage = 1.000), CGE partial-equilibrium fallback, spatial share closure, stockpile reserve non-negativity & depletion, register integrity, economic-sanity ranges, the geopolitical features (diversification, time-varying shock), and the **IEA-2025 top-three/refining/export-control risk metrics** (top-three exposure ≥ single-country; refining & export-control exposures bounded).
 - *Property-based / fuzz checks* — 30 random valid policy bundles (random lever subsets, demand growth, static/time-varying shocks, plateau, CGE on/off) must **all** preserve mass balance, share closure, no-NaN/negatives and a non-negative reserve.
 
-**All 58 checks pass.** The model is deterministic and reproducible (`python run_mvm.py; python verify_model.py`).
+**All 61 checks pass.** The model is deterministic and reproducible (`python run_mvm.py; python verify_model.py`).
 
 ---
 
@@ -148,7 +150,7 @@ The **supply shock** itself is not a lever but an `import_constraint`, with caps
 
 ## 2.1 The provenance system
 
-Every parameter carries a status in `model/data/data_register.csv` (~85 parameters):
+Every parameter carries a status in `model/data/data_register.csv` (~105 parameters):
 🟢 **real** (sourced/audited) · 🟡 **proxy** (desk/scaled) · 🔴 **gap** (placeholder). The headline pattern is honest: **the validation anchors and supply-concentration figures are real; most economic-structure and behavioural coefficients are proxy.**
 
 ## 2.2 Real anchors and control totals (used to validate / pin the model)
@@ -163,8 +165,13 @@ Every parameter carries a status in `model/data/data_register.csv` (~85 paramete
 | STPR (discount rate) | 3.5% | Green Book / NIGEAE |
 | Mining cost of equity (WACC) | 11.26% | Minviro (CAPM) |
 | Vision 2035 targets (2035) | ≥10% domestic / ≥20% recycling / ≤60% single-country | Vision 2035 (GOV.UK) |
-| NI median FT wage (2024) | £34,632/yr | NISRA ASHE |
+| **EU-CRMA targets (2030)** — EU-stretch sensitivity | 10% extraction / 40% processing / **25% recycling** / ≤65% single third country | European Commission CRMA |
+| **NI median FT wage (2025)** | **£37,100/yr (£713/wk)** — up from £34,632 (2024) | NISRA ASHE 2025 |
 | 2023 single-country supply concentration | REE 74% China, Co 70% DRC, Li 44% Australia | BGS / Idoine et al. 2025 |
+| **Top-three producer concentration (2024)** | **~86%** for Cu/Li/Ni/Co/graphite/REE | IEA 2025 |
+| **Refining concentration (2024)** | China leads refining for **19 of 20** strategic minerals (~70% avg) | IEA 2025 |
+| **Export controls (2024)** | affect **~55%** of energy-related strategic minerals | IEA 2025 |
+| **NI external trade (2024)** | sales £109.3bn; exports £19.6bn; imports £11.2bn; surplus £8.4bn | NISRA NIETS 2024 |
 | UK metals exported for processing | ~80% | GSNI/BGS OR25042 |
 | NI municipal recycling rate (2024/25) | 50.4% (flat since 2019) | DAERA LAC municipal waste |
 | Curraghinalt (Dalradian) resource | 3.79 Moz Au M&I (+Cu/Sb/Te/Bi/Co) | Dalradian 2021 feasibility study |
@@ -175,16 +182,18 @@ Every parameter carries a status in `model/data/data_register.csv` (~85 paramete
 
 ## 2.4 Strategy-grounded demand and support data
 
-**Demand** is derived from the **Vision 2035 Technical Annex (Annex 2)**, not hand-set: the annex's cumulative UK demand at 2024/27/30/35 is differenced to annual increments and converted to a CAGR, cross-checked against IEA net-zero:
+**Demand** is anchored to the **Vision 2035 Technical Annex (Annex 2) 2035 cumulative-demand tonnages** (now in the data register with provenance), not hand-set growth proxies. The annex's cumulative UK demand at 2024/27/30/35 is differenced to annual increments and converted to a CAGR, cross-checked against IEA net-zero:
 
-| Mineral | Annex-derived annual CAGR | IEA cross-check |
-|---|---|---|
-| Lithium | 26.5% | ~9× by 2040 |
-| Nickel | 10.8% | ~2× by 2040 |
-| Aluminium | 9.3% | — |
-| Cobalt | 9.2% | ~2× by 2040 |
-| REE_magnet | 8.8% | ~2× by 2040 |
-| Copper | 4.3% | ~2× by 2040 |
+| Mineral | 2035 cumulative demand (UK, t) | Annex-derived annual CAGR | IEA cross-check |
+|---|---|---|---|
+| Aluminium | 8,003,000 | 9.3% | — |
+| Copper *(growth mineral)* | 3,619,000 | 4.3% | ~2× by 2040 |
+| Nickel | 867,200 | 10.8% | ~2× by 2040 |
+| Lithium | 339,200 (LCE) | 26.5% | ~9× by 2040 |
+| Cobalt | 163,000 | 9.2% | ~2× by 2040 |
+| REE_magnet | 37,940 | 8.8% | ~2× by 2040 |
+
+> **Critical vs growth minerals.** Per the Vision 2035 annex, **copper is a UK *growth* mineral** (fundamental to advanced manufacturing & clean energy), **not** a current UK *critical* mineral. The model keeps copper inside the supply-security aggregates (it is strategically central to NI) but flags it, so the basket is reported as **"critical & growth minerals"** and copper's relatively secure, well-diversified supply does not overstate the *critical*-mineral domestic/recycled share.
 
 **Support-mechanism evidence (used to design and cost the Q2.3/Q2.4 levers):**
 
@@ -250,7 +259,7 @@ Each question below gives: **(i)** the experiment logic, **(ii)** the data used,
 | Green-skills cluster | 0.0 | 0.0 | 553 | 0.0 |
 | **Integrated package** | **+6.3** | **+246.1** | 818 | 0.28–0.56–1.04 |
 
-**(iv) How this leads to the answer.** Two robust results emerge: **collection is the binding constraint, not processing capacity** — smart collection/DRS is the *only* single lever that reaches the Vision-2035 20% recycling target (subsidising recovery *plant* alone moves nothing because NI's gap is feedstock); and **ecodesign standards are the best value for money** (~2.2× GVA per £, robust across the whole cost band, because they are mostly regulatory). The **mix beats any single lever**. **Sequencing:** *now* — recycled-content procurement + design standards + product passports (cheap, high return); *then* — a Circular Innovation Fund and collection/DRS to unblock feedstock.
+**(iv) How this leads to the answer.** Two robust results emerge: **collection is the binding constraint, not processing capacity** — smart collection/DRS is the *only* single lever that reaches the Vision-2035 20% recycling target (subsidising recovery *plant* alone moves nothing because NI's gap is feedstock); and **ecodesign standards are the best value for money** (~2.2× GVA per £, robust across the whole cost band, because they are mostly regulatory). The **mix beats any single lever**. **Sequencing:** *now* — recycled-content procurement + design standards + product passports (cheap, high return); *then* — a Circular Innovation Fund and collection/DRS to unblock feedstock. **Against the stricter EU-CRMA 25% (2030) recycling stretch** — relevant if NI serves the EU market under the Windsor Framework — *no single lever qualifies*; only the integrated package approaches it, reinforcing that the EU benchmark requires the full circular build-out.
 
 ## Q2.2 — Key opportunities and challenges for sustainable development
 
@@ -269,7 +278,7 @@ Each question below gives: **(i)** the experiment logic, **(ii)** the data used,
 | **Community benefit / social licence** | **1** | **+208.1** | **Dalradian** |
 | All enablers together | 2 | +226 | Dalradian + Baryte |
 
-Top opportunity-ranked minerals: REE_magnet (0.62, recycling), Copper (0.60, primary+recycling), Lithium (0.55), Cobalt (0.49), Aluminium (0.45) — the critical-mineral opportunities are overwhelmingly **circular**.
+Top opportunity-ranked minerals: REE_magnet (0.62, recycling), **Copper (0.60, *growth* mineral, primary+recycling)**, Lithium (0.55), Cobalt (0.49), Aluminium (0.45) — the opportunities are overwhelmingly **circular**. Per the Vision 2035 annex, copper is a UK **growth** mineral (not on the critical list), so this basket is read as **"critical & growth minerals"**; copper's strong rank reflects industrial-resilience value rather than critical-supply scarcity.
 
 **(iv) How this leads to the answer.** The **binding challenge is social licence, not economics**: NI's best deposit clears the commercial hurdle but is blocked by community opposition, and a credible **community-benefit package is the only lever that brings it forward** — worth roughly *ten times* finance, permitting or skills support alone (+£208m GVA, ~+600 jobs). Opportunities are led by the **circular pathway** (NI has little domestic critical-mineral geology), so critical-mineral security is mainly a recycling story. Bulk minerals (baryte, salt, aggregates) are the low-friction near-term opportunity.
 
@@ -313,13 +322,23 @@ The shock is acutely **mineral-specific**: per-mineral unmet gap = REE 73%, Anti
 
 ![Figure 2. Critical-mineral supply security in the integrated scenario (Q2.4): recycled share and domestic share rise toward the Vision-2035 targets (dashed) while maximum single-country exposure falls.](model/outputs/figures/fig3_supply_security.png)
 
-**(iv) How this leads to the answer.** **Light-touch fails the security test** (highest tail risk; security is a public good the market under-provides — confirmed by the IEA observation that critical minerals are *concentrating*, not diversifying). **No single instrument is enough.** A balanced **strategic-coordinator** posture is the most robust — it roughly **halves the 90th-percentile gap vs light-touch** and is the only posture that moves all three Vision-2035 indicators at once while adding GVA. The role is an active **coordinator/insurer** (set targets; de-risk midstream; fix collection; diversify + hold a thin reserve; uphold high-ESG terms) — exactly the posture Japan used successfully.
+**Beyond single-country: the IEA-2025 midstream-risk view.** The IEA finds the binding risk is now **top-three** mine concentration (rose to ~86% in 2024) and **refining** concentration (China refines 19 of 20 strategic minerals). The model adds both indices; under the export-ban shock (lower = safer):
+
+| Role | Single-country | Top-3 (mine) | Refining (midstream) |
+|---|---|---|---|
+| Market / light-touch | 0.246 | 0.504 | 0.355 |
+| Diversify & insure | 0.158 | 0.423 | 0.355 |
+| Strategic coordinator | 0.180 | 0.444 | **0.337** |
+
+The contrast is the key insight: **import diversification cuts single-country and partly top-three exposure, but barely touches refining exposure** — which only falls when NI builds its own recovery/processing capacity (the coordinator and circular roles). The security problem is *midstream*, so the answer must include capacity, not just diversification. (Export-controlled minerals — REE, antimony, cobalt — are flagged but tiny by tonnage, so a tonnage view understates their strategic weight.)
+
+**(iv) How this leads to the answer.** **Light-touch fails the security test** (highest tail risk; security is a public good the market under-provides — confirmed by the IEA observation that critical minerals are *concentrating*, not diversifying). **No single instrument is enough**, and single-country exposure alone *understates* the risk (top-three and refining are far higher). A balanced **strategic-coordinator** posture is the most robust — it roughly **halves the 90th-percentile gap vs light-touch**, is the only posture that moves all three Vision-2035 indicators at once while adding GVA, and is the only one (with circular-leader) that lowers *refining* exposure. The role is an active **coordinator/insurer** (set targets; de-risk midstream; fix collection; diversify + hold a thin reserve; uphold high-ESG terms) — exactly the posture Japan used successfully. Against the stricter **EU-CRMA stretch** (25% recycling, ≤65% single-country) NI needs the circular build-out to compete for the EU market under the Windsor Framework.
 
 ## Q2.5 — Local employment, skills and regional growth
 
-**(i) Experiment logic.** The firm-grounded jobs-by-council output is split by skill level and wage band (ONS SOC/ASHE structure on the real NISRA median wage £34,632), with **retained local employment** (the Minviro leakage fix, rising with local-content + skills) and a skilled-training need, across four scenarios.
+**(i) Experiment logic.** The firm-grounded jobs-by-council output is split by skill level and wage band (ONS SOC/ASHE structure on the real NISRA median wage **£37,100, ASHE 2025**), with **retained local employment** (the Minviro leakage fix, rising with local-content + skills) and a skilled-training need, across four scenarios.
 
-**(ii) Data used.** NISRA ASHE 2024 wage anchor; ONS ASHE-by-industry; NI skills backdrop (~7,500 skill-shortage vacancies, 5,000+ new roles/yr); Minviro retained-jobs estimates (Scen-2: 52 … two-mine 4b: 7,177); UK Industrial Strategy (Belfast named a critical-minerals cluster).
+**(ii) Data used.** **NISRA ASHE 2025** wage anchor (£37,100/yr, £713/wk — up ~7% from £34,632 in 2024, which is retained as a sensitivity; the premium is a ratio so it is unchanged, the wage bill scales ~7%); ONS ASHE-by-industry; NI skills backdrop (~7,500 skill-shortage vacancies, 5,000+ new roles/yr); Minviro retained-jobs estimates (Scen-2: 52 … two-mine 4b: 7,177); UK Industrial Strategy (Belfast named a critical-minerals cluster).
 
 **(iii) Results.**
 
@@ -338,7 +357,7 @@ The shock is acutely **mineral-specific**: per-mineral unmet gap = REE 73%, Anti
 
 **(i) Experiment logic.** The coupled Type-II GVA/output/jobs (discounted, 30 yr) are extended with Minviro's full benefit taxonomy — a tax proxy (~25% of GVA), exports, the named-firm investment pipeline, productivity, manufacturing resilience and **avoided import costs** (the import bill met by domestic + recycled supply). Value-for-money is reported on incremental GVA alone *and* with resilience.
 
-**(ii) Data used.** Minviro multiplier basis (NI 2016 + Scotland 2016 I-O), scenario anchors and WACC; named-firm investment pipeline (£1,164m); Minviro retained-jobs/leakage analysis and CLCA carbon (~0.36% of NI CO₂).
+**(ii) Data used.** Minviro multiplier basis (NI 2016 + Scotland 2016 I-O), scenario anchors and WACC; named-firm investment pipeline (£1,164m); Minviro retained-jobs/leakage analysis and CLCA carbon (~0.36% of NI CO₂); and the **NISRA NIETS 2024** external-trade frame (NI sales £109.3bn, exports £19.6bn, imports £11.2bn, surplus £8.4bn) to contextualise the export and avoided-import magnitudes.
 
 **(iii) Results.**
 
@@ -351,7 +370,7 @@ The shock is acutely **mineral-specific**: per-mineral unmet gap = REE 73%, Anti
 
 ![Figure 4. Annual GVA by scenario (Q2.6) — the integrated circular + primary scenario delivers the largest, rising benefit over the 30-year horizon.](model/outputs/figures/fig1_gva_trajectory.png)
 
-**(iv) How this leads to the answer.** The benefits are **substantial and broad** — the integrated scenario delivers ~£1.15bn discounted GVA, ~£1.8bn avoided imports, ~£0.3bn tax and ~£0.9bn exports over 30 years, on top of the £1.16bn investment pipeline. The **value-for-money is honest**: on incremental GVA alone the capital-heavy scenarios return below £1, but once **avoided imports / resilience** are counted the return rises to ~2×. **Pure extraction support is the weakest** (little opens without social licence). Headline benefits are an upper bound — the *retained* share depends on the Q2.5 local-content + skills measures.
+**(iv) How this leads to the answer.** The benefits are **substantial and broad** — the integrated scenario delivers ~£1.15bn discounted GVA, ~£1.8bn avoided imports, ~£0.3bn tax and ~£0.9bn exports over 30 years, on top of the £1.16bn investment pipeline. The **value-for-money is honest**: on incremental GVA alone the capital-heavy scenarios return below £1, but once **avoided imports / resilience** are counted the return rises to ~2×. **Pure extraction support is the weakest** (little opens without social licence). Headline benefits are an upper bound — the *retained* share depends on the Q2.5 local-content + skills measures. **In the NISRA NIETS 2024 trade frame**, the integrated minerals system contributes only ~0.3% of NI's £19.6bn external exports and displaces ~1.3% of its £11.2bn external imports by year 30 — small by *volume* but high in *strategic value*, protecting a far larger downstream manufacturing base from import-price and supply shocks. (NIETS sector tables are the recommended next calibration step for the proxy export shares.)
 
 ## Q2.7 — Negative impacts and how to minimise them
 
@@ -388,7 +407,7 @@ Running the strategy-derived demand (Vision 2035 / EU CRMA / UK Industrial Strat
 cd model
 pip install -r requirements.txt
 python run_mvm.py                 # main scenario pipeline → outputs/
-python verify_model.py            # 58 invariant + property-based checks
+python verify_model.py            # 61 invariant + property-based checks
 python q2_1_circularity_interventions.py … q2_7_negative_impacts.py
 python q_demand_supply_strategy.py
 python make_supply_chain_fig.py && python make_plots.py   # figures

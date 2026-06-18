@@ -209,6 +209,11 @@ class CoupledModel:
                 "crit_import_share": sec_crit["import_share"],
                 "crit_supply_gap": sec_crit["supply_gap_share"],
                 "crit_max_single_country": sec_crit["max_single_country_exposure"],
+                "crit_max_top3": sec_crit["max_top3_exposure"],
+                "crit_refining_exposure": sec_crit["refining_exposure"],
+                "crit_export_control_exposure": sec_crit["export_control_exposure"],
+                "crit_only_recycled_share": sec_crit["only_recycled_share"],
+                "crit_only_domestic_share": sec_crit["only_domestic_share"],
                 "recycled_share_all": sec["recycled_share"],
                 "recycling_substitution": sig.get("recycling_substitution", 0.0),
                 **sig.get("company_context", {}),
@@ -224,10 +229,23 @@ class CoupledModel:
     def _critical_supply_summary(self, mfa_rows):
         crit = [r for r in mfa_rows if r["mineral"] in P.CRITICAL_MINERALS]
         tot = sum(r["demand_t"] for r in crit) or 1.0
+        # Critical-ONLY basket (excludes copper, a UK *growth* mineral) so the
+        # critical-mineral domestic/recycled share is not flattered by copper's
+        # large, relatively secure tonnage (Vision 2035 annex classification).
+        conly = [r for r in mfa_rows if r["mineral"] in P.CRITICAL_ONLY_MINERALS]
+        ctot = sum(r["demand_t"] for r in conly) or 1.0
         return {
             "recycled_share": sum(r["recycled_t"] for r in crit) / tot,
             "domestic_share": sum(r["domestic_primary_t"] for r in crit) / tot,
             "import_share": sum(r["imports_t"] for r in crit) / tot,
             "supply_gap_share": sum(r.get("unmet_demand_t", 0.0) for r in crit) / tot,
             "max_single_country_exposure": max(r["single_country_exposure"] for r in crit),
+            # IEA-2025 top-3 (mine) and refining (midstream) concentration risk
+            "max_top3_exposure": max(r["top3_exposure"] for r in crit),
+            "refining_exposure": sum(r["refining_exposure"] * r["demand_t"] for r in crit) / tot,
+            "export_control_exposure": sum(
+                r["import_share"] * r["demand_t"] for r in crit if r["export_controlled"]) / tot,
+            # critical-only (excl. copper/growth) recycled & domestic shares
+            "only_recycled_share": sum(r["recycled_t"] for r in conly) / ctot,
+            "only_domestic_share": sum(r["domestic_primary_t"] for r in conly) / ctot,
         }

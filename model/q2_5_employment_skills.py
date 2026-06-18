@@ -127,10 +127,17 @@ def _write_memo(sc, dist):
     lines.append("# Q2.5 — Local employment, skills development & regional growth\n")
     lines.append("**Method:** the firm-grounded jobs-by-council-area output is split by **skill "
                  "level** and **wage band** (ONS SOC / ASHE-by-industry structure on a real NISRA "
-                 f"ASHE anchor — NI median FT wage £{E.NI_MEDIAN_ANNUAL_WAGE:,.0f}/yr, 2024), with "
+                 f"ASHE anchor — NI median FT wage £{E.NI_MEDIAN_ANNUAL_WAGE:,.0f}/yr, **2025**), with "
                  "**retained local employment** (the Minviro leakage fix — rises with local-supplier "
                  "and skills support) and a **skilled training/apprenticeship need**. Run across four "
                  "policy scenarios. Figures are model behaviour, not forecasts.\n")
+    lines.append(f"> **Wage anchor updated (NISRA ASHE 2025).** The NI full-time median is now "
+                 f"£{E.NI_MEDIAN_ANNUAL_WAGE:,.0f}/yr (£713/wk), up from "
+                 f"£{E.NI_MEDIAN_ANNUAL_WAGE_2024:,.0f}/yr (£666/wk) in 2024 — a "
+                 f"+{E.NI_MEDIAN_ANNUAL_WAGE/E.NI_MEDIAN_ANNUAL_WAGE_2024 - 1:.0%} uplift. The wage "
+                 f"*premium* below is a ratio to the NI median, so it is unchanged by the re-anchor; "
+                 f"the *wage bill* scales up by the same ~{E.NI_MEDIAN_ANNUAL_WAGE/E.NI_MEDIAN_ANNUAL_WAGE_2024 - 1:.0%} "
+                 f"(2024 remains available as a sensitivity).\n")
 
     lines.append("## How the sector contributes\n")
     lines.append(f"- **Quality jobs, above the NI average.** The minerals sectors pay a wage premium "
@@ -182,7 +189,8 @@ def _write_memo(sc, dist):
 
     lines.append("## Sources\n")
     for s in (
-        "NISRA ASHE 2024: NI median FT gross weekly £666 (~£34,632/yr); UK £728/£37,430",
+        "NISRA ASHE 2025: NI median FT gross weekly £713 (~£37,100/yr), up from £666 (~£34,632/yr) "
+        "in 2024 — the model's wage anchor; 2024 retained as a sensitivity",
         "ONS ASHE by industry: mining & quarrying among the highest-paid industries; "
         "manufacturing a modest premium",
         "NI skills: ~7,500 skill-shortage vacancies (2024), 5,000+ new roles needed annually, "

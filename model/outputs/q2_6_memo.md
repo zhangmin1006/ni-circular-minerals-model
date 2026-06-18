@@ -21,6 +21,10 @@ This maps onto Minviro's own taxonomy of *positive socio-economic impacts* — j
 4. **Value for money:** on **incremental GVA alone** the return is below 1 for the capital-heavy scenarios (e.g. integrated ~0.86 extra GVA per £ public cost) — but once the **avoided-import / resilience benefit** is added the return rises to ~2.21× and the wider tax, export and jobs benefits push it higher still. Pure extraction support is the weakest value (little opens without social licence — cf. Q2.2).
 5. **Benefits compound across questions:** the same spend that secures supply (Q2.4) and supports firms (Q2.3) also produces the GVA, exports and avoided imports here — so the economic case should be read as a portfolio, not lever-by-lever.
 
+## In the NI trade frame (NISRA NIETS 2024)
+
+NISRA's NI Economic Trade Statistics put NI on **£109.3bn** total business sales, **£19.6bn** exports outside the UK, **£11.2bn** imports from outside the UK and a **£8.4bn** external goods-trade surplus (2024). Against that frame the integrated minerals system contributes, by year 30, roughly **£67m/yr of exports** (~0.3% of NI external exports) and displaces about **£142m/yr of imports** (~1.3% of NI external imports). The point is **not volume** — minerals are a small slice of NI trade — but **strategic value and resilience**: these are high-value, supply-insecure inputs whose domestic/recycled supply protects a far larger downstream manufacturing base (Wrightbus, Seagate, Spirit, Encirc) from import-price and availability shocks. NIETS sector tables are the right next step to replace the proxy export shares.
+
 ## Retained benefit & caveats (Minviro)
 
 - **Benefits only count if they stay in NI.** Minviro devotes a section to *retained employment*, warning that mining benefits can be *"economically detached from the regions"* — it cites the recently closed Irish mines **Galmoy and Lisheen**, where national and international specialist firms during construction *limited the extent of local employment*. Its own estimate of retained direct jobs over 30 years scales with activity (Scenario 2: 52; one-mine: ~1,225; two-mine: ~7,177). So the headline GVA/jobs here are an upper bound; the *retained* share depends on local-content and skills measures (quantified in Q2.5, where retention rises from ~70% to ~97%).
@@ -34,6 +38,7 @@ This maps onto Minviro's own taxonomy of *positive socio-economic impacts* — j
 - Minviro positive socio-economic taxonomy: jobs, multiplier effects, taxes & royalties, infrastructure, training/skills, employment of nationals/locals, in-country procurement
 - Minviro retained-employment analysis + Galmoy/Lisheen leakage comparison; skilled-labour-shortage limitation
 - Tax proxy ~25% of GVA (PROXY, excludes royalties); export intensities & avoided-import valuation PROXY (replace with HMRC Regional Trade Statistics + firm offtake data)
+- NISRA NI Economic Trade Statistics (NIETS) 2024: NI business sales £109.3bn; external exports £19.6bn; external imports £11.2bn; trade surplus £8.4bn — the trade frame for the export/avoided-import context (sector tables are the next calibration step)
 - Investment pipeline from company_register.csv (named-firm investment_gbp_m)
 
 *BCR uses discounted GVA vs notional public cost; avoided imports, tax and exports are reported separately to avoid double-counting value-added.*

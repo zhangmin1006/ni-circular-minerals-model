@@ -222,15 +222,21 @@ def main():
         print(df[show].to_string())
 
     target = P.TARGETS_2035["recycling_share"]
-    hit = df.index[(df["crit_recycled_share_end"] >= target)].tolist()
+    hit = [h for h in df.index[(df["crit_recycled_share_end"] >= target)].tolist()
+           if h != "0_baseline"]
+    eu_target = P.TARGETS_EU_CRMA_2030["recycling_share"]   # EU-CRMA stretch (25%)
+    hit_eu = [h for h in df.index[(df["crit_recycled_share_end"] >= eu_target)].tolist()
+              if h != "0_baseline"]
     ranked_roi = df.drop(index="0_baseline").sort_values("gva_roi_central", ascending=False)
     ranked_share = df.drop(index="0_baseline").sort_values(
         "d_recycled_share_pp", ascending=False)
 
     robust = _rank_robustness(df)
     print("\nROI rank robustness to cost uncertainty: " + robust)
+    print(f"Meets UK 20% target: {hit or 'none alone'} | meets EU-CRMA 25% stretch: "
+          f"{hit_eu or 'none alone'}")
 
-    _write_memo(df, hit, ranked_roi, ranked_share, target, robust)
+    _write_memo(df, hit, ranked_roi, ranked_share, target, robust, eu_target, hit_eu)
     print("\nWritten: outputs/q2_1_interventions.csv  and  outputs/q2_1_memo.md")
 
 
@@ -259,7 +265,8 @@ def _md_table(df, cols):
     return "\n".join([header, sep] + rows)
 
 
-def _write_memo(df, hit, ranked_roi, ranked_share, target, robust):
+def _write_memo(df, hit, ranked_roi, ranked_share, target, robust, eu_target=0.25, hit_eu=None):
+    hit_eu = hit_eu or []
     def fmt(name):
         return INTERVENTIONS[name]["desc"]
     lines = []
@@ -290,12 +297,16 @@ def _write_memo(df, hit, ranked_roi, ranked_share, target, robust):
     lines.append(f"2. **Biggest lift in critical-mineral recycled share: `{best_share}`** "
                  f"(+{df.loc[best_share, 'd_recycled_share_pp']} pp vs baseline).")
     if hit:
-        names = ", ".join(f"`{h}`" for h in hit if h != "0_baseline")
+        names = ", ".join(f"`{h}`" for h in hit)
+        eu_names = ", ".join(f"`{h}`" for h in hit_eu) or "none individually"
         lines.append(f"3. **Meets the Vision-2035 20% recycling target:** {names or 'none individually'} "
-                     f"(target = {target:.0%} critical-mineral recycled share).")
+                     f"(target = {target:.0%} critical-mineral recycled share). Against the stricter "
+                     f"**EU-CRMA 25% (2030) stretch** — relevant to NI's potential EU-market exposure "
+                     f"under the Windsor Framework — the qualifying set is: {eu_names}.")
     else:
         lines.append(f"3. **No single intervention reaches the Vision-2035 {target:.0%} "
-                     f"recycling target** on its own — the package is needed.")
+                     f"recycling target** on its own — the package is needed (and the EU-CRMA "
+                     f"{eu_target:.0%} stretch is harder still).")
     design_rank = (df.drop(index=["0_baseline", "G_integrated_package"])
                    .sort_values("circular_design_uptake_end", ascending=False))
     d1, d2 = design_rank.index[0], design_rank.index[1]

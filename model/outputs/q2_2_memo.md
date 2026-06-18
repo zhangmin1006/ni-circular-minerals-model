@@ -6,8 +6,10 @@
 
 ## Opportunities — top-ranked minerals/pathways
 
+> **Critical vs growth minerals.** Per the Vision 2035 Technical Annex, **copper is a UK *growth* mineral** (fundamental to advanced manufacturing & clean energy), not a current UK *critical* mineral — it is tagged *growth* below. The other tracked metals (REE, Li, Co, Ni, Al, Sb) are critical. So the opportunity set is best read as **'critical & growth minerals'**, and copper's strong ranking reflects industrial resilience rather than critical-supply scarcity.
+
 - **REE_magnet** (critical, score 0.621): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
-- **Copper** (critical, score 0.598): Primary + recycling — key challenge: *Social licence / permitting (contested deposit)*.
+- **Copper** (growth, score 0.598): Primary + recycling — key challenge: *Social licence / permitting (contested deposit)*.
 - **Lithium** (critical, score 0.545): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 - **Cobalt** (critical, score 0.485): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.
 - **Aluminium** (critical, score 0.447): Recycling — key challenge: *Feedstock collection (low end-of-life capture)*.

@@ -655,10 +655,19 @@ with tab_q24:
         eb_cols = {
             "crit_domestic_share": "Domestic", "crit_recycled_share": "Recycled",
             "crit_import_share": "Import", "single_country_exposure": "Single-country",
+            "top3_exposure": "Top-3 (IEA)", "refining_exposure": "Refining (IEA)",
             "supply_risk_index": "HHI risk", "mean_supply_gap": "Supply gap",
             "cum_disc_gva_gbp_m": "GVA £m", "disc_public_cost_gbp_m": "Public cost £m",
         }
+        eb_cols = {k: v for k, v in eb_cols.items() if k in eb.columns}
         st.dataframe(eb[list(eb_cols)].rename(columns=eb_cols), width="stretch")
+        st.caption(
+            "IEA 2025: top-three producer concentration for key minerals rose to ~86% in 2024 and "
+            "China refines 19 of 20 strategic minerals (~70% avg). The **Top-3** and **Refining** "
+            "columns capture this midstream risk beside single-country exposure — refining exposure "
+            "only falls when NI builds its own recovery/processing capacity, not via import "
+            "diversification."
+        )
         st.dataframe(mc24.rename(columns={
             "mean_supply_gap": "MC mean gap", "p90_supply_gap": "MC p90 gap",
             "worst_supply_gap": "MC worst gap",
