@@ -1,11 +1,15 @@
-# Pinned with upper bounds so a fresh Streamlit Community Cloud build resolves to
-# the tested-good majors and a future breaking release cannot silently break the
-# deploy. Floors are the minimum the code needs; caps are the next major.
-numpy>=2.0,<3
-pandas>=2.2,<3.1
-mesa>=3.1,<4              # firm-grounded ABM uses the mesa 3.x rng= API
-networkx>=3.0,<4         # required by mesa 3.x
-scipy>=1.11,<2
-matplotlib>=3.8,<4
-python-docx>=1.1,<2      # Word export (export_word.py)
+# Streamlit Community Cloud installs THIS file at the repo root.
+#
+# The ONLINE app only reads the committed model outputs (CSV/JSON in
+# model/outputs/) and renders them, so it needs just these three packages
+# (+ their transitive numpy). It does NOT import mesa / scipy / networkx — those
+# are only used by the model itself, which on cloud runs only if a "Run … now"
+# button is clicked, and that never happens because the outputs are committed.
+#
+# Keeping the cloud build minimal avoids the C-extension build failures
+# (scipy / mesa toolchain) that otherwise break the online deploy. The FULL
+# model + experiment stack is in model/requirements.txt (used by CI and local
+# runs). Upper bounds keep a future breaking major from silently breaking deploy.
 streamlit>=1.49,<2       # st.dataframe(width="stretch") needs >= 1.49
+pandas>=2.2,<3.1
+matplotlib>=3.8,<4

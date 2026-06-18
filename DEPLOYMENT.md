@@ -22,11 +22,17 @@ deployed app has data immediately); if those outputs are ever missing, the app
 offers a button to regenerate them by running `model/run_mvm.py` (and the per-
 question experiments).
 
-> **Reproducible builds.** `requirements.txt` is pinned with upper bounds so a
-> fresh cloud build resolves to the tested-good majors (Streamlit ≥ 1.49 for the
-> `width="stretch"` dataframe API; pandas < 3.1; numpy < 3) and a future breaking
-> release cannot silently break the deploy. If you change a dependency, bump the
-> cap here and re-test with `python verify_model.py` and the AppTest smoke check.
+> **Why the build is split (this fixes the "won't boot" build error).** Streamlit
+> Community Cloud installs the **root `requirements.txt`**, which is deliberately
+> slim — only `streamlit`, `pandas`, `matplotlib` (+ transitive numpy). The online
+> app *only reads the committed outputs and renders them*; it never imports
+> `mesa` / `scipy` / `networkx`, so installing them on cloud just risked the
+> C-extension build failures (scipy/mesa toolchain) that break the deploy. The
+> **full model + experiment + export stack lives in `model/requirements.txt`**,
+> used by CI and local runs (`pip install -r model/requirements.txt`). Both are
+> pinned with upper bounds so a fresh install resolves to the tested-good majors
+> (Streamlit ≥ 1.49 for the `width="stretch"` API; pandas < 3.1; numpy < 3) and a
+> future breaking release cannot silently break the deploy.
 
 ### Tabs (13)
 Overview · Q2.1 Interventions · Q2.2 Opportunities · Q2.3 Business Support ·
@@ -35,9 +41,11 @@ Q2.7 Negative Impacts · Demand & Supply · Supply Security · Companies ·
 Regional Jobs · Data Quality.
 
 ### Troubleshooting a broken online app
-- **"Error installing requirements" / app won't boot:** a dependency resolved to
-  an incompatible version. The pinned `requirements.txt` prevents this; make sure
-  the deploy is on the latest `master`, then **Reboot** the app from "Manage app".
+- **"Error installing requirements" / app won't boot:** the cloud build was
+  trying to install/compile the heavy model stack (scipy/mesa). The slim root
+  `requirements.txt` (streamlit + pandas + matplotlib only) prevents this. Make
+  sure the deploy is on the latest `master`, then **Reboot** from "Manage app"
+  (and check "Manage app → logs" for the failing package if it persists).
 - **A tab shows a Python error:** usually means the committed outputs are stale vs
   the code. Re-run `python model/run_mvm.py` + the `q2_*` scripts locally, commit
   the regenerated `model/outputs/`, and push (the cloud auto-redeploys).

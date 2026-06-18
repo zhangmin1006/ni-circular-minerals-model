@@ -1,8 +1,11 @@
-numpy>=2.0
-pandas>=2.0
-mesa>=3.0
-networkx>=3.0
-scipy>=1.11
-matplotlib>=3.8
-python-docx>=1.1
-streamlit>=1.30
+# Full model + experiment + export stack (used by CI and local runs).
+# The online Streamlit app uses the slimmer ../requirements.txt at the repo root.
+# Upper bounds pin to the tested-good majors so a fresh install is reproducible.
+numpy>=2.0,<3
+pandas>=2.2,<3.1
+mesa>=3.1,<4              # firm-grounded ABM uses the mesa 3.x rng= API
+networkx>=3.0,<4         # required by mesa 3.x
+scipy>=1.11,<2
+matplotlib>=3.8,<4
+python-docx>=1.1,<2      # Word export (export_word.py)
+streamlit>=1.49,<2       # local dashboard run
