@@ -57,6 +57,7 @@ TEST_GROUPS = [
     ("Geopolitical-shock behaviour", verify_model.test_geopolitical),
     ("Employment and skills layer", verify_model.test_employment),
     ("Negative-impact layer", verify_model.test_impact),
+    ("CGE partial-equilibrium fallback", verify_model.test_cge_fallback),
     ("Property-based stress tests", verify_model.test_fuzz),
 ]
 
@@ -95,8 +96,14 @@ VALIDATION_DESIGN = [
     {
         "layer": "Behavioural features",
         "purpose": "Verify that policy and shock mechanisms move in the intended direction.",
-        "evidence": "Stockpile depletion, diversification exposure, time-varying shock onset and impact-layer response.",
-        "pass_rule": "Directional tests must pass without violating reserves, shares or output bounds.",
+        "evidence": "Stockpile depletion, diversification exposure, time-varying shock onset, the IEA-2025 top-three/refining/export-control risk indices, and impact-layer response.",
+        "pass_rule": "Directional tests must pass without violating reserves, shares or output bounds; top-three exposure >= single-country and the refining/export-control indices stay bounded.",
+    },
+    {
+        "layer": "Solver robustness",
+        "purpose": "Confirm the model degrades gracefully if the full CGE solve fails.",
+        "evidence": "The CGE solve is forced to fail and the run is checked for the partial-equilibrium fallback path.",
+        "pass_rule": "All steps route to the PE fallback with no NaN, bounded price feedback and intact mass balance.",
     },
     {
         "layer": "Stress testing",

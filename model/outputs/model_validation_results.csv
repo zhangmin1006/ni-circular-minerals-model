@@ -9,12 +9,13 @@ PASS,baseline: all mass balances close,300/300 rows
 PASS,shock: all mass balances close (domestic+imports+secondary+unmet=demand),300/300 rows
 PASS,no unmet demand without a shock,0.000
 PASS,shock creates unmet demand (supply gap),196236 t
+PASS,oversupply edge case: supplied copper still equals demand,supplied 9000.0 vs demand 9000.0
 PASS,"all supply shares in [0,1]",0 violations
 PASS,shares close to 1 (domestic+recycled+import+gap),0 violations
 PASS,no NaN/inf in key economic columns,"{'output_total_gbp_m': 0, 'gva_total_gbp_m': 0, 'employment_total': 0, 'recycling_jobs': 0, 'mining_jobs': 0, 'co2_kt': 0, 'crit_recycled_share': 0, 'crit_import_share': 0}"
 PASS,no negative jobs/GVA/output/CO2,"{'output_total_gbp_m': 0, 'gva_total_gbp_m': 0, 'employment_total': 0, 'recycling_jobs': 0, 'mining_jobs': 0, 'co2_kt': 0, 'crit_recycled_share': 0, 'crit_import_share': 0}"
 PASS,"crit_recycled_share within [0,1]",min 0.147 max 0.463
-PASS,"crit_import_share within [0,1]",min 0.527 max 0.843
+PASS,"crit_import_share within [0,1]",min 0.528 max 0.843
 PASS,"crit_domestic_share within [0,1]",min 0.010 max 0.011
 PASS,cumulative GVA identical across two runs,760.2411 vs 760.2411
 PASS,full timeseries identical,
@@ -35,17 +36,24 @@ PASS,Plaswire has no tracked critical-mineral target (composites),targets set()
 PASS,"all firm scores in [0,1]",out of range: []
 PASS,mining Type II output multiplier in 1.3-2.2,1.688
 PASS,mining GVA/output coeff in 0.2-0.5,0.350
-PASS,"peak total jobs < 1% of NI employment (816,562)",1514 jobs
+PASS,"peak total jobs < 1% of NI employment (816,562)",1513 jobs
 PASS,recycled share never exceeds 1,
 PASS,diversification lowers single-country exposure,0.435 -> 0.278
 PASS,time-varying shock: no gap before onset,pre 0.0000
 PASS,time-varying shock: gap appears after onset,post 0.0168
+PASS,main scenario 5_supply_shock includes an import constraint,"{'REE_magnet': 0.26, 'Lithium': 0.56, 'Cobalt': 0.30000000000000004, 'Nickel': 0.6, 'Copper': 0.7, 'Aluminium': 0.65, 'Antimony': 0.30000000000000004}"
+PASS,top-3 / refining / export-control risk metrics recorded,
+PASS,top-3 exposure >= single-country exposure (top-3 includes the leader),top3 0.460 vs single 0.435
+PASS,"refining & export-control exposures bounded in [0,1]","refining 0.272, export-ctrl 0.005"
 PASS,skill breakdown sums to total jobs,450.0 vs 450.0
-PASS,wage bill positive & premium > 0,"bill £17.32m, premium 1.111"
+PASS,wage bill positive & premium > 0,"bill £18.55m, premium 1.111"
 PASS,retained local <= total and rises with support,retention 0.7 -> 0.97
 PASS,primary mining pressure > recycling for every impact category,"{'water': (6.0, 1.2), 'land': (10.0, 0.6), 'biodiversity': (8.0, 0.4), 'waste': (50.0, 2.0)}"
 PASS,"ESG mitigation: 1.0 at no-ESG, reduced (<1, >=0.6) under high ESG",1.00 -> 0.65
 PASS,annual pressures non-negative,"{'water': 45.0, 'land': 68.0, 'biodiversity': 54.0, 'waste': 335.0}"
+PASS,forced CGE failure routes to the PE fallback,{'fallback_pe'}
+PASS,fallback run has no NaN in GVA/jobs,
+PASS,"fallback keeps price feedback bounded [0.8,1.5] & mass balance",feedback 1.000
 PASS,fuzz: all 30 random configs ran without error,0 errored
 PASS,fuzz: MFA mass balance closes in every config,0 violated
 PASS,fuzz: supply shares bounded & sum to 1 in every config,0 violated

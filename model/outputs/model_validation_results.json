@@ -1,7 +1,7 @@
 {
-  "run_timestamp": "2026-06-17T22:05:06",
-  "checks_total": 53,
-  "checks_passed": 53,
+  "run_timestamp": "2026-06-18T17:10:58",
+  "checks_total": 61,
+  "checks_passed": 61,
   "checks_failed": 0,
   "checks": [
     {
@@ -56,6 +56,11 @@
     },
     {
       "status": "PASS",
+      "check": "oversupply edge case: supplied copper still equals demand",
+      "detail": "supplied 9000.0 vs demand 9000.0"
+    },
+    {
+      "status": "PASS",
       "check": "all supply shares in [0,1]",
       "detail": "0 violations"
     },
@@ -82,7 +87,7 @@
     {
       "status": "PASS",
       "check": "crit_import_share within [0,1]",
-      "detail": "min 0.527 max 0.843"
+      "detail": "min 0.528 max 0.843"
     },
     {
       "status": "PASS",
@@ -187,7 +192,7 @@
     {
       "status": "PASS",
       "check": "peak total jobs < 1% of NI employment (816,562)",
-      "detail": "1514 jobs"
+      "detail": "1513 jobs"
     },
     {
       "status": "PASS",
@@ -211,13 +216,33 @@
     },
     {
       "status": "PASS",
+      "check": "main scenario 5_supply_shock includes an import constraint",
+      "detail": "{'REE_magnet': 0.26, 'Lithium': 0.56, 'Cobalt': 0.30000000000000004, 'Nickel': 0.6, 'Copper': 0.7, 'Aluminium': 0.65, 'Antimony': 0.30000000000000004}"
+    },
+    {
+      "status": "PASS",
+      "check": "top-3 / refining / export-control risk metrics recorded",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "top-3 exposure >= single-country exposure (top-3 includes the leader)",
+      "detail": "top3 0.460 vs single 0.435"
+    },
+    {
+      "status": "PASS",
+      "check": "refining & export-control exposures bounded in [0,1]",
+      "detail": "refining 0.272, export-ctrl 0.005"
+    },
+    {
+      "status": "PASS",
       "check": "skill breakdown sums to total jobs",
       "detail": "450.0 vs 450.0"
     },
     {
       "status": "PASS",
       "check": "wage bill positive & premium > 0",
-      "detail": "bill \u00a317.32m, premium 1.111"
+      "detail": "bill \u00a318.55m, premium 1.111"
     },
     {
       "status": "PASS",
@@ -238,6 +263,21 @@
       "status": "PASS",
       "check": "annual pressures non-negative",
       "detail": "{'water': 45.0, 'land': 68.0, 'biodiversity': 54.0, 'waste': 335.0}"
+    },
+    {
+      "status": "PASS",
+      "check": "forced CGE failure routes to the PE fallback",
+      "detail": "{'fallback_pe'}"
+    },
+    {
+      "status": "PASS",
+      "check": "fallback run has no NaN in GVA/jobs",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "fallback keeps price feedback bounded [0.8,1.5] & mass balance",
+      "detail": "feedback 1.000"
     },
     {
       "status": "PASS",
