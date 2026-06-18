@@ -99,7 +99,10 @@ def main():
         print(f"  Crit. recycled share   : {q['2.4_secure_supply']['crit_recycled_share_end']} (target 0.20)")
         print(f"  Crit. domestic share   : {q['2.4_secure_supply']['crit_domestic_share_end']} (target 0.10)")
         print(f"  Crit. max single-country: {q['2.4_secure_supply']['crit_max_single_country_end']} (target <=0.60)")
-        print(f"  Cum. discounted CO2 kt : {q['2.7_negative_impacts']['cumulative_discounted_co2_kt']}")
+        print(f"  Closure-cliff mining jobs (Q2.7 econ): "
+              f"{q['2.7_economic_negative_impacts']['closure_cliff_mining_jobs_end']}")
+        print(f"  Cum. discounted CO2 kt (env satellite) : "
+              f"{q['environmental_satellites']['cumulative_discounted_co2_kt']}")
 
         # end-year spatial job allocation (Q2.5 regional growth)
         end = df.iloc[-1]
@@ -135,7 +138,8 @@ def main():
             "crit_recycled_share": q["2.4_secure_supply"]["crit_recycled_share_end"],
             "crit_domestic_share": q["2.4_secure_supply"]["crit_domestic_share_end"],
             "crit_max_single_country": q["2.4_secure_supply"]["crit_max_single_country_end"],
-            "cum_disc_CO2_kt": q["2.7_negative_impacts"]["cumulative_discounted_co2_kt"],
+            "closure_cliff_mining_jobs": q["2.7_economic_negative_impacts"]["closure_cliff_mining_jobs_end"],
+            "cum_disc_CO2_kt": q["environmental_satellites"]["cumulative_discounted_co2_kt"],
         })
     comp_df = pd.DataFrame(comp)
     comp_df.to_csv(os.path.join(OUT, "scenario_comparison.csv"), index=False)

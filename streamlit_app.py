@@ -865,7 +865,7 @@ with tab_q27:
         cols = {k: v for k, v in cols.items() if k in df27.columns}
         st.dataframe(df27[list(cols)].rename(columns=cols), width="stretch")
         if memo27:
-            with st.expander("Full Q2.7 findings memo (negative impacts, Minviro Appendix A)"):
+            with st.expander("Full Q2.7 findings memo (economic negative impacts)"):
                 st.markdown(memo27)
 
 

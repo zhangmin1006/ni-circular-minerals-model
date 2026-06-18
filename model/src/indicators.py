@@ -84,7 +84,22 @@ def map_to_questions(df, cumulative):
             "firm_capex_operating_gbp_m": round(last.get("company_capex_operating_gbp_m", 0.0), 1),
             "firm_capex_proposed_gbp_m": round(last.get("company_capex_proposed_gbp_m", 0.0), 1),
         },
-        "2.7_negative_impacts": {
+        # Q2.7 is the ECONOMIC negative impacts (the consultation question as posed).
+        # The per-scenario closure-cliff exposure (mining GVA/jobs that END at mine
+        # closure) is computable here; the full five-negative breakdown (leakage,
+        # closure liability, agri/tourism displacement, boom-bust, stranded capital)
+        # is produced by q2_7_negative_impacts.py -> outputs/q2_7_impacts.csv.
+        "2.7_economic_negative_impacts": {
+            "closure_cliff_mining_gva_gbp_m_end": round(
+                last["mining_fd_gbp_m"] * P.GVA_COEFF[P.S["Mining_Quarrying"]], 2),
+            "closure_cliff_mining_jobs_end": round(last["mining_jobs"], 1),
+            "note": "economic negatives (benefit leakage, closure/remediation liability, "
+                    "agriculture/tourism displacement, boom-bust exposure, stranded capital) "
+                    "are quantified in q2_7_impacts.csv",
+        },
+        # Environmental CO2/PM satellites are retained as a separate block (NOT the
+        # Q2.7 answer, which is economic): they remain useful general indicators.
+        "environmental_satellites": {
             "co2_kt_end": round(last["co2_kt"], 2),
             "pm_t_end": round(last["pm_t"], 2),
             "cumulative_discounted_co2_kt": round(cumulative["co2"], 1),

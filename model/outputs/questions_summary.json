@@ -43,7 +43,12 @@
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
-    "2.7_negative_impacts": {
+    "2.7_economic_negative_impacts": {
+      "closure_cliff_mining_gva_gbp_m_end": 7.31,
+      "closure_cliff_mining_jobs_end": 261.2,
+      "note": "economic negatives (benefit leakage, closure/remediation liability, agriculture/tourism displacement, boom-bust exposure, stranded capital) are quantified in q2_7_impacts.csv"
+    },
+    "environmental_satellites": {
       "co2_kt_end": 104.69,
       "pm_t_end": 11.22,
       "cumulative_discounted_co2_kt": 1591.8
@@ -93,7 +98,12 @@
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
-    "2.7_negative_impacts": {
+    "2.7_economic_negative_impacts": {
+      "closure_cliff_mining_gva_gbp_m_end": 7.31,
+      "closure_cliff_mining_jobs_end": 265.2,
+      "note": "economic negatives (benefit leakage, closure/remediation liability, agriculture/tourism displacement, boom-bust exposure, stranded capital) are quantified in q2_7_impacts.csv"
+    },
+    "environmental_satellites": {
       "co2_kt_end": 134.19,
       "pm_t_end": 13.98,
       "cumulative_discounted_co2_kt": 1974.0
@@ -143,7 +153,12 @@
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
-    "2.7_negative_impacts": {
+    "2.7_economic_negative_impacts": {
+      "closure_cliff_mining_gva_gbp_m_end": 7.37,
+      "closure_cliff_mining_jobs_end": 263.3,
+      "note": "economic negatives (benefit leakage, closure/remediation liability, agriculture/tourism displacement, boom-bust exposure, stranded capital) are quantified in q2_7_impacts.csv"
+    },
+    "environmental_satellites": {
       "co2_kt_end": 105.0,
       "pm_t_end": 11.26,
       "cumulative_discounted_co2_kt": 1597.0
@@ -193,7 +208,12 @@
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
-    "2.7_negative_impacts": {
+    "2.7_economic_negative_impacts": {
+      "closure_cliff_mining_gva_gbp_m_end": 7.37,
+      "closure_cliff_mining_jobs_end": 265.5,
+      "note": "economic negatives (benefit leakage, closure/remediation liability, agriculture/tourism displacement, boom-bust exposure, stranded capital) are quantified in q2_7_impacts.csv"
+    },
+    "environmental_satellites": {
       "co2_kt_end": 124.72,
       "pm_t_end": 13.1,
       "cumulative_discounted_co2_kt": 1852.3
@@ -243,7 +263,12 @@
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
-    "2.7_negative_impacts": {
+    "2.7_economic_negative_impacts": {
+      "closure_cliff_mining_gva_gbp_m_end": 7.31,
+      "closure_cliff_mining_jobs_end": 262.6,
+      "note": "economic negatives (benefit leakage, closure/remediation liability, agriculture/tourism displacement, boom-bust exposure, stranded capital) are quantified in q2_7_impacts.csv"
+    },
+    "environmental_satellites": {
       "co2_kt_end": 112.37,
       "pm_t_end": 11.94,
       "cumulative_discounted_co2_kt": 1760.7
@@ -293,7 +318,12 @@
       "firm_capex_operating_gbp_m": 914.0,
       "firm_capex_proposed_gbp_m": 250.0
     },
-    "2.7_negative_impacts": {
+    "2.7_economic_negative_impacts": {
+      "closure_cliff_mining_gva_gbp_m_end": 7.31,
+      "closure_cliff_mining_jobs_end": 263.8,
+      "note": "economic negatives (benefit leakage, closure/remediation liability, agriculture/tourism displacement, boom-bust exposure, stranded capital) are quantified in q2_7_impacts.csv"
+    },
+    "environmental_satellites": {
       "co2_kt_end": 124.39,
       "pm_t_end": 13.06,
       "cumulative_discounted_co2_kt": 1847.0
