@@ -35,6 +35,32 @@ SCENARIO_LABELS = {
     "6_high_esg_low_impact": "High ESG / low impact",
 }
 
+USER_HORIZON = 30
+USER_STPR = 0.035
+
+try:
+    sys.path.insert(0, str(MODEL_DIR / "src"))
+    from policy_params import LEVER_COST as USER_LEVER_COST
+except Exception:
+    # Keep the online app independent of the full model stack; this fallback is
+    # the same NI-scale cost map used by the experiment scripts.
+    USER_LEVER_COST = {
+        "finance_support": 6.0,
+        "exploration_grant": 3.0,
+        "community_benefit": 3.0,
+        "recycling_grant": 7.0,
+        "innovation_grant": 5.0,
+        "collection_infrastructure": 9.0,
+        "product_passport": 2.0,
+        "secondary_market_support": 4.0,
+        "recycled_content_procurement": 1.0,
+        "design_standards": 1.0,
+        "skills_support": 4.0,
+        "local_supplier_support": 3.0,
+        "diversification": 3.0,
+        "strategic_stockpile": 4.0,
+    }
+
 
 # cwd-robust favicon: resolve against this file, not the working directory, and
 # fall back to an emoji if the asset is missing (so deploy never fails on it).
@@ -130,6 +156,12 @@ def load_q23():
     memo_path = OUT / "q2_3_memo.md"
     memo = memo_path.read_text(encoding="utf-8") if memo_path.exists() else None
     return sc, stages, memo
+
+
+@st.cache_data(show_spinner=False)
+def load_q23_severity():
+    path = OUT / "q2_3_shock_severity.csv"
+    return pd.read_csv(path) if path.exists() else pd.DataFrame()
 
 
 def generate_q23():
@@ -285,6 +317,72 @@ def format_columns(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def discounted_user_cost(policy: dict[str, float]) -> float:
+    annual = sum(USER_LEVER_COST.get(k, 0.0) * float(v) for k, v in policy.items())
+    return sum(annual / ((1.0 + USER_STPR) ** t) for t in range(USER_HORIZON))
+
+
+def response_surface(
+    df: pd.DataFrame,
+    base_key: str,
+    weights: dict[str, float],
+    clip_01: tuple[str, ...] = (),
+    clip_nonnegative: tuple[str, ...] = (),
+) -> pd.Series:
+    """Fast what-if estimate from the experiment scenario endpoints.
+
+    The heavy ABM/MFA/IO/CGE model is pre-run for named policy endpoints. The
+    online app uses those endpoints as a local response surface so users can
+    vary parameters without requiring scipy/mesa on Streamlit Cloud.
+    """
+    base = df.loc[base_key]
+    out = base.copy()
+    numeric_cols = df.select_dtypes(include="number").columns
+    for col in numeric_cols:
+        value = float(base[col])
+        for key, weight in weights.items():
+            if key not in df.index or not weight:
+                continue
+            value += float(weight) * (float(df.loc[key, col]) - float(base[col]))
+        if col in clip_01:
+            value = max(0.0, min(1.0, value))
+        if col in clip_nonnegative:
+            value = max(0.0, value)
+        out[col] = value
+    return out
+
+
+def interpolate_severity(sweep: pd.DataFrame, severity: float, support: str) -> pd.Series | None:
+    if sweep.empty or support not in set(sweep["support"]):
+        return None
+    subset = sweep[sweep["support"] == support].sort_values("supplier_loss_factor")
+    xs = subset["supplier_loss_factor"].tolist()
+    if not xs:
+        return None
+    if severity <= xs[0]:
+        return subset.iloc[0].copy()
+    if severity >= xs[-1]:
+        return subset.iloc[-1].copy()
+    lo = subset[subset["supplier_loss_factor"] <= severity].iloc[-1]
+    hi = subset[subset["supplier_loss_factor"] >= severity].iloc[0]
+    if float(hi["supplier_loss_factor"]) == float(lo["supplier_loss_factor"]):
+        return lo.copy()
+    frac = ((severity - float(lo["supplier_loss_factor"]))
+            / (float(hi["supplier_loss_factor"]) - float(lo["supplier_loss_factor"])))
+    out = lo.copy()
+    for col in subset.select_dtypes(include="number").columns:
+        out[col] = float(lo[col]) + frac * (float(hi[col]) - float(lo[col]))
+    return out
+
+
+def user_experiment_caption():
+    st.caption(
+        "User-defined experiment: fast response-surface estimate from the modelled "
+        "scenario endpoints. Use the fixed tables below as the audited model runs; "
+        "rerun the full model for publication-grade custom parameter sets."
+    )
+
+
 ensure_outputs()
 ts, comp, company, register, questions, validation, spatial = load_outputs()
 options = scenario_options(ts)
@@ -377,6 +475,59 @@ with tab_q21:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.1 experiment: choose circularity parameters", expanded=True):
+            user_experiment_caption()
+            c1, c2, c3 = st.columns(3)
+            recovery = c1.slider("Recovery capital grant", 0.0, 1.0, 0.35, 0.05,
+                                 key="q21_recovery")
+            innovation = c1.slider("Circular innovation fund", 0.0, 1.0, 0.60, 0.05,
+                                   key="q21_innovation")
+            collection = c2.slider("Collection / product passports", 0.0, 1.0, 1.0, 0.05,
+                                   key="q21_collection")
+            market = c2.slider("Secondary-market offtake", 0.0, 1.0, 0.60, 0.05,
+                               key="q21_market")
+            design = c3.slider("Circular design standards", 0.0, 1.0, 0.60, 0.05,
+                               key="q21_design")
+            skills = c3.slider("Green skills / local suppliers", 0.0, 1.0, 0.60, 0.05,
+                               key="q21_skills")
+            q21_weights = {
+                "A_materials_recovery_capital": recovery,
+                "B_circular_innovation_fund": innovation,
+                "C_smart_collection_drs": collection,
+                "D_secondary_market_offtake": market,
+                "E_circular_design_standards": design,
+                "F_green_skills_cluster": skills,
+            }
+            q21 = response_surface(
+                iv, "0_baseline", q21_weights,
+                clip_01=("crit_recycled_share_end", "recycled_share_all_end",
+                         "circular_design_uptake_end", "crit_max_single_country_end"),
+                clip_nonnegative=("secondary_value_gbp_m_end", "recycling_jobs_end",
+                                  "cum_disc_gva_gbp_m", "cum_disc_co2_kt"),
+            )
+            q21_base = iv.loc["0_baseline"]
+            q21_policy = {
+                "recycling_grant": min(1.0, 0.45 * recovery + 0.20 * innovation),
+                "innovation_grant": min(1.0, 0.70 * innovation),
+                "collection_infrastructure": collection,
+                "product_passport": min(1.0, 0.60 * collection + 0.60 * design),
+                "secondary_market_support": min(1.0, 0.70 * market),
+                "recycled_content_procurement": min(1.0, 0.50 * market + 0.30 * design),
+                "design_standards": min(1.0, 0.70 * design),
+                "skills_support": min(1.0, 0.80 * skills),
+                "local_supplier_support": min(1.0, 0.50 * skills),
+            }
+            q21_cost = discounted_user_cost(q21_policy)
+            q21_gva_gain = float(q21["cum_disc_gva_gbp_m"] - q21_base["cum_disc_gva_gbp_m"])
+            q21_roi = q21_gva_gain / q21_cost if q21_cost else 0.0
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Custom recycled share", f"{q21['crit_recycled_share_end']:.1%}",
+                      f"{(q21['crit_recycled_share_end'] - q21_base['crit_recycled_share_end']) * 100:.1f} pp")
+            u2.metric("Recycling jobs", f"{q21['recycling_jobs_end']:.0f}",
+                      f"{q21['recycling_jobs_end'] - q21_base['recycling_jobs_end']:+.0f}")
+            u3.metric("Discounted GVA gain", f"GBP {q21_gva_gain:,.1f}m")
+            u4.metric("GVA ROI", f"{q21_roi:.2f}x", f"cost GBP {q21_cost:,.1f}m")
+
         plot = iv.drop(index="0_baseline", errors="ignore")
         best_roi = plot["gva_roi_central"].idxmax()
         best_share = plot["d_recycled_share_pp"].idxmax()
@@ -451,6 +602,58 @@ with tab_q22:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.2 experiment: choose development constraints", expanded=True):
+            user_experiment_caption()
+            c1, c2, c3 = st.columns(3)
+            permit = c1.slider("Permitting speed / clarity", 0.0, 1.0, 0.50, 0.05,
+                               key="q22_permit")
+            finance = c1.slider("Finance / co-investment support", 0.0, 1.0, 0.50, 0.05,
+                                key="q22_finance")
+            community = c2.slider("Community benefit / social licence", 0.0, 1.0, 0.50, 0.05,
+                                  key="q22_community")
+            skills_q22 = c2.slider("Skills availability", 0.0, 1.0, 0.40, 0.05,
+                                   key="q22_skills")
+            energy = c3.slider("Competitive green energy", 0.0, 1.0, 0.30, 0.05,
+                               key="q22_energy")
+            high_esg = c3.slider("Responsible high-ESG conditions", 0.0, 1.0, 0.40, 0.05,
+                                 key="q22_esg")
+            q22_weights = {
+                "permitting_reform": permit,
+                "finance_support": finance,
+                "community_benefit": community,
+                "skills_availability": skills_q22,
+                "energy_competitiveness": energy,
+                "responsible_high_esg": high_esg,
+            }
+            q22 = response_surface(
+                sc, "0_current_constraints", q22_weights,
+                clip_01=("crit_domestic_share_end", "crit_recycled_share_end",
+                         "single_country_exposure_end"),
+                clip_nonnegative=("mines_opened", "end_jobs", "cum_disc_gva_gbp_m",
+                                  "cum_disc_co2_kt"),
+            )
+            q22_base = sc.loc["0_current_constraints"]
+            q22_policy = {
+                "finance_support": 0.8 * finance,
+                "exploration_grant": 0.10 * finance,
+                "community_benefit": 0.4 * community,
+                "skills_support": 0.8 * skills_q22,
+            }
+            q22_cost = discounted_user_cost(q22_policy)
+            margins = {
+                row: q22_weights[row] * float(sc.loc[row, "d_cum_gva_gbp_m"])
+                for row in q22_weights if row in sc.index
+            }
+            strongest = max(margins, key=margins.get) if margins else "n/a"
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Projects opened", f"{q22['mines_opened']:.1f}",
+                      f"{q22['mines_opened'] - q22_base['mines_opened']:+.1f}")
+            u2.metric("Domestic critical share", f"{q22['crit_domestic_share_end']:.1%}",
+                      f"{(q22['crit_domestic_share_end'] - q22_base['crit_domestic_share_end']) * 100:.1f} pp")
+            u3.metric("Discounted GVA", f"GBP {q22['cum_disc_gva_gbp_m']:,.1f}m",
+                      f"cost GBP {q22_cost:,.1f}m")
+            u4.metric("Strongest chosen unlock", sc.loc[strongest, "label"] if strongest in sc.index else "n/a")
+
         st.markdown("**Opportunity ranking (higher = stronger opportunity)**")
         st.bar_chart(opp["opportunity_score"])
         opp_cols = {
@@ -517,6 +720,67 @@ with tab_q23:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.3 experiment: choose shock and support parameters", expanded=True):
+            user_experiment_caption()
+            c1, c2, c3 = st.columns(3)
+            supplier_loss = c1.slider("Dominant-supplier loss factor", 0.5, 1.5, 1.0, 0.05,
+                                      key="q23_supplier_loss")
+            upstream = c1.slider("Upstream support", 0.0, 1.0, 0.50, 0.05,
+                                 key="q23_upstream")
+            midstream = c2.slider("Midstream recovery / collection support", 0.0, 1.0, 0.70, 0.05,
+                                  key="q23_midstream")
+            downstream = c2.slider("Downstream manufacturer support", 0.0, 1.0, 0.40, 0.05,
+                                   key="q23_downstream")
+            enabling = c3.slider("Skills / supplier / stockpile support", 0.0, 1.0, 0.40, 0.05,
+                                 key="q23_enabling")
+            q23_weights = {
+                "shock_upstream_support": upstream,
+                "shock_midstream_support": midstream,
+                "shock_downstream_support": downstream,
+                "shock_enabling_support": enabling,
+            }
+            q23 = response_surface(
+                sc23, "shock_no_support", q23_weights,
+                clip_01=("supply_gap_early5", "crit_supply_gap_end",
+                         "crit_recycled_share_end", "crit_domestic_share_end",
+                         "crit_import_share_end", "single_country_exposure_end",
+                         "recycling_substitution_end"),
+                clip_nonnegative=("mining_jobs_end", "recycling_jobs_end",
+                                  "manufacturing_jobs_end", "total_jobs_end",
+                                  "cum_disc_gva_gbp_m"),
+            )
+            q23_base = sc23.loc["shock_no_support"]
+            sweep23 = load_q23_severity()
+            sev_base = interpolate_severity(sweep23, supplier_loss, "no_support")
+            if sev_base is not None and q23_base["crit_supply_gap_end"]:
+                gap_scale = float(sev_base["supply_gap_end"]) / float(q23_base["crit_supply_gap_end"])
+                early_scale = float(sev_base["supply_gap_early5"]) / max(
+                    0.001, float(q23_base["supply_gap_early5"]))
+                q23["crit_supply_gap_end"] = max(0.0, min(1.0, float(q23["crit_supply_gap_end"]) * gap_scale))
+                q23["supply_gap_early5"] = max(0.0, min(1.0, float(q23["supply_gap_early5"]) * early_scale))
+            q23_policy = {
+                "finance_support": 0.8 * upstream,
+                "exploration_grant": 0.12 * upstream,
+                "community_benefit": 0.4 * upstream,
+                "recycling_grant": 0.4 * midstream,
+                "innovation_grant": 0.6 * midstream,
+                "collection_infrastructure": midstream,
+                "secondary_market_support": min(1.0, 0.6 * midstream + 0.5 * downstream),
+                "recycled_content_procurement": 0.5 * downstream,
+                "local_supplier_support": min(1.0, 0.7 * downstream + 0.5 * enabling),
+                "design_standards": 0.6 * downstream,
+                "skills_support": 0.8 * enabling,
+                "strategic_stockpile": 0.6 * enabling,
+            }
+            q23_cost = discounted_user_cost(q23_policy)
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Supply gap", f"{q23['crit_supply_gap_end']:.1%}",
+                      f"{(q23['crit_supply_gap_end'] - q23_base['crit_supply_gap_end']) * 100:.1f} pp")
+            u2.metric("Recycled share", f"{q23['crit_recycled_share_end']:.1%}",
+                      f"{(q23['crit_recycled_share_end'] - q23_base['crit_recycled_share_end']) * 100:.1f} pp")
+            u3.metric("Jobs protected", f"{q23['total_jobs_end'] - q23_base['total_jobs_end']:+.0f}")
+            u4.metric("Support cost", f"GBP {q23_cost:,.1f}m")
+
         if "shock_no_support" in sc23.index:
             shock = sc23.loc["shock_no_support"]
             k1, k2, k3 = st.columns(3)
@@ -628,6 +892,61 @@ with tab_q24:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.4 experiment: choose government role parameters", expanded=True):
+            user_experiment_caption()
+            shock_choice = st.selectbox(
+                "Geopolitical shock",
+                ["0_stable", "trade_friction", "export_ban", "bloc_fragmentation"],
+                index=2,
+                key="q24_shock",
+            )
+            c1, c2, c3 = st.columns(3)
+            diversify = c1.slider("Diversify & insure", 0.0, 1.0, 0.60, 0.05,
+                                  key="q24_diversify")
+            domestic = c1.slider("Domestic primary capability", 0.0, 1.0, 0.40, 0.05,
+                                 key="q24_domestic")
+            circular = c2.slider("Circular recovery capability", 0.0, 1.0, 0.70, 0.05,
+                                 key="q24_circular")
+            coordinator = c2.slider("Strategic coordination", 0.0, 1.0, 0.60, 0.05,
+                                    key="q24_coord")
+            stockpile = c3.slider("Strategic stockpile intensity", 0.0, 1.0, 0.50, 0.05,
+                                  key="q24_stockpile")
+            role_surface = grid24[grid24["shock"] == shock_choice].set_index("role")
+            q24_weights = {
+                "diversify_and_insure": min(1.0, diversify + 0.4 * stockpile),
+                "domestic_autonomy": domestic,
+                "circular_leader": circular,
+                "strategic_coordinator": coordinator,
+            }
+            q24 = response_surface(
+                role_surface, "market_light_touch", q24_weights,
+                clip_01=("crit_domestic_share", "crit_recycled_share",
+                         "crit_only_recycled_share", "crit_only_domestic_share",
+                         "crit_import_share", "single_country_exposure", "top3_exposure",
+                         "refining_exposure", "export_control_exposure",
+                         "supply_risk_index", "mean_supply_gap"),
+                clip_nonnegative=("cum_disc_gva_gbp_m", "disc_public_cost_gbp_m"),
+            )
+            q24_policy = {
+                "diversification": diversify,
+                "strategic_stockpile": stockpile,
+                "finance_support": 0.8 * domestic,
+                "exploration_grant": 0.12 * domestic,
+                "community_benefit": 0.4 * domestic,
+                "recycling_grant": 0.4 * circular,
+                "innovation_grant": 0.6 * circular,
+                "collection_infrastructure": circular,
+                "secondary_market_support": max(0.5 * circular, 0.5 * coordinator),
+                "design_standards": 0.6 * circular,
+                "skills_support": 0.5 * coordinator,
+            }
+            q24_cost = discounted_user_cost(q24_policy)
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Supply gap", f"{q24['mean_supply_gap']:.1%}")
+            u2.metric("Single-country exposure", f"{q24['single_country_exposure']:.1%}")
+            u3.metric("Recycled share", f"{q24['crit_recycled_share']:.1%}")
+            u4.metric("Public cost", f"GBP {q24_cost:,.1f}m")
+
         ranked = mc24.drop(index="market_light_touch", errors="ignore").sort_values(
             "p90_supply_gap")
         if len(ranked):
@@ -705,6 +1024,62 @@ with tab_q25:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.5 experiment: choose employment and skills parameters", expanded=True):
+            user_experiment_caption()
+            c1, c2, c3 = st.columns(3)
+            circular_jobs = c1.slider("Circular sector scale-up", 0.0, 1.0, 0.60, 0.05,
+                                      key="q25_circular")
+            primary_jobs = c1.slider("Responsible primary development", 0.0, 1.0, 0.35, 0.05,
+                                     key="q25_primary")
+            local_content = c2.slider("Local supplier content", 0.0, 1.0, 0.80, 0.05,
+                                      key="q25_local")
+            skills_pipe = c2.slider("Skills / apprenticeship pipeline", 0.0, 1.0, 0.80, 0.05,
+                                    key="q25_skills")
+            wage_anchor = c3.slider("Wage premium assumption", 0.8, 1.3, 1.0, 0.05,
+                                    key="q25_wage_anchor")
+            q25_weights = {
+                "2_circular_innovation": circular_jobs,
+                "4_integrated": primary_jobs,
+                "local_skills_focus": (local_content + skills_pipe) / 2.0,
+            }
+            q25 = response_surface(
+                sc25, "1_baseline", q25_weights,
+                clip_01=("local_retention_rate",),
+                clip_nonnegative=("total_jobs_end", "minerals_sector_jobs", "high_skill_jobs",
+                                  "mid_skill_jobs", "entry_skill_jobs", "avg_wage_gbp",
+                                  "wage_bill_gbp_m", "retained_local_jobs",
+                                  "skilled_training_need"),
+            )
+            q25["avg_wage_gbp"] = float(q25["avg_wage_gbp"]) * wage_anchor
+            q25["wage_bill_gbp_m"] = float(q25["wage_bill_gbp_m"]) * wage_anchor
+            q25_policy = {
+                "recycling_grant": 0.4 * circular_jobs,
+                "collection_infrastructure": circular_jobs,
+                "design_standards": 0.6 * circular_jobs,
+                "exploration_grant": 0.15 * primary_jobs,
+                "finance_support": 0.5 * primary_jobs,
+                "community_benefit": 0.4 * primary_jobs,
+                "local_supplier_support": local_content,
+                "skills_support": skills_pipe,
+            }
+            q25_cost = discounted_user_cost(q25_policy)
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Total jobs", f"{q25['total_jobs_end']:,.0f}")
+            u2.metric("High-skill jobs", f"{q25['high_skill_jobs']:,.0f}")
+            u3.metric("Retained local jobs", f"{q25['retained_local_jobs']:,.0f}",
+                      f"{q25['local_retention_rate']:.0%} retention")
+            u4.metric("Programme cost", f"GBP {q25_cost:,.1f}m")
+            district_base = dist25[dist25["scenario"] == "1_baseline"].set_index("district")["end_jobs"]
+            district_custom = district_base.copy().astype(float)
+            for scen, weight in q25_weights.items():
+                if scen in set(dist25["scenario"]):
+                    district_s = dist25[dist25["scenario"] == scen].set_index("district")["end_jobs"]
+                    district_custom = district_custom.add(
+                        weight * (district_s - district_base), fill_value=0.0)
+            district_custom = district_custom.clip(lower=0).sort_values(ascending=False)
+            st.caption("Custom end-year jobs by council area")
+            st.bar_chart(district_custom)
+
         if "local_skills_focus" in sc25.index and "1_baseline" in sc25.index:
             ls, base = sc25.loc["local_skills_focus"], sc25.loc["1_baseline"]
             k1, k2, k3 = st.columns(3)
@@ -762,6 +1137,64 @@ with tab_q26:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.6 experiment: choose economic-benefit parameters", expanded=True):
+            user_experiment_caption()
+            c1, c2, c3 = st.columns(3)
+            circular_benefit = c1.slider("Circular investment intensity", 0.0, 1.0, 0.60, 0.05,
+                                         key="q26_circular")
+            primary_benefit = c1.slider("Primary development intensity", 0.0, 1.0, 0.40, 0.05,
+                                        key="q26_primary")
+            local_resilience = c2.slider("Local/resilience value captured", 0.0, 1.0, 0.70, 0.05,
+                                         key="q26_resilience")
+            avoided_import_weight = c2.slider("Avoided-import value multiplier", 0.5, 1.5, 1.0, 0.05,
+                                              key="q26_avoid_weight")
+            tax_rate = c3.slider("Effective tax take on GVA", 0.15, 0.35, 0.25, 0.01,
+                                 key="q26_tax")
+            export_multiplier = c3.slider("Export intensity multiplier", 0.5, 1.5, 1.0, 0.05,
+                                          key="q26_exports")
+            integration = min(circular_benefit, primary_benefit)
+            q26_weights = {
+                "2_circular_innovation": max(0.0, circular_benefit - 0.5 * integration),
+                "3_primary_extraction": max(0.0, primary_benefit - 0.5 * integration),
+                "4_integrated": min(1.0, integration + 0.25 * local_resilience),
+            }
+            q26 = response_surface(
+                df26, "1_baseline", q26_weights,
+                clip_nonnegative=("cum_disc_gva_gbp_m", "cum_disc_output_gbp_m",
+                                  "avoided_import_cost_gbp_m", "tax_proxy_gbp_m",
+                                  "exports_gbp_m", "gva_per_worker_gbp",
+                                  "annual_exports_end_gbp_m",
+                                  "annual_avoided_imports_end_gbp_m",
+                                  "manufacturing_jobs_end", "end_jobs",
+                                  "disc_public_cost_gbp_m"),
+            )
+            q26_base = df26.loc["1_baseline"]
+            q26["tax_proxy_gbp_m"] = float(q26["cum_disc_gva_gbp_m"]) * tax_rate
+            q26["exports_gbp_m"] = float(q26["exports_gbp_m"]) * export_multiplier
+            q26["avoided_import_cost_gbp_m"] = (
+                float(q26["avoided_import_cost_gbp_m"]) * avoided_import_weight)
+            q26_policy = {
+                "recycling_grant": 0.4 * circular_benefit,
+                "collection_infrastructure": circular_benefit,
+                "innovation_grant": 0.5 * circular_benefit,
+                "exploration_grant": 0.15 * primary_benefit,
+                "finance_support": 0.6 * primary_benefit,
+                "community_benefit": 0.4 * primary_benefit,
+                "local_supplier_support": local_resilience,
+            }
+            q26_cost = discounted_user_cost(q26_policy)
+            q26_gva_gain = float(q26["cum_disc_gva_gbp_m"] - q26_base["cum_disc_gva_gbp_m"])
+            q26_avoid_gain = float(q26["avoided_import_cost_gbp_m"]
+                                   - q26_base["avoided_import_cost_gbp_m"])
+            q26_gva_bcr = q26_gva_gain / q26_cost if q26_cost else 0.0
+            q26_res_bcr = (q26_gva_gain + q26_avoid_gain) / q26_cost if q26_cost else 0.0
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Discounted GVA", f"GBP {q26['cum_disc_gva_gbp_m']:,.0f}m",
+                      f"{q26_gva_gain:+,.0f}m vs baseline")
+            u2.metric("Tax proxy", f"GBP {q26['tax_proxy_gbp_m']:,.0f}m")
+            u3.metric("Avoided imports", f"GBP {q26['avoided_import_cost_gbp_m']:,.0f}m")
+            u4.metric("GVA / resilience BCR", f"{q26_gva_bcr:.2f}x / {q26_res_bcr:.2f}x")
+
         if "4_integrated" in df26.index:
             it = df26.loc["4_integrated"]
             k1, k2, k3 = st.columns(3)
@@ -829,6 +1262,80 @@ with tab_q27:
                 st.cache_data.clear()
                 st.rerun()
     else:
+        with st.expander("User-defined Q2.7 experiment: choose economic-negative-impact parameters", expanded=True):
+            user_experiment_caption()
+            c1, c2, c3 = st.columns(3)
+            primary_scale = c1.slider("Primary extraction intensity", 0.0, 1.0, 0.50, 0.05,
+                                      key="q27_primary")
+            circular_hedge = c1.slider("Circular hedge / recycling alternative", 0.0, 1.0, 0.50, 0.05,
+                                       key="q27_circular")
+            local_content_q27 = c2.slider("Local content / skills retention", 0.0, 1.0, 0.70, 0.05,
+                                          key="q27_local")
+            closure_bond = c2.slider("Closure bond strength", 0.0, 1.0, 0.80, 0.05,
+                                     key="q27_closure")
+            rehabilitation = c3.slider("Progressive rehabilitation", 0.0, 1.0, 0.70, 0.05,
+                                       key="q27_rehab")
+            price_volatility = c3.slider("Commodity price volatility", 0.5, 1.5, 1.0, 0.05,
+                                         key="q27_volatility")
+            q27 = response_surface(
+                df27, "1_baseline",
+                {"2_circular_innovation": circular_hedge, "3_primary_unmanaged": primary_scale},
+                clip_01=("econ_negative_per_gva", "local_retention", "mgmt_intensity"),
+                clip_nonnegative=("cum_disc_gva_gbp_m", "minerals_direct_gva_gbp_m",
+                                  "benefit_leakage_gbp_m", "closure_liability_gbp_m",
+                                  "agri_tourism_displacement_gbp_m",
+                                  "econ_negative_total_gbp_m", "net_local_gva_gbp_m",
+                                  "boom_bust_var_gbp_m_pa",
+                                  "stranded_capital_at_risk_gbp_m",
+                                  "closure_cliff_gva_gbp_m_pa", "closure_cliff_jobs",
+                                  "mines_opened"),
+            )
+            unmanaged = df27.loc["3_primary_unmanaged"]
+            managed = df27.loc["5_responsible_managed"]
+            circular = df27.loc["2_circular_innovation"]
+            leakage_primary = (
+                primary_scale
+                * (float(unmanaged["benefit_leakage_gbp_m"])
+                   - local_content_q27 * (
+                       float(unmanaged["benefit_leakage_gbp_m"])
+                       - float(managed["benefit_leakage_gbp_m"])))
+            )
+            leakage_circular = circular_hedge * float(circular["benefit_leakage_gbp_m"])
+            closure = primary_scale * (
+                (1.0 - closure_bond) * float(unmanaged["closure_liability_gbp_m"])
+                + closure_bond * float(managed["closure_liability_gbp_m"])
+            )
+            displacement = primary_scale * (
+                (1.0 - rehabilitation) * float(unmanaged["agri_tourism_displacement_gbp_m"])
+                + rehabilitation * float(managed["agri_tourism_displacement_gbp_m"])
+            )
+            q27["benefit_leakage_gbp_m"] = max(0.0, leakage_primary + leakage_circular)
+            q27["closure_liability_gbp_m"] = max(0.0, closure)
+            q27["agri_tourism_displacement_gbp_m"] = max(0.0, displacement)
+            q27["econ_negative_total_gbp_m"] = (
+                float(q27["benefit_leakage_gbp_m"])
+                + float(q27["closure_liability_gbp_m"])
+                + float(q27["agri_tourism_displacement_gbp_m"])
+            )
+            q27["boom_bust_var_gbp_m_pa"] = (
+                primary_scale * float(unmanaged["boom_bust_var_gbp_m_pa"])
+                * price_volatility * (1.0 - 0.35 * circular_hedge)
+            )
+            q27["stranded_capital_at_risk_gbp_m"] = (
+                primary_scale * float(unmanaged["stranded_capital_at_risk_gbp_m"])
+                * (1.0 - 0.60 * circular_hedge)
+            )
+            q27["net_local_gva_gbp_m"] = (
+                float(q27["cum_disc_gva_gbp_m"]) - float(q27["econ_negative_total_gbp_m"]))
+            q27["econ_negative_per_gva"] = (
+                float(q27["econ_negative_total_gbp_m"]) / max(1.0, float(q27["cum_disc_gva_gbp_m"])))
+            u1, u2, u3, u4 = st.columns(4)
+            u1.metric("Economic negatives", f"GBP {q27['econ_negative_total_gbp_m']:,.0f}m",
+                      f"{q27['econ_negative_per_gva']:.0%} of GVA")
+            u2.metric("Net local GVA", f"GBP {q27['net_local_gva_gbp_m']:,.0f}m")
+            u3.metric("Closure liability", f"GBP {q27['closure_liability_gbp_m']:,.0f}m")
+            u4.metric("Stranded capital risk", f"GBP {q27['stranded_capital_at_risk_gbp_m']:,.0f}m")
+
         if "3_primary_unmanaged" in df27.index and "5_responsible_managed" in df27.index:
             pu, mg = df27.loc["3_primary_unmanaged"], df27.loc["5_responsible_managed"]
             k1, k2, k3 = st.columns(3)
