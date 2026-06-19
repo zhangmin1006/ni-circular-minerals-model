@@ -56,8 +56,9 @@ rising demand simply increases import dependence.
 - **The binding challenge is social licence, not economics.** NI's best deposit
   clears the commercial hurdle but is blocked by community opposition. In the model
   a credible **community-benefit package** is the *only* lever that brings it
-  forward — and it delivers roughly **ten times** the value of finance, permitting
-  or skills support on their own (+£208m discounted GVA, +~600 jobs). Crucially it
+  forward — and it is **by far the most powerful single lever** (+£208m discounted
+  GVA and +~600 jobs, versus under £2m for the next-best lever, finance, and nothing
+  for permitting, skills or energy on their own). Crucially it
   can be done sustainably: pairing extraction with high-ESG conditions yields
   similar value at lower impact.
 - **Critical-mineral security is mainly a recycling story.** NI has little domestic
@@ -180,26 +181,33 @@ are a separate matter, tracked in the model's CO₂/PM satellites.)*
 
 ---
 
-## Six recommendations
+## Recommendations from the findings
 
-1. **Build the midstream.** Fund first-of-a-kind / scale-up processing and recovery
-   capacity (cost-share + blended finance + offtake/price floor). This is the binding
-   gap and the highest-leverage action.
-2. **Fix feedstock collection.** A smart collection / deposit-return / WEEE scheme is
-   the only route to the 20% recycling target.
-3. **Lead with cheap demand-side rules.** Recycled-content procurement, ecodesign
-   standards and product passports — high return, low cost — sequenced ahead of, then
-   alongside, capacity.
-4. **Make any extraction responsible and contained.** Pair primary development with a
-   genuine community-benefit scheme (the binding constraint), high-ESG design (which
-   cuts the local burden ~35%) and bonded closure; impacts are site-specific, so
-   require project- and place-specific assessment.
-5. **Tie support to local content and skills.** Local-supplier development plus a
-   green-skills / apprenticeship pipeline convert headline jobs into *retained* NI jobs
-   (~70%→~97%) and are the gating enabler of the GVA and employment benefits.
-6. **Create one front door and a thin safety net.** A single "strategic project"
-   designation (mirroring/accessing EU CRMA via Windsor) plus a modest ~180-day
-   strategic reserve and international diversification for the residual risk.
+1. **Because collection is the immediate bottleneck, fix feedstock first.** Build
+   take-back and collection routes for batteries, electronics, magnets, end-of-life
+   vehicle parts and industrial scrap before relying on plant grants.
+2. **Because design rules give the best value for money, start with low-cost market
+   rules.** Use recycled-content procurement, design-for-recycling standards and
+   product passports to create demand for recovered material.
+3. **Because NI's gap is the missing middle, build processing and recovery capacity.**
+   Help first commercial plants with cost-sharing, guarantees and long-term purchase
+   contracts.
+4. **Because community acceptance is the binding constraint for extraction, make local
+   benefit a gateway.** Require credible community-benefit agreements, local jobs,
+   high standards and clean-up bonds before supporting new mining.
+5. **Because manufacturer support does little without material supply, sequence
+   business support.** Support processors first, then manufacturers, with one DfE-led
+   front door for strategic projects.
+6. **Because supply security is under-provided by the market, act as co-ordinator and
+   insurer.** Monitor risk, diversify suppliers, hold a modest reserve and treat
+   processing capacity as a security asset.
+7. **Because retained jobs are a policy choice, tie support to local content and
+   skills.** Public support should come with apprenticeships, training places, NI
+   supplier commitments and reporting on jobs kept in NI.
+8. **Because the economic case is strongest as a package, appraise the portfolio.**
+   Count GVA, tax, exports, avoided imports and manufacturer resilience, while also
+   subtracting leakage, closure liabilities, displaced farming/tourism and stranded
+   capital risk.
 
 ---
 

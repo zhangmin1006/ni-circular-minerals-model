@@ -92,7 +92,15 @@ The model tracks ten minerals, in three groups. Seven are **critical minerals** 
 
 **What we found.** (1) **The bottleneck is collecting the worn-out material, not buying recycling machines** — a good collection / deposit-return scheme is the *only single measure* that hits the UK's 2035 target of meeting 20% of critical-mineral demand from recycling. Grants for machinery alone achieve very little, because there is not enough material being collected to feed them. (2) **"Design-for-recycling" rules give the best value for money** (about £2.20 of value per £1 of public cost) because they are mostly rules, not spending. (3) **A combined package works best overall.** (4) As demand grows, NI's lack of processing plants (there is currently none for lithium, cobalt, nickel, copper or aluminium) becomes the next bottleneck.
 
-**Our recommendation.** Do the cheap, high-value things first (rules requiring recycled content in public contracts, design-for-recycling standards, digital "product passports" that track materials); then fund collection and an innovation partnership with Ionic and QUB; then help build processing capacity for battery metals.
+**Our recommendation, based on what we found.** Because the main bottleneck is **getting enough recyclable material into the system**, not buying more machines, the Department should put collection and market demand ahead of plant grants:
+
+- **Fix collection first.** Start targeted take-back schemes for batteries, electronics, magnets, end-of-life vehicle parts and industrial scrap, working with councils and NI recyclers such as Re-Gen, RiverRidge and Bryson.
+- **Use cheap rules to create demand.** Require recycled content in public contracts where practical, and introduce design-for-recycling standards so products are easier to repair, dismantle and recover.
+- **Use product passports where they matter most.** Track batteries, electronics, magnets and larger equipment so recyclers know what materials are inside and how to handle them safely.
+- **Fund innovation only where it solves the bottleneck.** Support Ionic Technologies, QUB, FE colleges and manufacturers to improve sorting, recovery yields and safe handling, but link that funding to real material collection.
+- **Do not rely on machinery grants alone.** The model shows they add almost no recycling unless there is enough feedstock to process.
+- **Scale plants after the feedstock route is proven.** Once collection is working, help finance first commercial plants for lithium, cobalt, nickel, copper and aluminium recovery.
+- **Measure success in simple terms.** Track tonnes collected, recycled share of demand, recycled material sold to NI firms, and private investment crowded in.
 
 ---
 
@@ -113,9 +121,16 @@ The strongest opportunities are in **recycling** rare-earth magnets, lithium, co
 | **A community-benefit agreement (local acceptance)** | **one** | **+£208m** | **Curraghinalt (Dalradian)** |
 | Everything together | two | +£226m | both |
 
-**What we found.** The real obstacle is **community acceptance, not money or paperwork.** NI's best deposit already makes commercial sense but is held up by local opposition. A credible **community-benefit agreement** is the *only* thing that brings it forward — and it is worth roughly **ten times** as much as cheaper finance, faster planning or skills support on their own. For critical minerals specifically, the realistic prize is **recycling and processing**, because NI has very little of this geology.
+**What we found.** The real obstacle is **community acceptance, not money or paperwork.** NI's best deposit already makes commercial sense but is held up by local opposition. A credible **community-benefit agreement** is the *only* thing that brings it forward — and it is **by far the most powerful single lever**: it adds about **£208m** of value to the economy, compared with under **£2m** for the next-best single measure (cheaper finance, which only unlocks a small barytes project) and **nothing at all** for faster planning, skills or cheaper energy on their own. For critical minerals specifically, the realistic prize is **recycling and processing**, because NI has very little of this geology.
 
-**Our recommendation.** Treat genuine **community benefit and high responsibility standards as the central condition** for any new mining; pursue critical minerals mainly through recycling and processing.
+**Our recommendation, based on what we found.** Because the binding obstacle is **community acceptance**, not simply finance or planning speed, sustainable development should be treated as a local-benefit test:
+
+- **Make community benefit a gateway condition.** No major new mine should receive public support or move easily through the system unless it has early engagement, a credible local-benefit package and a clear way for residents to raise concerns.
+- **Define "responsible mining" in advance.** Set plain-English requirements for water, land restoration, biodiversity, traffic, noise, monitoring and closure before projects are approved.
+- **Put local jobs and suppliers into the licence conversation.** Community benefit should include apprenticeships, local hiring, local procurement and transparent reporting, not only a one-off fund.
+- **Keep critical-mineral policy mainly circular.** For rare earths, lithium, cobalt and nickel, NI's realistic opportunity is recycling and processing, because the local geology is limited.
+- **Use extraction selectively.** Where the evidence supports mining, require community benefit, high standards and clean-up funding paid up front.
+- **Support lower-risk industrial minerals where appropriate.** Baryte, salt, aggregates and construction minerals may offer nearer-term opportunities if local impacts are manageable.
 
 ---
 
@@ -135,7 +150,15 @@ The disruption creates a **shortfall of about 20% of NI's critical-mineral deman
 
 **What we found.** **Helping manufacturers alone barely works** during a disruption, because they cannot buy recycled material that does not yet exist — so that help must come *after* the processing capacity is built. A **stockpile is only a short bridge, not a fix**: sized to international practice (about 180 days), it cushions only the first year or two and then runs out. A full, well-sequenced package of support cuts the shortfall to about 11% and protects roughly 970 jobs compared with doing nothing.
 
-**Our recommendation.** Prioritise **money and guaranteed contracts for the processing/recycling stage**, set up as **standing, repeatable schemes** rather than one-off grants; and offer businesses a **single "front door"** for a strategic project (NI could, under the Windsor Framework, tap both EU fast-track permissions and UK funding).
+**Our recommendation, based on what we found.** Because manufacturer support alone does little when there is no recycled material to buy, business support should be sequenced from the middle of the chain outward:
+
+- **Build the processing and recycling stage first.** Create a standing scale-up fund for firms moving from pilot to commercial scale, especially rare-earth and battery-metal recovery.
+- **Use purchase contracts, not just grants.** Government-backed offtake or price-floor contracts would give lenders confidence that new plants have customers and a minimum income.
+- **Give strategic projects one front door.** A firm should be able to access planning support, finance, skills help, energy advice, UK funding and EU-related routes through one DfE-led process.
+- **Use stockpiles only as a bridge.** A small reserve can cushion the first months of a shock, but it runs down quickly and does not build industry.
+- **Support manufacturers after supply exists.** Recycled-content procurement and supplier-development support should come once processors can actually provide material.
+- **Help local suppliers qualify.** Smaller NI firms will need support with quality, traceability, safety and data requirements so they can join the chain.
+- **Make support permanent enough to plan around.** The evidence points to standing finance, skills and offtake tools rather than one-off funding rounds.
 
 ---
 
@@ -157,7 +180,16 @@ We also looked beyond reliance on a single country, following 2024 International
 
 **What we found.** **Leaving it to the market is the riskiest option** — supply security is something the market under-provides. A **balanced "co-ordinator" approach is the safest**: it roughly **halves the bad-case shortfall** compared with the market approach and is the only approach that improves all three of the UK's 2035 targets while still adding economic value. We are careful to say it is the **best-balanced option, not a guarantee** that every target is met in every situation.
 
-**Our recommendation.** Government should act as an **active co-ordinator and insurer** — set the targets; reduce the risk of building processing capacity (funding plus guaranteed-purchase contracts); fix collection of recyclables; spread suppliers and hold a modest reserve; and insist on high standards. This is the approach Japan used to cut its reliance on Chinese rare earths from about 90% to about 58%.
+**Our recommendation, based on what we found.** Because the market-only approach has the highest risk, government should act as an **active co-ordinator and insurer**: not running the industry, but making sure NI is prepared before a crisis.
+
+- **Create a simple minerals-resilience dashboard.** Track import dependence, recycled share, local processing capacity, supplier concentration and emergency cover each year.
+- **Prioritise the highest-risk minerals.** Rare earths, cobalt, lithium and antimony need more active monitoring because supply is concentrated and disruption would be hard to absorb.
+- **Treat processing capacity as a security asset.** Diversifying suppliers helps, but it does not fix dependence on overseas refining; NI needs its own recovery and processing capability.
+- **Fix collection as part of security policy.** Batteries, electronics, magnets and scrap are potential local supply, but only if they are collected before being exported or lost.
+- **Diversify overseas routes.** Use UK, Irish, EU and trusted international partnerships so NI manufacturers are not exposed to one country or supplier route.
+- **Hold a modest reserve for the most exposed materials.** Use it to buy time in the first months of a shock, while domestic and alternative supply responds.
+- **Be honest about limits.** The balanced co-ordinator role is the safest option tested, but it is not a guarantee that every target is met in every crisis.
+- **Keep standards high.** Security of supply should be paired with environmental safeguards and community-benefit conditions.
 
 ---
 
@@ -176,7 +208,15 @@ We also looked beyond reliance on a single country, following 2024 International
 
 **What we found.** The sector offers **good-quality jobs paying above the NI average**, spread to **rural areas** (the west and Mid Ulster, where the firms are) as well as Belfast. Crucially, **how many of the jobs stay local is a choice**: it rises from about 70% to about 97% if support is tied to using local suppliers and training local people — directly avoiding the problem (seen at the closed Galmoy and Lisheen mines in the Republic) where outside specialist firms take much of the work. **Skills are the limiting factor**, against roughly 7,500 hard-to-fill vacancies in NI.
 
-**Our recommendation.** **Tie public support to local-supplier and training commitments**, and build a green-skills/critical-minerals training pipeline now (further-education colleges, QUB, apprenticeships) — it is the thing that decides whether the jobs actually appear.
+**Our recommendation, based on what we found.** Because job retention rises sharply when support is tied to local suppliers and skills, DfE should judge success by **jobs kept in NI**, not only jobs announced:
+
+- **Make local benefit a condition of public support.** Grants, guarantees and licences should include commitments on local hiring, apprenticeships, training places and NI suppliers.
+- **Build the skills pipeline before the plants are built.** Work with FE colleges, QUB, employers and apprenticeship providers on recycling, minerals processing, electrical skills, maintenance, environmental monitoring and restoration.
+- **Use short conversion courses.** People already in manufacturing, construction, engineering, logistics and waste management could move into the sector with targeted training.
+- **Build regional strengths.** Belfast and Belfast Harbour can anchor recycling and rare-earth recovery; Mid and East Antrim can link to advanced manufacturing; Mid Ulster can support equipment makers; the west can benefit where responsible extraction or quarrying is appropriate.
+- **Measure retained jobs and contracts.** Supported projects should report how many jobs, training places and supplier contracts actually stay in NI.
+- **Support local suppliers to qualify.** Many local firms will need help meeting traceability, safety, quality and reporting requirements.
+- **Start now.** Waiting until demand peaks would mean importing skilled workers and losing part of the benefit.
 
 ---
 
@@ -196,7 +236,15 @@ We also looked beyond reliance on a single country, following 2024 International
 
 **What we found.** The benefits are **large and wide-ranging** — the combined approach delivers around £1.15bn of value added, about £1.8bn of avoided import costs, roughly £0.3bn of tax and £0.9bn of exports over 30 years, on top of a £1.16bn investment pipeline from the named firms. The **value-for-money figure is presented honestly**: counting only value added, the money-heavy options return under £1 per £1 spent; but once **avoided imports and supply security** are counted, the return rises to about £2. **Supporting mining on its own is the weakest option** (little goes ahead without community acceptance). In NI's overall trade picture (£19.6bn of exports outside the UK in 2024) minerals are small by *volume* but high in *strategic value*, because they protect a much larger manufacturing base.
 
-**Our recommendation.** Make the economic case as a **whole package** (recycling + responsible mining + local content), and count **supply security and avoided imports** alongside the headline value — not mining support in isolation.
+**Our recommendation, based on what we found.** Because the strongest benefits come from the **combined package**, not mining alone, the economic case should be made as a portfolio:
+
+- **Prioritise recycling, processing and responsible extraction together.** The best-performing option combines circular supply, responsible primary development where justified, and local-content conditions.
+- **Count avoided imports and supply security separately.** They are real benefits for NI manufacturers, but they should be shown clearly so value is not double-counted.
+- **Show two value-for-money figures.** Present the return on direct GVA alone and the wider return once avoided imports and resilience are included.
+- **Do not support extraction in isolation.** Mining-only support is the weakest option unless community acceptance, local suppliers, skills and clean-up safeguards are in place.
+- **Protect the manufacturers that use these materials.** The wider benefit is resilience for firms such as Wrightbus, Seagate, Spirit, Encirc and other manufacturers, not just mineral output.
+- **Spend public money where it unlocks private action.** Focus on first commercial plants, purchase contracts, collection systems and skills, where the market is unlikely to move quickly enough by itself.
+- **Strengthen the evidence before large commitments.** Use NI-specific trade, waste-flow, skills and supplier data to refine project appraisals.
 
 ---
 
@@ -208,6 +256,7 @@ We also looked beyond reliance on a single country, following 2024 International
 
 | Approach | Economic downsides (lost local value: leakage + clean-up cost + displaced farming/tourism) | As a share of the value created | Investment at risk of being wasted | Net value kept locally |
 |---|---|---|---|---|
+| Do nothing extra (baseline) | £136m (leakage only) | 17% | £0m | £653m |
 | Recycling-led | £162m (leakage only) | 17% | £0m | £780m |
 | **Mining, lightly managed** | **£359m** | **36%** | **£125m** | **£639m** |
 | Recycling + mining together | £225m | 20% | £73m | £928m |
@@ -215,20 +264,31 @@ We also looked beyond reliance on a single country, following 2024 International
 
 The five economic downsides are: **value "leaking" out of NI** (when outside firms and workers, rather than local ones, do the work); a **"closure cliff" and clean-up bill** (a mine's jobs and value end when it closes, and the clean-up falls on the public purse if it is not paid for in advance); **displacing local farming and tourism**; **boom-and-bust** from volatile metal prices; and **money sunk into a contested project** that may never proceed (Curraghinalt has already faced a roughly 21-year planning process and around £250m of proposed investment).
 
-**What we found.** Mining done with little care carries economic downsides worth about **36% of the value it creates**, and its **net benefit to NI can actually fall below doing nothing** — badly-run mining can leave NI worse off. **Recycling avoids almost all of these downsides.** And **responsibly-managed mining cuts the downsides by about two-thirds** and keeps the most value locally.
+**What we found.** Mining done with little care carries economic downsides worth about **36% of the value it creates**, and its **net value kept locally (about £639m) can actually fall below the do-nothing baseline (about £653m)** — badly-run mining can leave NI worse off. **Recycling avoids almost all of these downsides.** And **responsibly-managed mining cuts the downsides by about two-thirds** (from about £359m to £128m) and keeps the most value locally.
 
-**Our recommendation.** Reduce the economic downsides by **using local suppliers and workers** (keeps value in NI), **requiring clean-up costs to be paid into a bond up front** and land to be restored, **using guaranteed-price contracts to smooth boom-and-bust**, and **pairing any contested mine with recycling capacity** so the region is not over-reliant on it.
+**Our recommendation, based on what we found.** Because lightly-managed mining can leave NI worse off, the Department should reduce economic downsides **before** projects begin:
+
+- **Require a net local benefit test.** Appraisal should show what remains after leakage, clean-up costs, displaced farming/tourism and stranded-capital risk, not only headline gross value.
+- **Keep spending local.** Supported projects should use NI workers, apprentices and suppliers wherever possible, so wages and contracts stay in the region.
+- **Make closure bonds non-negotiable.** A mine should pay into a ring-fenced clean-up fund up front, so taxpayers are not left with the bill.
+- **Restore land progressively.** Ongoing restoration reduces the time farming, tourism and local amenity are disrupted.
+- **Protect farming and tourism explicitly.** Licensing should show local losses as well as mining gains, especially in rural and scenic areas.
+- **Reduce boom-and-bust risk.** Use phased investment, long-term contracts and price-floor arrangements to smooth income and avoid a sharp shock when a project closes.
+- **Pair contested extraction with recycling capacity.** Recycling gives NI useful minerals capability even if a mine is delayed, stopped or becomes uneconomic.
+- **Redesign or stop weak projects.** If local benefit, clean-up funding and community support cannot be made credible, the economic risk is too high.
 
 ---
 
 ## Summary of recommendations to the Department
 
-1. **Build the missing middle of the chain.** Help fund the first commercial processing/recycling plants (cost-sharing + guaranteed-purchase contracts) — the biggest gap and the highest-value action.
-2. **Fix collection of recyclable material** (a deposit-return / electronics take-back scheme) — the only way to hit the 20% recycling target.
-3. **Start with the cheap rules** — recycled-content requirements, design-for-recycling standards and product "passports" — high value, low cost.
-4. **Make any new mining responsible and contained** — community-benefit agreements (the key condition), high standards, and clean-up costs paid up front.
-5. **Tie support to local content and skills** — so the jobs and value stay in NI (raising the local share from about 70% to about 97%).
-6. **Create one "front door" for strategic projects and a modest safety net** — single-point support (using both UK and EU routes via the Windsor Framework), plus diversified suppliers and a small reserve for emergencies.
+- **Because collection is the immediate bottleneck, fix feedstock first.** Build take-back and collection routes for batteries, electronics, magnets, end-of-life vehicle parts and industrial scrap before relying on plant grants.
+- **Because design rules give the best value for money, start with low-cost market rules.** Use recycled-content procurement, design-for-recycling standards and product passports to create demand for recovered material.
+- **Because NI's gap is the missing middle, build processing and recovery capacity.** Help first commercial plants with cost-sharing, guarantees and long-term purchase contracts.
+- **Because community acceptance is the binding constraint for extraction, make local benefit a gateway.** Require credible community-benefit agreements, local jobs, high standards and clean-up bonds before supporting new mining.
+- **Because manufacturer support does little without material supply, sequence business support.** Support processors first, then manufacturers, with one DfE-led front door for strategic projects.
+- **Because supply security is under-provided by the market, act as co-ordinator and insurer.** Monitor risk, diversify suppliers, hold a modest reserve and treat processing capacity as a security asset.
+- **Because retained jobs are a policy choice, tie support to local content and skills.** Public support should come with apprenticeships, training places, NI supplier commitments and reporting on jobs kept in NI.
+- **Because the economic case is strongest as a package, appraise the portfolio.** Count GVA, tax, exports, avoided imports and manufacturer resilience, while also subtracting leakage, closure liabilities, displaced farming/tourism and stranded-capital risk.
 
 ---
 
