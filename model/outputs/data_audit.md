@@ -4,7 +4,7 @@ Programmatic audit of the data inputs behind the model and the Q2.1-2.7 experime
 
 ## 1. Data register (`data_register.csv`)
 
-- **112 parameters.** Status: real 72, proxy 21, desk_verified 13, web_verified 3, reference 2, gap 1.
+- **113 parameters.** Status: real 73, proxy 21, desk_verified 13, web_verified 3, reference 2, gap 1.
 - **Placeholder-source (6)** — biggest provenance gaps: `io_technical_coefficients`, `io_employment_coefficients`, `io_co2_coefficients`, `in_use_stock_ree_tonnes`, `ni_demand_growth_ev`, `ni_demand_growth_wind`.
 - **Declared gaps (1):** `in_use_stock_ree_tonnes`.
 

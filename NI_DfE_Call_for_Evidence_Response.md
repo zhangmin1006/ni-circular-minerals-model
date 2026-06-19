@@ -410,8 +410,8 @@ We checked the response's findings and recommendations against the main public d
 | **2.7** Benefit leakage; mine-closure liability; agriculture/tourism displacement | **Minviro** warns mining projects "are often … economically detached from the regions in which they are located" (leakage), has a dedicated "Mine Closure" section with closure-cost analysis, and assesses impacts on "agriculture" and "tourism". |
 
 **Two points for transparency:**
-- The **top-three and refining concentration figures** used in 2.4 (about 86% from the top three producers; one country refining 19 of the 20 most strategic minerals) come from the **International Energy Agency (2025)** — an external source, not from the four documents above.
-- Some instruments cited (for example the £50m DBT critical-minerals fund, or England's £500m Mayoral Recyclable Growth Fund) are **UK- or England-level**; this response treats them as instruments Northern Ireland could *access or adapt*, not as existing NI budgets.
+- The **top-three and refining concentration figures** used in 2.4 (about 86% from the top three producers; one country refining 19 of the 20 most strategic minerals) are global figures from the **International Energy Agency (2025)** — an external source, not from the four documents above.
+- A few instruments are quoted at **UK or England level**; this response and the model **scale them to Northern Ireland's share of the UK population (~2.9%, about 1.9 million of 68 million people)**. On that basis the **£50m UK critical-minerals fund is equivalent to roughly £1.5m for NI**, and **England's £500m Mayoral Recyclable Growth Fund (which does not cover NI) to roughly £15m** were NI to create its own version. The cost assumptions used throughout this response are **already expressed at NI scale** on this basis — and set somewhat above a pure population share for the circular levers, to reflect NI's disproportionately large critical-minerals activity (for example Ionic Technologies). So the figures here are **NI-level, not UK or England budgets**.
 
 ---
 

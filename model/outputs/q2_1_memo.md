@@ -66,9 +66,9 @@ Public-cost figures are NI-scale annual budgets benchmarked to real UK programme
 
 | Lever | NI cost £m/yr — low / central / high (intensity 1.0) | UK anchor |
 |---|---|---|
-| recycling_grant | 4.0 / 7.0 / 12.0 | Vision 2035 DBT £50m for UK extraction/processing/recycling (+£165m already invested); NI recovery-grant share ~£7m/yr. |
-| innovation_grant | 3.0 / 5.0 / 9.0 | Innovate UK CLIMATES £15m + Faraday/ReLiB £34m battery-recycling R&D; NI Circular Innovation Fund ~£5m/yr. |
-| collection_infrastructure | 5.0 / 9.0 / 20.0 | DEFRA DRS impact assessment: £632m set-up, £1.065bn/yr running (England+NI, drinks); NI WEEE/critical-stream collection programme ~£9m/yr. |
+| recycling_grant | 4.0 / 7.0 / 12.0 | Vision 2035 DBT £50m UK for extraction/processing/recycling (≈£1.5m at NI's 2.9% population share; +£165m already invested); set at NI ~£7m/yr — above pro-rata, reflecting NI's over-indexed critical-minerals activity (e.g. Ionic). |
+| innovation_grant | 3.0 / 5.0 / 9.0 | Innovate UK CLIMATES £15m + Faraday/ReLiB £34m UK battery-recycling R&D (≈£1.4m at NI's population share); NI Circular Innovation Fund set at ~£5m/yr. |
+| collection_infrastructure | 5.0 / 9.0 / 20.0 | DEFRA DRS impact assessment: £632m UK set-up, £1.065bn/yr running (GB-wide drinks; ≈£18m of set-up at NI's population share); NI WEEE/critical-stream collection programme set at ~£9m/yr. |
 | product_passport | 1.0 / 2.0 / 4.0 | Digital product passport / EPR data systems — largely regulatory. |
 | secondary_market_support | 2.0 / 4.0 / 8.0 | Secondary-materials marketplace + contingent offtake guarantees; ~£4m/yr NI. |
 | recycled_content_procurement | 0.5 / 1.0 / 2.0 | Minimum recycled-content public-procurement standard — regulatory, minimal direct spend. |
