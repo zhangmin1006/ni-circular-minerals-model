@@ -57,6 +57,8 @@ It runs over **30 years (2026–2055)**. Money figures are 30-year totals expres
 
 ## 2.1 — How can the Department support innovation that will support circularity (recycling, recovering materials, secondary-material markets and circular design in manufacturing)?
 
+**The logic (why we tested it this way).** The question asks which kinds of support actually help recycling. The fair way to answer that is to try each support measure **on its own, and then all together**, and measure the result — so we can tell which lever genuinely increases recycling and gives good value, and which only sounds good on paper.
+
 **What we tested.** Seven possible support measures, run on their own and as a package over 30 years, scored on how much they raise the share of demand met by recycling, and on **value for money** (the extra economic value created for each £1 of public money spent).
 
 | Support measure | Extra share of critical minerals met by recycling | Extra value to the economy (30-yr) | Value for money (value per £1 spent) |
@@ -76,6 +78,8 @@ It runs over **30 years (2026–2055)**. Money figures are 30-year totals expres
 ---
 
 ## 2.2 — What are the key opportunities and challenges for sustainable minerals development?
+
+**The logic (why we tested it this way).** To find the real obstacle holding development back, the sensible test is to **remove obstacles one at a time** and see which removal unlocks the most — the obstacle that makes the biggest difference is the true binding constraint, not just the one that is talked about most.
 
 **What we tested.** We ranked each mineral by its opportunity for NI, then removed one obstacle at a time to see which obstacle, when fixed, unlocks the most development.
 
@@ -98,6 +102,8 @@ The strongest opportunities are in **recycling** rare-earth magnets, lithium, co
 
 ## 2.3 — What support is needed for businesses to take part in the minerals supply chain?
 
+**The logic (why we tested it this way).** Businesses most need support when supply is under stress, so we recreate a realistic supply shock and watch **who is hurt and who could step in**. That reveals what each type of business actually needs — and in what order it needs it — far better than asking in calm conditions.
+
 **What we tested.** A serious supply disruption — losing the dominant overseas supplier of each critical mineral (today one country supplies, for example, 74% of the world's rare earths, 70% of cobalt and 44% of lithium) — plus a price spike. We then looked at which businesses are hit and what help each needs.
 
 The disruption creates a **shortfall of about 20% of NI's critical-mineral demand**, and this **lands on local manufacturers** as higher costs and uncertainty. It is actually an *opportunity* for miners and recyclers — but only if they have the capacity to step in. Support therefore needs to be **tailored to each stage and delivered in the right order:**
@@ -115,6 +121,8 @@ The disruption creates a **shortfall of about 20% of NI's critical-mineral deman
 ---
 
 ## 2.4 — What role should we have in ensuring a secure supply of minerals?
+
+**The logic (why we tested it this way).** "What role" is really a choice between **different government approaches**, so we set up five realistic ones and stress-test each. A secure-supply policy has to hold up in a **bad year, not just on average** — so we judge the approaches mainly on their worst-case results, the same way one would judge an insurance policy.
 
 **What we tested.** Five different government approaches, each put through an escalating supply shock and then through **120 random "what-if" disruptions** (different minerals, timing and severity). We measured the typical and the **bad-case (worse than 9 times out of 10)** shortfall.
 
@@ -136,6 +144,8 @@ We also looked beyond reliance on a single country, following 2024 International
 
 ## 2.5 — How can the sector contribute to local employment, skills development and regional growth?
 
+**The logic (why we tested it this way).** This question is about **who benefits and where**, so a single headline jobs number is not enough. We break the jobs down by **skill, pay, council area, and whether they stay in NI**, and see how different policy choices change those — because the same headline number can be good or poor depending on its quality and where it lands.
+
 **What we tested.** The jobs created, split by skill and pay (using the official NISRA 2025 figure that the typical NI full-time wage is £37,100 a year), how many of those jobs are kept in NI, and the training needed.
 
 | Approach | Jobs by year 30 | Pay vs the NI average | Share of jobs kept in NI |
@@ -152,6 +162,8 @@ We also looked beyond reliance on a single country, following 2024 International
 ---
 
 ## 2.6 — What are the potential economic benefits of mineral development?
+
+**The logic (why we tested it this way).** To value the benefits fairly we add up the **full range** — value added, jobs, tax, exports, investment and money saved on imports — over 30 years, and weigh them against the public cost. A benefit only really counts if it is genuine, **stays in NI**, and is **worth more than it costs** — so we show value for money, and we show it both with and without counting supply-security/avoided-import gains.
 
 **What we tested.** The full range of benefits — value added to the economy, jobs, tax, exports, business investment, and **money saved on imports** (the import bill NI avoids by supplying material itself or by recycling).
 
@@ -170,6 +182,8 @@ We also looked beyond reliance on a single country, following 2024 International
 ---
 
 ## 2.7 — What are the potential economic negative impacts of mineral development?
+
+**The logic (why we tested it this way).** The question is specifically about **economic** harm, so we list the main economic downsides and measure them under **different ways of running mining** — carelessly managed, responsibly managed, and recycling-led. Comparing those shows both how big the downsides are and, importantly, **which management choices shrink them** — and whether, after the downsides, NI is actually better off.
 
 **What we tested.** Five **economic** downsides of new mining (this question is about *economic* harms; environmental effects are a separate matter), and the measures that reduce them.
 

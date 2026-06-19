@@ -23,27 +23,27 @@ os.makedirs(FIGDIR, exist_ok=True)
 # --- stage definitions (firm short-names grouped by the model's chain stages) ---
 STAGES = {
     "primary": dict(
-        title="PRIMARY  &  QUARRY", subtitle="8 firms",
+        title="PRIMARY  &  QUARRY", subtitle="",
         firms=["Dalradian (Au/Sb/Cu — contested)", "Mannok · Irish Salt · Kilwaughter",
                "Breedon · FP McCann · Galantas · Conroy"],
         colour="#c9a66b"),
     "processing": dict(
-        title="PROCESSING  &  RECOVERY", subtitle="1 firm  —  BINDING GAP",
+        title="PROCESSING  &  RECOVERY", subtitle="THE BINDING GAP",
         firms=["Ionic Technologies", "(Belfast · 400 tpa REE oxide target)",
                "no Li / Co / Ni recovery capacity"],
         colour="#d98880"),
     "manufacturing": dict(
-        title="MANUFACTURING  (downstream)", subtitle="5 firms",
+        title="MANUFACTURING  (downstream)", subtitle="",
         firms=["Wrightbus · Seagate · Spirit", "Encirc · Harland & Wolff / Navantia",
                "demand-rich: EV, magnets, aerospace"],
         colour="#7fb3d5"),
     "collection": dict(
-        title="COLLECTION  &  FEEDSTOCK", subtitle="5 firms",
+        title="COLLECTION  &  FEEDSTOCK", subtitle="",
         firms=["Re-Gen · RiverRidge · Bryson", "Envirogreen · Plaswire (turbine blades)",
                "routes exist; critical-metal capture low"],
         colour="#7dcea0"),
     "enabling": dict(
-        title="EQUIPMENT  &  ENABLING", subtitle="2 firms  +  QUB / QUILL",
+        title="EQUIPMENT  &  ENABLING", subtitle="QUB / QUILL",
         firms=["CDE Group · Terex / Powerscreen / Finlay", "processing & recycling equipment",
                "skills, R&D and cluster anchor"],
         colour="#bfbfbf"),
