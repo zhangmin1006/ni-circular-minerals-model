@@ -394,4 +394,25 @@ The model represents **21 real, named Northern Ireland operators**, compiled fro
 
 ---
 
+## Annex C — How these findings align with published evidence
+
+We checked the response's findings and recommendations against the main public documents for this review — the **UK Critical Minerals Strategy (Vision 2035)** and its **Technical Annex**, the **UK Modern Industrial Strategy (2025)**, and the **Minviro Final Report and Appendix A**. They are **consistent with, and in several places directly supported by, the published UK strategy and the Minviro evidence — no contradictions were found.** The main points of alignment:
+
+| Our finding / recommendation | Consistent with — and what the published source says |
+|---|---|
+| **2.1** A 20% recycling target; lead with circular-economy rules | **Vision 2035** sets the target that "20% of total annual UK demand for critical minerals is met [through recycling] by 2035"; the **UK Industrial Strategy** commits to "boost … the circular economy". |
+| **2.2** Copper is a *growth*, not *critical*, mineral | **Technical Annex**: "copper is not classed as critical but is fundamental for advanced manufacturing and the clean energy transition … copper and uranium [are] classed as growth minerals". |
+| **2.2** Social licence / community acceptance is the binding constraint | **Minviro** lists "failure to obtain a social licence to operate" among the things that "can stop a project going ahead", and discusses social-licence-to-operate at length. |
+| **2.3** First-of-a-kind finance, purchase contracts, a one-stop route; stockpile as a bridge | **Vision 2035**: the public-finance offer "including the National Wealth Fund and UK Export Finance"; "up to £50 million for critical mineral projects"; a "demand aggregation platform"; and "stockpiling, including through procurement mechanisms". |
+| **2.4** Government as active coordinator/insurer; monitor risk; treat processing as a security asset | **Vision 2035**: the two objectives — "optimise domestic production" and "build resilient UK and global supply networks". **UK Industrial Strategy**: "an enhancement of the Critical Minerals Intelligence Centre to improve its horizon scanning". |
+| **2.5** Belfast as a recycling/advanced-manufacturing anchor; build the skills pipeline | **UK Industrial Strategy** names "Critical Minerals clusters in … Belfast" and prioritises city regions "such as Belfast". |
+| **2.6** Count the full benefit suite (jobs, taxes & royalties, infrastructure, training, local procurement) | **Minviro**'s "Positive socio-economic impacts" taxonomy lists exactly "Job creation, Economic multiplier effects, Payment of taxes and royalties, Development of new infrastructure …". |
+| **2.7** Benefit leakage; mine-closure liability; agriculture/tourism displacement | **Minviro** warns mining projects "are often … economically detached from the regions in which they are located" (leakage), has a dedicated "Mine Closure" section with closure-cost analysis, and assesses impacts on "agriculture" and "tourism". |
+
+**Two points for transparency:**
+- The **top-three and refining concentration figures** used in 2.4 (about 86% from the top three producers; one country refining 19 of the 20 most strategic minerals) come from the **International Energy Agency (2025)** — an external source, not from the four documents above.
+- Some instruments cited (for example the £50m DBT critical-minerals fund, or England's £500m Mayoral Recyclable Growth Fund) are **UK- or England-level**; this response treats them as instruments Northern Ireland could *access or adapt*, not as existing NI budgets.
+
+---
+
 *The detailed figures behind each answer, and the full technical and method documentation, can be supplied on request. All figures are model results under stated, partly-estimated assumptions and are offered as **evidence on the likely direction and scale** of each effect, not as precise forecasts. We would welcome the chance to refine the model with the Department's own data so it can become a fully calibrated decision tool.*
