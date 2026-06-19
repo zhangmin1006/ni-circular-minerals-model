@@ -36,7 +36,7 @@ primary extraction → processing/refining → manufacturing use → in-use stoc
 
 The model is populated from a register of 21 named NI operators (`company_register.csv`), grouped into the five supply-chain stages below. The single most important structural fact — which drives most of the findings — is the **midstream bottleneck**: NI has strong upstream extraction and very strong downstream manufacturing demand, but only **one** critical-mineral processing/recovery asset (Ionic Technologies, 70 staff).
 
-![Figure 1. NI minerals supply chain — structure and key players. Linear chain (top, left→right) with the circular return loop (bottom). Stage employment is summed from the 21-firm register. The midstream processing/recovery stage is the binding gap.](model/outputs/figures/fig0_supply_chain.png)
+![Figure 1. NI minerals supply chain — structure and key players. Linear chain (top, left→right) with the circular return loop (bottom); stages grouped from the 21-firm register. The midstream processing/recovery stage is the binding gap.](model/outputs/figures/fig0_supply_chain.png)
 
 | Stage | Firms | Jobs | Key named players | Role in model |
 |---|---|---|---|---|

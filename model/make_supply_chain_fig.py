@@ -23,27 +23,27 @@ os.makedirs(FIGDIR, exist_ok=True)
 # --- stage definitions (firm short-names grouped by the model's chain stages) ---
 STAGES = {
     "primary": dict(
-        title="PRIMARY  &  QUARRY", subtitle="8 firms · 2,840 jobs",
+        title="PRIMARY  &  QUARRY", subtitle="8 firms",
         firms=["Dalradian (Au/Sb/Cu — contested)", "Mannok · Irish Salt · Kilwaughter",
                "Breedon · FP McCann · Galantas · Conroy"],
         colour="#c9a66b"),
     "processing": dict(
-        title="PROCESSING  &  RECOVERY", subtitle="1 firm · 70 jobs  —  BINDING GAP",
+        title="PROCESSING  &  RECOVERY", subtitle="1 firm  —  BINDING GAP",
         firms=["Ionic Technologies", "(Belfast · 400 tpa REE oxide target)",
                "no Li / Co / Ni recovery capacity"],
         colour="#d98880"),
     "manufacturing": dict(
-        title="MANUFACTURING  (downstream)", subtitle="5 firms · 8,470 jobs",
+        title="MANUFACTURING  (downstream)", subtitle="5 firms",
         firms=["Wrightbus · Seagate · Spirit", "Encirc · Harland & Wolff / Navantia",
                "demand-rich: EV, magnets, aerospace"],
         colour="#7fb3d5"),
     "collection": dict(
-        title="COLLECTION  &  FEEDSTOCK", subtitle="5 firms · 824 jobs",
+        title="COLLECTION  &  FEEDSTOCK", subtitle="5 firms",
         firms=["Re-Gen · RiverRidge · Bryson", "Envirogreen · Plaswire (turbine blades)",
                "routes exist; critical-metal capture low"],
         colour="#7dcea0"),
     "enabling": dict(
-        title="EQUIPMENT  &  ENABLING", subtitle="2 firms · 1,500 jobs  +  QUB / QUILL",
+        title="EQUIPMENT  &  ENABLING", subtitle="2 firms  +  QUB / QUILL",
         firms=["CDE Group · Terex / Powerscreen / Finlay", "processing & recycling equipment",
                "skills, R&D and cluster anchor"],
         colour="#bfbfbf"),
@@ -78,8 +78,8 @@ def main():
 
     fig.suptitle("Northern Ireland minerals supply chain — structure and key players",
                  fontsize=14, fontweight="bold", y=0.985)
-    ax.text(6.7, 6.78, "Linear chain (top, left→right) with the circular return loop (bottom). "
-            "Stage jobs from the 21-firm register.", ha="center", fontsize=9, color="#444")
+    ax.text(6.7, 6.78, "Linear chain (top, left→right) with the circular return loop (bottom); "
+            "grouped from the 21-firm register.", ha="center", fontsize=9, color="#444")
 
     W, H = 3.05, 1.55
     # top linear chain

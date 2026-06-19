@@ -17,7 +17,7 @@ This response is written for a general reader. Technical terms and abbreviations
 3. **The economic ripple effects** — a standard method (called **input–output analysis**) for working out the jobs and value created across the wider economy when one part grows.
 4. **The whole economy** — a model that lets prices and wages adjust, so the answers are economy-wide, not just for the mining sector.
 
-It runs over **30 years (2026–2055)**. Money figures are 30-year totals expressed in today's money, following standard UK Treasury (Green Book) guidance that values a pound next year slightly below a pound today (a "discount rate" of 3.5%).
+It runs over **30 years (2026–2055)**. Money figures are 30-year totals expressed in today's money, following standard UK Treasury (Green Book) guidance that values a pound next year slightly below a pound today (a "discount rate" of 3.5%). **A fuller, non-technical description of the method, model and data is in Annex A at the end of this response.**
 
 **How reliable is this?** The model is **checked against an independent study** (the Minviro 2022 report commissioned for this review) and reproduces its results, and it passes 61 automated quality checks every time it is run. But it is a **"what-if" tool, not a crystal ball**: the population totals and policy targets it uses are real and sourced, but many of the internal economic numbers are reasonable estimates rather than measured NI data. So please read the findings as showing the **direction, the ranking, and the rough scale** of each effect — which is robust — rather than exact predictions.
 
@@ -199,4 +199,52 @@ The five economic downsides are: **value "leaking" out of NI** (when outside fir
 
 ---
 
-*The method, data sources and assumptions behind this evidence are set out in an accompanying technical report, and the detailed figures in a fuller findings report; both can be supplied. All figures are model results under stated, partly-estimated assumptions and are offered as **evidence on the likely direction and scale** of each effect, not as precise forecasts. We would welcome the chance to refine the model with the Department's own data so it can become a fully calibrated decision tool.*
+## Annex A — How this evidence was produced (the method, model and data, in plain terms)
+
+*This annex explains, without technical jargon, how the figures in this response were produced. A full technical report with the underlying detail can be supplied.*
+
+### A.1 The method — comparing choices, not predicting the future
+
+We did **not** try to forecast exactly what will happen. Instead, we built a working model of Northern Ireland's minerals system and used it to **compare different policy choices over 30 years**, asking a simple question each time: *which choice leaves NI better off?* Each model run is one complete, internally-consistent "story" of how the system would behave under one set of policies (for example, "recycling-led" versus "mining-led" versus "do nothing"). We then compare the stories side by side. This is why the response talks about the **direction and ranking** of options rather than precise predictions.
+
+### A.2 The model — four joined-up parts
+
+The model links four parts, each a well-established technique, so that a decision in one place flows through to the others:
+
+1. **The companies (a decision simulation).** We represent **21 real, named Northern Ireland businesses** and let each one make its own decisions year by year — for example, whether to develop a mine (which only goes ahead if it is *both* commercially worthwhile *and* accepted by the local community), whether to invest in recycling, and how much recycled material to use. Each company's choices depend on its own real situation (its size, location and stage of development) and on whichever government policies are switched on in that run.
+
+2. **The materials stock-take.** For each of the ten minerals tracked, the model keeps a year-by-year tally of how much is needed, how much is mined in NI, how much is recycled, how much is imported, and any shortfall. Like a set of accounts, these figures must always add up — a basic check that the physical picture is consistent.
+
+3. **The economic ripple-effect calculator.** When one part of the economy grows, it creates work for suppliers and, through the wages it pays, for shops and services too. We use the **standard official method ("input–output" analysis)** that governments worldwide use to estimate these knock-on jobs and value — not just the direct jobs in mining or recycling.
+
+4. **The whole-economy model.** Finally, a model of the wider NI economy lets **prices and wages adjust**, so the results reflect an economy that responds (for example, a mining boom can push up local wages), rather than a fixed snapshot.
+
+These parts feed into one another: the companies' decisions drive the materials stock-take; that drives the economic calculators; and the results feed back (for instance, higher wages make it harder to staff a mine). A final step shares the resulting jobs across Northern Ireland's 11 council areas, which is how we can say where the growth lands.
+
+### A.3 The data — what is solid, and what is estimated
+
+**Solid, sourced figures** (the anchors the model is built around):
+- the **independent Minviro (2022) study** commissioned for this very review — the model is tuned to reproduce its results, so it starts from a recognised baseline;
+- **official NISRA statistics** (Northern Ireland Statistics and Research Agency) for jobs, the typical wage (£37,100 a year, 2025) and trade;
+- the **UK Critical Minerals Strategy (Vision 2035)** for the official targets and the projected growth in demand;
+- **International Energy Agency** evidence on how concentrated world mineral supply is (for example, that one country supplies most rare earths);
+- a **register of 21 real NI companies** that we compiled from public sources; and
+- the published resource figures for the **Curraghinalt** deposit.
+
+**Estimated, illustrative figures.** Some of the model's internal economic ratios — for example, exactly how much each industry buys from every other — are **reasonable estimates rather than measured Northern Ireland data**, because a full NI-specific economic table does not yet exist publicly. Every such value is clearly flagged in the model's data register, with its source and status. This is the main reason we present the findings as showing direction and scale rather than exact pounds.
+
+### A.4 How we checked the model
+
+- It **reproduces the independent Minviro results** on a like-for-like basis (a confidence check against outside evidence).
+- It passes **61 automatic quality checks every time it runs** — for example, that the materials always add up, that nothing turns negative, and that the same inputs always give exactly the same answer.
+- It is **transparent and repeatable**: anyone with the model gets identical numbers, so the evidence can be independently checked.
+
+### A.5 What this evidence can — and cannot — tell you
+
+- **It can** show the *direction* of each effect, the *ranking* of policy options, and the *rough scale* of the benefits and downsides. These are robust.
+- **It cannot** give precise, pound-for-pound forecasts of the future.
+- **To go further:** with the Department's own data — a Northern Ireland economic table, NI recycling and waste figures, and a short survey of the firms involved — the model could be turned into a **fully calibrated decision tool** for appraising specific proposals.
+
+---
+
+*The detailed figures behind each answer, and the full technical and method documentation, can be supplied on request. All figures are model results under stated, partly-estimated assumptions and are offered as **evidence on the likely direction and scale** of each effect, not as precise forecasts. We would welcome the chance to refine the model with the Department's own data so it can become a fully calibrated decision tool.*
