@@ -280,4 +280,58 @@ These parts feed into one another: the companies' decisions drive the materials 
 
 ---
 
+## Annex B — The 21 Northern Ireland businesses analysed
+
+The model represents **21 real, named Northern Ireland operators**, compiled from public sources and grouped into the five stages of the supply chain shown in the diagram above. They span the whole chain — from mining and quarrying, through collection and the single processing/recovery business, to the manufacturers that use the materials and the equipment makers that supply the sector. (Evidence basis: 13 are confirmed from company websites/press reporting and 8 from desk research; the detailed scores used in the model are desk estimates, flagged in the data register.)
+
+### Primary / mining and quarrying
+
+| Company | What they do | Location (council area) | Status |
+|---|---|---|---|
+| Dalradian Gold | Proposed gold mine (also antimony, copper, tellurium) at Curraghinalt | Curraghinalt · Fermanagh & Omagh | Proposed (contested) |
+| Galantas Gold | Gold/silver mine operator | Omagh · Fermanagh & Omagh | Care & maintenance |
+| Conroy Gold and Natural Resources | Gold and antimony exploration | Longford-Down · Armagh, Banbridge & Craigavon | Exploration |
+| Irish Salt Mining and Exploration | Rock-salt mine | Kilroot · Mid & East Antrim | Operating |
+| Kilwaughter Minerals | Quarry and lime/minerals processor | Larne · Mid & East Antrim | Operating |
+| Breedon / Whitemountain | Quarrying and construction materials (incl. recycled aggregates) | Multiple NI sites | Operating |
+| FP McCann | Quarrying and concrete products | Magherafelt · Mid Ulster | Operating |
+| Mannok | Cement, quarrying and construction materials | Derrylin · Fermanagh & Omagh | Operating |
+
+### Collection / feedstock (waste and recycling)
+
+| Company | What they do | Location (council area) | Status |
+|---|---|---|---|
+| Re-Gen Waste | Waste management and recycling collection | Newry · Newry, Mourne & Down | Operating |
+| RiverRidge | Waste and resource management | Mallusk · Antrim & Newtownabbey | Operating |
+| Bryson Recycling | Household collection, reuse and recycling (social enterprise) | Belfast | Operating |
+| Envirogreen Recycling | Commercial recycling and waste management | Armagh · Armagh, Banbridge & Craigavon | Operating |
+| Plaswire | Recycler of wind-turbine blades and composites | Lurgan · Armagh, Banbridge & Craigavon | Scaling up |
+
+### Processing / recovery — the binding gap
+
+| Company | What they do | Location (council area) | Status |
+|---|---|---|---|
+| Ionic Technologies | Rare-earth magnet recycler — recovers critical minerals (400 tonnes/yr target) | Belfast Harbour · Belfast | Scaling up |
+
+### Manufacturing (the businesses that use the materials)
+
+| Company | What they do | Location (council area) | Status |
+|---|---|---|---|
+| Encirc | Container-glass manufacturer (uses recycled glass) | Derrylin · Fermanagh & Omagh | Operating |
+| Wrightbus | Zero-emission (electric/hydrogen) bus manufacturer | Ballymena · Mid & East Antrim | Operating |
+| Seagate Technology | Electronics / data-storage manufacturer | Springtown · Derry City & Strabane | Operating |
+| Spirit AeroSystems Belfast | Aerospace manufacturer | Belfast | In ownership transition |
+| Harland & Wolff / Navantia UK | Marine fabrication and offshore-wind structures | Belfast | Operating |
+
+### Equipment and enabling
+
+| Company | What they do | Location (council area) | Status |
+|---|---|---|---|
+| CDE Group | Maker of minerals-processing and recycling equipment | Cookstown · Mid Ulster | Operating |
+| Terex (Powerscreen / Finlay) | Maker of crushing, screening and recycling equipment | Dungannon / Omagh · Mid Ulster | Operating |
+
+*Northern Ireland's research base — Queen's University Belfast and its QUILL ionic-liquids laboratory — underpins the recycling cluster but is not counted among the 21 businesses.*
+
+---
+
 *The detailed figures behind each answer, and the full technical and method documentation, can be supplied on request. All figures are model results under stated, partly-estimated assumptions and are offered as **evidence on the likely direction and scale** of each effect, not as precise forecasts. We would welcome the chance to refine the model with the Department's own data so it can become a fully calibrated decision tool.*
