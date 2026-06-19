@@ -53,6 +53,25 @@ It runs over **30 years (2026–2055)**. Money figures are 30-year totals expres
 
 **Our headline message.** Northern Ireland's biggest minerals opportunity is **recycling and processing critical minerals from worn-out products** — paired with **responsibly-run** new mining only where the evidence and local community support allow it. NI has lots of *demand* for these materials and world-class research, but very little *capacity to process them*: only one business currently recovers critical minerals. The single most valuable thing the Department can do is **help build that middle-of-the-chain processing capacity and fix the collection of recyclable material**.
 
+### The ten minerals we looked at
+
+The model tracks ten minerals, in three groups. Seven are **critical minerals** (economically important and at risk of supply disruption — mostly the metals the green transition depends on); one is a **growth mineral** (vital to future industry but not on the official "critical" list — copper); and three are **bulk/industrial minerals**, included for comparison and because NI already produces some of them.
+
+| Mineral | What it is and where it's used | Why it matters for NI | Group |
+|---|---|---|---|
+| **Rare-earth elements** (the magnets) | A family of metals (e.g. neodymium) used to make the small, very powerful magnets inside electric-vehicle motors and wind-turbine generators | Almost entirely imported, with one country dominating world supply; NI has a real recycling firm (Ionic) recovering them from old magnets | Critical |
+| **Lithium** | The key metal in rechargeable batteries (electric vehicles, grid storage) | Fastest-growing demand of all; no NI mining, so the opportunity is recovering it from used batteries | Critical |
+| **Cobalt** | Helps keep many EV batteries stable | World supply very concentrated in one country; NI's route is battery recycling | Critical |
+| **Nickel** | Used in batteries and in stainless steel | Battery-metal demand; recovered through recycling | Critical |
+| **Aluminium** | Lightweight metal for vehicles, packaging and construction | Very widely used and highly recyclable | Critical |
+| **Antimony** | Flame retardants, some batteries, and defence uses | Concentrated supply now facing export controls; occurs alongside the gold at Curraghinalt | Critical |
+| **Copper** | The metal of electrification — wiring, motors, the grid, renewables | UK demand roughly doubles by 2035; the UK calls it a "growth" (not "critical") mineral; present in the Curraghinalt deposit | Growth |
+| **Baryte** | A heavy mineral used as a weighting agent in drilling fluids and as a filler | An industrial mineral with possible NI geology; low-risk near-term option | Bulk / industrial |
+| **Salt (rock salt)** | Winter road de-icing and chemicals | NI already mines it at Kilroot (Irish Salt) — an existing, large-scale, low-risk operation | Bulk / industrial |
+| **Zinc** | Mainly used to rust-proof (galvanise) steel | An established industrial metal, included for comparison | Bulk / industrial |
+
+*(The model focuses its "critical" label on the energy-transition metals above; some industrial metals such as zinc also appear on the wider UK critical list, but are grouped here as bulk/industrial because they are not the focus of this review.)*
+
 ---
 
 ## 2.1 — How can the Department support innovation that will support circularity (recycling, recovering materials, secondary-material markets and circular design in manufacturing)?
